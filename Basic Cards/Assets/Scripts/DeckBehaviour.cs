@@ -6,60 +6,87 @@ using UnityEngine;
 public class DeckBehaviour : MonoBehaviour {
 	
 	public Sprite[] cardsFaces;		//all of the sprites to use for dealing cards
-	public Sprite cardBack;
-	public GameObject card;
-	public GameObject undrawnDeck;
+	public Sprite cardBack;			//the image for the back of the cards
+	public CardBehaviour card;		//the gameobject of the actual cards
 
-	public List<GameObject> allDealtCards;
-	public List<GameObject> shuffledCards;
-	public Transform cardStartPosition;
-	public Transform deckStartPosition;
-	public Transform offScreenDeck;
+	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
 
-	public int cardCount;
+	public List<CardBehaviour> deckToDrawFrom;		//the current undrawn deck of cards
+	public List<CardBehaviour> discardedCards;		//the cards that are out of play and used
+	public List<CardBehaviour> drawnCards;			//the cards that have been drawn and are in play
+	public Transform cardStartPosition;			//the location marker for the first card drawn
+	public Transform deckStartPosition;			//undrawnDeck start position
+	public Transform offScreenDeck;				//the actual location for storage of all the cards in the deck //need to fix to be more efficient. Maybe not instantiate the cards untill drawn?
 
-	private Vector3 spawnPosition;
-	public float cardGapX;
-	private float cardWidthX;
+	//public int cardCount;
 
-	public float clickRate;
-	private float nextClick;
+	private Vector3 spawnPosition;		//the variable location for each new card that is drawn
+	public float cardGapX;				//the gap between the cards, used for spacing of the spawn points
+	private float cardWidthX;			//the width of the card, used for spacing of the spawn points
 
 	void Start () {
-		cardCount = -1;
-		cardWidthX = card.transform.localScale.x;
-		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);
-		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;
-		for (int i=0; i <cardsFaces.Length; i++){
-			allDealtCards.Add (Instantiate (card, offScreenDeck.position, cardStartPosition.rotation));
+		//cardCount = -1;
+		cardWidthX = card.transform.localScale.x;		//scale of card used for spacing
+		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);		//making the object that symbolized the undrawn deck of cards
+		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;		//applying the back of the card graphic to it
+		for (int i=0; i <cardsFaces.Length; i++){		//making as many cards as there are graphics for faces
+			drawnCards.Add(Instantiate (card, offScreenDeck.position, cardStartPosition.rotation));		//placing these cards offscreen and also into the deckToDrawFrom list
+			card.setNumber(i);
 		}
-		shuffle();
+		shuffleAll();
 	}
 	public void DealCard(){
-		cardCount++;
-		if (allDealtCards.Count >= 5) {
+		//int cardCount = 0;
+		if (drawnCards.Count >= 5 || deckToDrawFrom.Count <= 0) {
 		} 
 		else {
-			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * cardCount;		//figures the width of the card to put down another based on how many cards have been dealt
-			spawnPosition = new Vector3 (cardXPosition, cardStartPosition.transform.position.y, cardStartPosition.transform.position.z);
+			//cardCount
+			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * drawnCards.Count;		//figures the width of the card to put down another based on how many cards have been dealt
+			spawnPosition = new Vector3(cardXPosition, cardStartPosition.transform.position.y, cardStartPosition.transform.position.z);
+			deckToDrawFrom [0].moveCard (spawnPosition);
+			drawnCards.Add(deckToDrawFrom[0]);
+			//Debug.Log (deckToDrawFrom.Count);
+			deckToDrawFrom.RemoveAt(0);
 
 			//if (cardCount >0){
-			//	allDealtCards[cardCount-1].SetActive(false);
+			//	deckToDrawFrom[cardCount-1].SetActive(false);
 			//}
 		}
 	}
 	// Update is called once per frame
-	void Update () {
-//		if (Input.GetButton("Fire1") && Time.time > nextClick)
-//		{
-//			nextClick = Time.time + clickRate;
-//			DealCard ();
-//		}
-		
-	}
-	private void shuffle(){
-		for (int i=0; i <allDealtCards.Count; i++){
-			shuffle.Add (Instantiate (card, offScreenDeck.position, cardStartPosition.rotation));
+	void Update() {
+		int tempCount = drawnCards.Count;
+		for (int i = 0; i < tempCount; i++) {
+			if (!drawnCards[i].isActiveAndEnabled) {
+				discardedCards.Add(drawnCards [i]);
+				drawnCards.RemoveAt(i);
+				i = tempCount;
+			}
 		}
+	}
+	private void shuffleAll(){
+		List<CardBehaviour> shuffledCards = new List<CardBehaviour>();
+		if (deckToDrawFrom.Count >0){
+			int tempCount = deckToDrawFrom.Count;
+			for (int i = 0; i < tempCount; i++) { 
+				discardedCards.Add(deckToDrawFrom[0]);
+				deckToDrawFrom.RemoveAt(0);
+				//Debug.Log (deckToDrawFrom.Count);
+				//Debug.Log (discardedCards.Count);
+			}
+		}
+		else {				
+			Debug.Log ("the stack of cards being shuffled does not have any cards in it" );
+			Debug.Log (deckToDrawFrom.Count);
+		}
+
+		int tempCount2 = discardedCards.Count;
+		for (int i=0; i <tempCount2; i++){
+			int rand = Random.Range(0,discardedCards.Count-1);
+			shuffledCards.Add(discardedCards[rand]);
+			discardedCards.RemoveAt(rand);
+		}
+		deckToDrawFrom = new List<CardBehaviour>(shuffledCards);
+		shuffledCards.Clear();
 	}
 }
