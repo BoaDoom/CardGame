@@ -20,12 +20,18 @@ public class DeckBehaviour : MonoBehaviour {
 
 	//public int cardCount;
 
-	private Vector3 spawnPosition;		//the variable location for each new card that is drawn
+	private Vector3 tableLocation;		//the variable location for each new card that is drawn
 	public float cardGapX;				//the gap between the cards, used for spacing of the spawn points
 	private float cardWidthX;			//the width of the card, used for spacing of the spawn points
 
+	private int maxCardsOnTable = 5;
+	private float[] xCordForDrawnCards;
+
 	void Start () {
-		//cardCount = -1;
+//		for (int i=0; i<maxCardsOnTable; i++){
+//			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * i;
+//		}
+
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
@@ -37,20 +43,30 @@ public class DeckBehaviour : MonoBehaviour {
 		shuffleAll();							//shuffles all the cards in deckToDrawFrom
 	}
 	public void DealCard(){
-		if (drawnCards.Count >= 5 || deckToDrawFrom.Count <= 0) {					//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
+		if (drawnCards.Count < 5 && deckToDrawFrom.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
+			drawnCards.Add(deckToDrawFrom[0]);																									//adds the first card of the draw pile to the drawn pile
+			deckToDrawFrom.RemoveAt(0);																//removes the card from the draw pile, allowing next card to be picked
+			relocateDrawnCards();	
 		} 
 		else {
-			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * drawnCards.Count;		//**
-			spawnPosition = new Vector3(cardXPosition, cardStartPosition.transform.position.y, cardStartPosition.transform.position.z);			//creates a vector3 to send to the card
-			deckToDrawFrom [0].moveCard (spawnPosition);																						//sends coordinates to the card on where to start on the game board
-			drawnCards.Add(deckToDrawFrom[0]);																									//adds the first card of the draw pile to the drawn pile
-			deckToDrawFrom.RemoveAt(0);																											//removes the card from the draw pile, allowing next card to be picked
+			Debug.Log ("too many cards in play");
 		}
+	}
+
+	private void relocateDrawnCards(){
+		//if (drawnCards.Count > 0) {
+			int tempCount = drawnCards.Count;
+			for (int i = 0; i < tempCount; i++) {
+				float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * i;
+				tableLocation = new Vector3(cardXPosition, cardStartPosition.transform.position.y, cardStartPosition.transform.position.z);			//creates a vector3 to send to the card
+				drawnCards[i].moveCard(tableLocation);																						//sends coordinates to the card on where to start on the game board
+			}
+		//}
 	}
 	void Update() {
 	}
 
-	public void updateCards(){								//is called when there are possible cards played and need to be resorted
+	public void updateCards(){								//is called when there are possible cards played and need to be resorted into the discard pile
 		int tempCount = drawnCards.Count;					//assigns a variable to the number of cards currently in the active drawn deck
 		for (int i = 0; i < tempCount; i++) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
