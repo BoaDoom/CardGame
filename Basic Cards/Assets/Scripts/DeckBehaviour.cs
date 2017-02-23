@@ -26,12 +26,12 @@ public class DeckBehaviour : MonoBehaviour {
 
 	void Start () {
 		//cardCount = -1;
-		cardWidthX = card.transform.localScale.x;		//scale of card used for spacing
-		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);		//making the object that symbolized the undrawn deck of cards
-		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;		//applying the back of the card graphic to it
-		for (int i=0; i <cardsFaces.Length; i++){		//making as many cards as there are graphics for faces
-			drawnCards.Add(Instantiate (card, offScreenDeck.position, cardStartPosition.rotation));		//placing these cards offscreen and also into the deckToDrawFrom list
-			card.setNumber(i);
+		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
+		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
+		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
+		for (int i=0; i <cardsFaces.Length; i++){															//making as many cards as there are graphics for faces
+			deckToDrawFrom.Add(Instantiate (card, offScreenDeck.position, cardStartPosition.rotation));		//placing these cards offscreen and also into the deckToDrawFrom list
+			card.setNumber(i+1);																			//sets each card number in order
 		}
 		shuffleAll();
 	}
