@@ -9,7 +9,7 @@ public class UndrawnDeck : MonoBehaviour {
 	private DeckBehaviour deckBehaviour;
 
 	public void Start() {
-		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");
+		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");				//whole block is for grabbing the Deck object so it can deal a card when clicked
 		if(deckBehaviourObject != null){
 			deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour>();
 		}
@@ -19,10 +19,7 @@ public class UndrawnDeck : MonoBehaviour {
 		//spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
-	void OnMouseDown(){
-		GameObject deckBehaviourObject = GameObject.FindWithTag("PlayArea");
-		if (deckBehaviourObject != null) {
-		}
+	void OnMouseDown(){																			//if the deck pile is clicked on, another card is dealt
 		deckBehaviour.DealCard ();
 	}
 		

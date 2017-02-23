@@ -2,10 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\DeckBehaviour.cs">
     <Files>
-      <File FileName="Assets\Scripts\DeckBehaviour.cs" Line="34" Column="43" />
-      <File FileName="Assets\Scripts\CardBehaviour.cs" Line="50" Column="33" />
-      <File FileName="Assets\Scripts\UndrawnDeck.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Draggable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DeckBehaviour.cs" Line="81" Column="45" />
+      <File FileName="Assets\Scripts\CardBehaviour.cs" Line="52" Column="4" />
+      <File FileName="Assets\Scripts\UndrawnDeck.cs" Line="12" Column="160" />
+      <File FileName="Assets\Scripts\Draggable.cs" Line="9" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
