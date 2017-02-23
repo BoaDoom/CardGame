@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardBehaviour : MonoBehaviour {
 
 	//public Sprite[] cardFace;
-	public int cardNumber;
+	public int cardNumber = 0;
 	//public Sprite backOfCard;
 
 	private SpriteRenderer spriteRenderer;
@@ -26,13 +26,16 @@ public class CardBehaviour : MonoBehaviour {
 		if(deckBehaviourObject == null){
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
 		}
+		spriteRenderer = GetComponent<SpriteRenderer> ();
 	}
 	public void setFace(Sprite cardFaceGraphic){
-		spriteRenderer = GetComponent<SpriteRenderer> ();
 		spriteRenderer.sprite = cardFaceGraphic;
 	}
-	public void setNumber(int number){
-		cardNumber = number;
+	public void setNumber(int importNumber){
+		cardNumber = importNumber;
+	}
+	public int getNumber(){
+		return cardNumber;
 	}
 
 	public void moveCard(Vector3 newPosition){
