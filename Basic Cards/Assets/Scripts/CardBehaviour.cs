@@ -5,10 +5,10 @@ using UnityEngine;
 public class CardBehaviour : MonoBehaviour {
 
 	//public Sprite[] cardFace;
-	public int cardNumber = 0;
+	public int cardNumber;
 	//public Sprite backOfCard;
 
-	private SpriteRenderer spriteRenderer;
+	//public SpriteRenderer spriteRenderer;
 	//private DeckBehaviour deckBehaviour;
 	private Transform playArea;
 	private GameObject deckBehaviourObject;
@@ -26,10 +26,10 @@ public class CardBehaviour : MonoBehaviour {
 		if(deckBehaviourObject == null){
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
 		}
-		spriteRenderer = GetComponent<SpriteRenderer> ();
+		//spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 	}
 	public void setFace(Sprite cardFaceGraphic){
-		spriteRenderer.sprite = cardFaceGraphic;
+		gameObject.GetComponent<SpriteRenderer>().sprite = cardFaceGraphic;
 	}
 	public void setNumber(int importNumber){
 		cardNumber = importNumber;

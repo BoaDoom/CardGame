@@ -33,7 +33,6 @@ public class DeckBehaviour : MonoBehaviour {
 //		for (int i=0; i<maxCardsOnTable; i++){
 //			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * i;
 //		}
-
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
@@ -43,14 +42,15 @@ public class DeckBehaviour : MonoBehaviour {
 			//card.setFace(cardsFaces[i]);																	//assigns a sprite of a card face in order from the array of cardfaces
 			orderOfDrawPile.Add(i);
 		}
-		//shuffleAll();							//shuffles all the cards in orderOfDrawPile
+		shuffleAll();							//shuffles all the cards in orderOfDrawPile
 	}
 	public void DealCard(){
-		if (drawnCards.Count < 10 && orderOfDrawPile.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
-			drawnCards.Add(Instantiate (card, offScreenDeck.position, cardStartPosition.rotation));																									//adds the first card of the draw pile to the drawn pile
-			card.setNumber(orderOfDrawPile[0]);																			//sets each card number in order created
-			//Debug.Log(orderOfDrawPile[0]);
-			card.setFace(cardsFaces[(orderOfDrawPile[0]+1)]);
+		if (drawnCards.Count < 5 && orderOfDrawPile.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
+			CardBehaviour instCard;
+			instCard = Instantiate (card, offScreenDeck.position, cardStartPosition.rotation);																									//adds the first card of the draw pile to the drawn pile
+			drawnCards.Add(instCard);
+			instCard.setNumber(orderOfDrawPile[0]);																			//sets each card number in order created
+			instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
 			orderOfDrawPile.RemoveAt(0);																//removes the card from the draw pile, allowing next card to be picked
 			relocateDrawnCards();	
 		} 
@@ -98,7 +98,7 @@ public class DeckBehaviour : MonoBehaviour {
 	public void shuffleDiscard(){											//function for the times when there are cards in play that you don't want to grab when you want to reshuffle
 		int tempCount = discardedCards.Count;								//stores total number of discard cards
 		for (int i=0; i <tempCount; i++){									//loops for every card in discard pile
-			int rand = 0; //Random.Range(0,discardedCards.Count-1);				//picks a random number from 0 to current number of cards of discard. Subtracted one because count starts at 1, actual deck starts at 0
+			int rand = Random.Range(0,discardedCards.Count);				//picks a random number from 0 to current number of cards of discard. Subtracted one because count starts at 1, actual deck starts at 0
 			orderOfDrawPile.Add(discardedCards[rand]);
 			discardedCards.RemoveAt(rand);
 		}
