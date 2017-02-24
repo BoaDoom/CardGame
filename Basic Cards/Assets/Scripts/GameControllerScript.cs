@@ -5,19 +5,13 @@ using UnityEngine.UI;
 
 public class GameControllerScript : MonoBehaviour {
 	public Button shuffleButton;
+	public Button shuffleEverythingButton;
 	//public DeckBehaviour deckBehav;
 	public DeckBehaviour deckBehaviour;
 	// Use this for initialization
 	void Start () {
-		//Button shuffleButton = shufflebtn.GetComponent<Button>();
-		Button shuffleButtonObject = GameObject.FindObjectOfType<Button>();				//whole block is for grabbing the Deck object so it can deal a card when clicked
-		if(shuffleButtonObject != null){
-			shuffleButton = shuffleButtonObject.GetComponent<Button>();
-		}
-		if(shuffleButtonObject == null){
-			Debug.Log ("Cannot find 'Shuffle Button'object");
-		}
 		shuffleButton.onClick.AddListener(pressShuffle);
+		shuffleEverythingButton.onClick.AddListener(shuffleEverything);
 		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");				//whole block is for grabbing the Deck object so it can deal a card when clicked
 			if(deckBehaviourObject != null){
 				deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour>();
@@ -34,5 +28,8 @@ public class GameControllerScript : MonoBehaviour {
 
 	public void pressShuffle(){
 		deckBehaviour.shuffleAll();
+	}
+	public void shuffleEverything(){
+		deckBehaviour.shuffleEverything();
 	}
 }

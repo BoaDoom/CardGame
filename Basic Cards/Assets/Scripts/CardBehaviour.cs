@@ -50,9 +50,13 @@ public class CardBehaviour : MonoBehaviour {
 	}
 	void OnTriggerStay2D(Collider2D other){
 		if (other.CompareTag("PlayArea") && played){
-			gameObject.SetActive (false);
+			deactivate();
 			deckBehaviour.updateCards ();
 		}
+	}
+
+	public void deactivate(){
+		gameObject.SetActive (false);
 	}
 	public void Update(){
 

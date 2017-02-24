@@ -45,17 +45,19 @@ public class DeckBehaviour : MonoBehaviour {
 		shuffleAll();							//shuffles all the cards in orderOfDrawPile
 	}
 	public void DealCard(){
-		if (drawnCards.Count < 5 && orderOfDrawPile.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
-			CardBehaviour instCard;
-			instCard = Instantiate (card, offScreenDeck.position, cardStartPosition.rotation);																									//adds the first card of the draw pile to the drawn pile
-			drawnCards.Add(instCard);
-			instCard.setNumber(orderOfDrawPile[0]);																			//sets each card number in order created
-			instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
-			orderOfDrawPile.RemoveAt(0);																//removes the card from the draw pile, allowing next card to be picked
-			relocateDrawnCards();	
-		} 
-		else {
-			Debug.Log ("too many cards in play or too few to draw from");
+		for (int i=0; i < 5; i++){
+			if (drawnCards.Count < 5 && orderOfDrawPile.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
+				CardBehaviour instCard;
+				instCard = Instantiate (card, offScreenDeck.position, cardStartPosition.rotation);																									//adds the first card of the draw pile to the drawn pile
+				drawnCards.Add(instCard);
+				instCard.setNumber(orderOfDrawPile[0]);																			//sets each card number in order created
+				instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
+				orderOfDrawPile.RemoveAt(0);																//removes the card from the draw pile, allowing next card to be picked
+				relocateDrawnCards();	
+			} 
+			else {
+				Debug.Log ("too many cards in play or too few to draw from");
+			}
 		}
 	}
 
@@ -69,16 +71,17 @@ public class DeckBehaviour : MonoBehaviour {
 	}
 
 	public void updateCards(){								//is called when there are possible cards played and need to be resorted into the discard pile
-		int tempCount = drawnCards.Count;					//assigns a variable to the number of cards currently in the active drawn deck
-		for (int i = 0; i < tempCount; i++) {				//runs through all drawn cards
+		//int tempCount = drawnCards.Count;					//assigns a variable to the number of cards currently in the active drawn deck
+		//int i = 0;
+		for (int i = 0; i < drawnCards.Count; i++){ //CardBehaviour drawnCard in drawnCards) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
 				discardedCards.Add(drawnCards[i].getNumber());			//moves any non active cards to discarded pile
 				//Debug.Log(drawnCards[i].getNumber());
 				//Debug.Log ("DrawnCard.getNumber result");
 				Destroy(drawnCards[i].gameObject);
 				drawnCards.RemoveAt(i);						//removes the non active card from the drawn pile
-				i = tempCount;								//puts i to current max of For loop, ending loop prematurely. This works because at the moment, only 1 card needs to be updated at a time
-															//and running through the rest of the loop isn't necissary
+				i--;
+				//tempCount--;
 			}
 		}
 	}
@@ -102,5 +105,12 @@ public class DeckBehaviour : MonoBehaviour {
 			orderOfDrawPile.Add(discardedCards[rand]);
 			discardedCards.RemoveAt(rand);
 		}
+	}
+	public void shuffleEverything(){
+		foreach (CardBehaviour drawnCard in drawnCards) {
+			drawnCard.deactivate ();
+		}
+		updateCards ();
+		shuffleAll ();
 	}
 }
