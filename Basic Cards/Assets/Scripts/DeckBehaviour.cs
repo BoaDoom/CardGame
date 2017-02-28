@@ -10,6 +10,7 @@ public class DeckBehaviour : MonoBehaviour {
 	public CardBehaviour card;		//the gameobject of the actual cards
 
 	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
+	public EnemyBehaviour enemyBehaviour;
 
 	//public List<int> deckIntOrder;
 
@@ -33,13 +34,17 @@ public class DeckBehaviour : MonoBehaviour {
 //		for (int i=0; i<maxCardsOnTable; i++){
 //			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * i;
 //		}
+//		GameObject enemyController = GameObject.FindWithTag("DeckBehaviour");
+//		if(enemyController != null){
+//			deckBehaviour = enemyController.GetComponent<DeckBehaviour>();
+//		}
+//		if(enemyController == null){
+//			Debug.Log ("Cannot find 'enemyController'object");
+//		}
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
 		for (int i=0; i < cardsFaces.Length; i++){															//making as many cards as there are graphics for faces, gets the number from the Card prefab
-			//orderOfDrawPile.Add(Instantiate (card, offScreenDeck.position, cardStartPosition.rotation));		//placing these cards offscreen and also into the orderOfDrawPile list
-			//card.setNumber(i+1);																			//sets each card number in order created
-			//card.setFace(cardsFaces[i]);																	//assigns a sprite of a card face in order from the array of cardfaces
 			orderOfDrawPile.Add(i);
 		}
 		shuffleAll();							//shuffles all the cards in orderOfDrawPile
@@ -76,6 +81,7 @@ public class DeckBehaviour : MonoBehaviour {
 		for (int i = 0; i < drawnCards.Count; i++){ //CardBehaviour drawnCard in drawnCards) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
 				discardedCards.Add(drawnCards[i].getNumber());			//moves any non active cards to discarded pile
+				enemyBehaviour.takeDamage(drawnCards[i].getAttackValue());
 				//Debug.Log(drawnCards[i].getNumber());
 				//Debug.Log ("DrawnCard.getNumber result");
 				Destroy(drawnCards[i].gameObject);
