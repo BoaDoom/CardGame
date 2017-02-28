@@ -12,8 +12,6 @@ public class DeckBehaviour : MonoBehaviour {
 	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
 	public EnemyBehaviour enemyBehaviour;
 
-	//public List<int> deckIntOrder;
-
 	public List<int> orderOfDrawPile;		//the current undrawn deck of cards
 	public List<int> discardedCards;		//the cards that are out of play and used
 	public List<CardBehaviour> drawnCards;			//the cards that have been drawn and are in play
@@ -21,26 +19,11 @@ public class DeckBehaviour : MonoBehaviour {
 	public Transform deckStartPosition;			//undrawnDeck start position
 	public Transform offScreenDeck;				//the actual location for storage of all the cards in the deck **//need to fix to be more efficient. Maybe not instantiate the cards untill drawn?
 
-	//public int cardCount;
-
 	private Vector3 tableLocation;		//the variable location for each new card that is drawn
 	public float cardGapX;				//the gap between the cards, used for spacing of the spawn points
 	private float cardWidthX;			//the width of the card, used for spacing of the spawn points
 
-	//private int maxCardsOnTable = 5;
-	//private float[] xCordForDrawnCards;
-
 	void Start () {
-//		for (int i=0; i<maxCardsOnTable; i++){
-//			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * i;
-//		}
-//		GameObject enemyController = GameObject.FindWithTag("DeckBehaviour");
-//		if(enemyController != null){
-//			deckBehaviour = enemyController.GetComponent<DeckBehaviour>();
-//		}
-//		if(enemyController == null){
-//			Debug.Log ("Cannot find 'enemyController'object");
-//		}
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
@@ -76,18 +59,13 @@ public class DeckBehaviour : MonoBehaviour {
 	}
 
 	public void updateCards(){								//is called when there are possible cards played and need to be resorted into the discard pile
-		//int tempCount = drawnCards.Count;					//assigns a variable to the number of cards currently in the active drawn deck
-		//int i = 0;
 		for (int i = 0; i < drawnCards.Count; i++){ //CardBehaviour drawnCard in drawnCards) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
 				discardedCards.Add(drawnCards[i].getNumber());			//moves any non active cards to discarded pile
 				enemyBehaviour.takeDamage(drawnCards[i].getAttackValue());
-				//Debug.Log(drawnCards[i].getNumber());
-				//Debug.Log ("DrawnCard.getNumber result");
 				Destroy(drawnCards[i].gameObject);
 				drawnCards.RemoveAt(i);						//removes the non active card from the drawn pile
 				i--;
-				//tempCount--;
 			}
 		}
 	}
