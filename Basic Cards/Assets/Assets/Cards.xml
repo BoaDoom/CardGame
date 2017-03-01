@@ -1,14 +1,134 @@
-<cards>
-	<card name= "PPSlvl1">
-		<number>1</number>
-		<attack>10</attack>
-		<attackType>PinpointShot</attackType>
-	</card>
-</cards>
-
-
-http://wiki.unity3d.com/index.php?title=Saving_and_Loading_Data:_XmlSerializer
-
-https://msdn.microsoft.com/en-us/library/fa420a9y(v=vs.110).aspx
-http://www.ibm.com/developerworks/library/x-contain/
-https://www.studica.com/blog/read-xml-file-in-unity
+<attackcards>
+	<pinpointshotcard>
+		<attackpattern>single1x1</attackpattern>
+		<card rank=1>
+			<name>PPSweak</name>
+			<number>1</number>
+			<attack>10</attack>
+			<attackType>PinpointShot</attackType>
+		</card>
+		<card rank=1>
+			<name>PPSMweak</name>
+			<number>2</number>
+			<attack>15</attack>
+			<attackType>PinpointShot</attackType>
+		</card>
+		<card rank=1>
+			<name>PPSmedium</name>
+			<number>3</number>
+			<attack>20</attack>
+			<attackType>PinpointShot</attackType>
+		</card>
+		<card rank=1>
+			<name>PPSMstrong</name>
+			<number>4</number>
+			<attack>25</attack>
+			<attackType>PinpointShot</attackType>
+		</card>
+		<card rank=1>
+			<name>PPSstrong</name>
+			<number>5</number>
+			<attack>30</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+	</pinpointshotcard>
+	<spreadshotcard>
+		<attackpattern>5star</attackpattern>
+		<card rank=1>
+			<name>SSweak</name>
+			<number>6</number>
+			<attack>6</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=2>
+			<name>SSMweak</name>
+			<number>7</number>
+			<attack>8</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=3>
+			<name>SSmedium</name>
+			<number>8</number>
+			<attack>10</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=4>
+			<name>SSMstrong</name>
+			<number>9</number>
+			<attack>12</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=5>
+			<name>SSstrong</name>
+			<number>10</number>
+			<attack>14</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		</spreadshotcard>
+	<areashotcard>
+		<attackpattern>12star</attackpattern>
+		<card rank=1>
+			<name>ASweak</name>
+			<number>11</number>
+			<attack>2</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=2>
+			<name>ASMweak</name>
+			<number>12</number>
+			<attack>4</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=3>
+			<name>ASmedium</name>
+			<number>13</number>
+			<attack>6</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=4>
+			<name>ASMstrong</name>
+			<number>14</number>
+			<attack>8</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=5>
+			<name>ASstrong</name>
+			<number>15</number>
+			<attack>10</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+	</areashotcard>
+	<randomshotcard>
+		<attackpattern>2x2rand</attackpattern>
+		<card rank=1>
+			<name>RSweak</name>
+			<number>16</number>
+			<attack>10</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=2>
+			<name>RSMweak</name>
+			<number>17</number>
+			<attack>15</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=3>
+			<name>RSmedium</name>
+			<number>18</number>
+			<attack>20</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=4>
+			<name>RSMstrong</name>
+			<number>19</number>
+			<attack>25</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+		<card rank=5>
+			<name>RSstrong</name>
+			<number>20</number>
+			<attack>30</attack>
+			<attackType>SpreadShot</attackType>
+		</card>
+	</randomshotcard>
+</attackcards>

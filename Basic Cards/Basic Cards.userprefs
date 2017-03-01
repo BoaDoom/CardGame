@@ -1,15 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Assets\Cards.xml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\XMLloaderScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\DeckBehaviour.cs" Line="24" Column="91" />
+      <File FileName="Assets\Scripts\DeckBehaviour.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CardBehaviour.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\UndrawnDeck.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameControllerScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ShuffleButtonScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EnemyBehaviour.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\UIBehaviourScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Assets\Cards.xml" Line="14" Column="52" />
+      <File FileName="Assets\Assets\Cards.xml" Line="134" Column="15" />
+      <File FileName="Assets\Scripts\XMLloaderScript.cs" Line="56" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
