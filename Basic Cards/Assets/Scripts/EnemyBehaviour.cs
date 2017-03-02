@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyBehaviour : MonoBehaviour {
-	public float healthMax = 10;
-	public float remainingHealth;
+	float healthMax = 200;
+	float remainingHealth;
 	public Text enemyHealthDisplayNumber;
 
 	public Transform healthBarGraphic;

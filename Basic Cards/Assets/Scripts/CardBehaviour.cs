@@ -5,16 +5,18 @@ using UnityEngine;
 public class CardBehaviour : MonoBehaviour {
 
 	//public Sprite[] cardFace;
-	public int cardNumber;
-	public float cardAttackValue;
+//	private int cardNumber;
+//	public float cardAttackValue;
 	//public Sprite backOfCard;
+	int cardSpriteNum;
+	string nameOfCard; 
+	int rankOfCard; 
+	int attackDamageOfCard; 
+	string typeOfAttack;
 
-	//public SpriteRenderer spriteRenderer;
-	//private DeckBehaviour deckBehaviour;
-	private Transform playArea;
-	private GameObject deckBehaviourObject;
+	//private Transform playArea;
+	//private GameObject deckBehaviourObject;
 	private DeckBehaviour deckBehaviour;
-	//private GameObject PlayAreaObject;
 
 	private bool played;
 
@@ -32,38 +34,21 @@ public class CardBehaviour : MonoBehaviour {
 	public void setFace(Sprite cardFaceGraphic){
 		gameObject.GetComponent<SpriteRenderer>().sprite = cardFaceGraphic;
 	}
-	public void setNumber(int importNumber){
-		cardNumber = importNumber;
-		switch (cardNumber) 
-		{
-		case 0:
-		case 5:
-			cardAttackValue = 1.0f;
-			break;
-		case 1:
-		case 6:
-			cardAttackValue = 2.0f;
-			break;
-		case 2:
-		case 7:
-			cardAttackValue = 3.0f;
-			break;
-		case 3:
-		case 8:
-			cardAttackValue = 4.0f;
-			break;
-		case 4:
-		case 9:
-			cardAttackValue = 5.0f;
-			break;
-		}
+	public int CardNumber{
+		get{return cardSpriteNum;}
+	}
+	public float AttackValue{
+		get{return attackDamageOfCard;}
+	}
 
-	}
-	public int getNumber(){
-		return cardNumber;
-	}
-	public float getAttackValue(){
-		return cardAttackValue;
+	public XMLData CardAttributes{
+		set{
+			cardSpriteNum = value.cardSpriteNum;
+			nameOfCard = value.nameOfCard; 
+			rankOfCard = value.rankOfCard; 
+			attackDamageOfCard = value.attackDamageOfCard; 
+			typeOfAttack = value.typeOfAttack;
+		}
 	}
 
 	public void moveCard(Vector3 newPosition){

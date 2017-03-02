@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml; //Needed for XML functionality
+using System.Xml.Serialization; //Needed for XML Functionality
+using System.IO;
 using UnityEngine;
 
 
@@ -11,6 +14,9 @@ public class DeckBehaviour : MonoBehaviour {
 
 	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
 	public EnemyBehaviour enemyBehaviour;
+
+	//public XMLloaderScript XMLloader;
+	public List<XMLData> cardData;
 
 	public List<int> orderOfDrawPile;		//the current undrawn deck of cards
 	public List<int> discardedCards;		//the cards that are out of play and used
@@ -24,6 +30,13 @@ public class DeckBehaviour : MonoBehaviour {
 	private float cardWidthX;			//the width of the card, used for spacing of the spawn points
 
 	void Start () {
+		GameObject XMLloaderObject = GameObject.FindWithTag("Loader");
+		if(XMLloaderObject != null){
+			cardData = XMLloaderObject.GetComponent<XMLloaderScript>().data;
+		}
+		if(XMLloaderObject == null){
+			Debug.Log ("Cannot find 'XMLloaderObject'object");
+		}
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
@@ -35,18 +48,21 @@ public class DeckBehaviour : MonoBehaviour {
 	public void DealCard(){
 		for (int i=0; i < 5; i++){
 			if (drawnCards.Count < 5 && orderOfDrawPile.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
-				CardBehaviour instCard;
-				instCard = Instantiate (card, offScreenDeck.position, cardStartPosition.rotation);																									//adds the first card of the draw pile to the drawn pile
-				drawnCards.Add(instCard);
-				instCard.setNumber(orderOfDrawPile[0]);																			//sets each card number in order created
-				instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
-				orderOfDrawPile.RemoveAt(0);																//removes the card from the draw pile, allowing next card to be picked
+				createCard();
 				relocateDrawnCards();	
 			} 
 			else {
 				Debug.Log ("too many cards in play or too few to draw from");
 			}
 		}
+	}
+	private void createCard(){
+		CardBehaviour instCard;
+		instCard = Instantiate (card, offScreenDeck.position, cardStartPosition.rotation);
+		drawnCards.Add(instCard);
+		instCard.CardAttributes = cardData[orderOfDrawPile[0]];
+		instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
+		orderOfDrawPile.RemoveAt(0);
 	}
 
 	private void relocateDrawnCards(){
@@ -61,8 +77,8 @@ public class DeckBehaviour : MonoBehaviour {
 	public void updateCards(){								//is called when there are possible cards played and need to be resorted into the discard pile
 		for (int i = 0; i < drawnCards.Count; i++){ //CardBehaviour drawnCard in drawnCards) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
-				discardedCards.Add(drawnCards[i].getNumber());			//moves any non active cards to discarded pile
-				enemyBehaviour.takeDamage(drawnCards[i].getAttackValue());
+				discardedCards.Add(drawnCards[i].CardNumber);			//moves any non active cards to discarded pile
+				enemyBehaviour.takeDamage(drawnCards[i].AttackValue);
 				Destroy(drawnCards[i].gameObject);
 				drawnCards.RemoveAt(i);						//removes the non active card from the drawn pile
 				i--;

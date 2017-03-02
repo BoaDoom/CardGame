@@ -1,134 +1,134 @@
 <attackcards>
 	<pinpointshotcard>
 		<attackpattern>single1x1</attackpattern>
-		<card rank=1>
+		<card number="1">
 			<name>PPSweak</name>
-			<number>1</number>
+			<rank>1</rank>
 			<attack>10</attack>
 			<attackType>PinpointShot</attackType>
 		</card>
-		<card rank=1>
+		<card number="2">
 			<name>PPSMweak</name>
-			<number>2</number>
+			<rank>2</rank>
 			<attack>15</attack>
 			<attackType>PinpointShot</attackType>
 		</card>
-		<card rank=1>
+		<card number="3">
 			<name>PPSmedium</name>
-			<number>3</number>
+			<rank>3</rank>
 			<attack>20</attack>
 			<attackType>PinpointShot</attackType>
 		</card>
-		<card rank=1>
+		<card number="4">
 			<name>PPSMstrong</name>
-			<number>4</number>
+			<rank>4</rank>
 			<attack>25</attack>
 			<attackType>PinpointShot</attackType>
 		</card>
-		<card rank=1>
+		<card number="5">
 			<name>PPSstrong</name>
-			<number>5</number>
+			<rank>5</rank>
 			<attack>30</attack>
 			<attackType>SpreadShot</attackType>
 		</card>
 	</pinpointshotcard>
 	<spreadshotcard>
 		<attackpattern>5star</attackpattern>
-		<card rank=1>
+		<card number="6">
 			<name>SSweak</name>
-			<number>6</number>
+			<rank>6</rank>
 			<attack>6</attack>
 			<attackType>SpreadShot</attackType>
 		</card>
-		<card rank=2>
+		<card number="7">
 			<name>SSMweak</name>
-			<number>7</number>
+			<rank>7</rank>
 			<attack>8</attack>
 			<attackType>SpreadShot</attackType>
 		</card>
-		<card rank=3>
+		<card number="8">
 			<name>SSmedium</name>
-			<number>8</number>
+			<rank>8</rank>
 			<attack>10</attack>
 			<attackType>SpreadShot</attackType>
 		</card>
-		<card rank=4>
+		<card number="9">
 			<name>SSMstrong</name>
-			<number>9</number>
+			<rank>9</rank>
 			<attack>12</attack>
 			<attackType>SpreadShot</attackType>
 		</card>
-		<card rank=5>
+		<card number="10">
 			<name>SSstrong</name>
-			<number>10</number>
+			<rank>9</rank>
 			<attack>14</attack>
 			<attackType>SpreadShot</attackType>
 		</card>
 		</spreadshotcard>
 	<areashotcard>
 		<attackpattern>12star</attackpattern>
-		<card rank=1>
+		<card number="11">
 			<name>ASweak</name>
-			<number>11</number>
+			<rank>1</rank>
 			<attack>2</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>AreaShot</attackType>
 		</card>
-		<card rank=2>
+		<card number="12">
 			<name>ASMweak</name>
-			<number>12</number>
+			<rank>2</rank>
 			<attack>4</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>AreaShot</attackType>
 		</card>
-		<card rank=3>
+		<card number="13">
 			<name>ASmedium</name>
-			<number>13</number>
+			<rank>3</rank>
 			<attack>6</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>AreaShot</attackType>
 		</card>
-		<card rank=4>
+		<card number="14">
 			<name>ASMstrong</name>
-			<number>14</number>
+			<rank>4</rank>
 			<attack>8</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>AreaShot</attackType>
 		</card>
-		<card rank=5>
+		<card number="15">
 			<name>ASstrong</name>
-			<number>15</number>
+			<rank>5</rank>
 			<attack>10</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>AreaShot</attackType>
 		</card>
 	</areashotcard>
 	<randomshotcard>
 		<attackpattern>2x2rand</attackpattern>
-		<card rank=1>
+		<card number="16">
 			<name>RSweak</name>
-			<number>16</number>
+			<rank>1</rank>
 			<attack>10</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>RandomShot</attackType>
 		</card>
-		<card rank=2>
+		<card number="17">
 			<name>RSMweak</name>
-			<number>17</number>
+			<rank>2</rank>
 			<attack>15</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>RandomShot</attackType>
 		</card>
-		<card rank=3>
+		<card number="18">
 			<name>RSmedium</name>
-			<number>18</number>
+			<rank>3</rank>
 			<attack>20</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>RandomShot</attackType>
 		</card>
-		<card rank=4>
+		<card number="19">
 			<name>RSMstrong</name>
-			<number>19</number>
+			<rank>4</rank>
 			<attack>25</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>RandomShot</attackType>
 		</card>
-		<card rank=5>
+		<card number="20">
 			<name>RSstrong</name>
-			<number>20</number>
+			<rank>5</rank>
 			<attack>30</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>RandomShot</attackType>
 		</card>
 	</randomshotcard>
 </attackcards>
