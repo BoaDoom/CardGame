@@ -93,7 +93,7 @@ public class DeckBehaviour : MonoBehaviour {
 				orderOfDrawPile.RemoveAt (0);									//removes first card in list of DeckToDrawFrom
 			}
 		} else {				
-			Debug.Log ("the stack of cards being shuffled does not have any cards in it");
+			//Debug.Log ("the stack of cards being shuffled does not have any cards in it");
 			Debug.Log (orderOfDrawPile.Count);
 		}
 		shuffleDiscard ();													//calls the shuffle discard function every time
@@ -112,5 +112,11 @@ public class DeckBehaviour : MonoBehaviour {
 		}
 		updateCards ();
 		shuffleAll ();
+	}
+	public void discardEverything(){
+		foreach (CardBehaviour drawnCard in drawnCards) {
+			drawnCard.deactivate ();
+		}
+		updateCards ();
 	}
 }

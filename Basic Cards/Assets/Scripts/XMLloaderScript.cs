@@ -13,7 +13,7 @@ public class XMLloaderScript : MonoBehaviour {
 	IEnumerable<XElement> items; //Create an Ienumerable list. Will be used to store XML Items. 
 	public List <XMLData> data = new List <XMLData>(); //Initialize List of XMLData objects.
 
-	int iteration = 1;
+	int iteration = 0;
 	//int tempvar = 0;
 	//bool finishedLoading = false;
 
