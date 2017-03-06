@@ -14,6 +14,8 @@ public class CardBehaviour : MonoBehaviour {
 	int attackDamageOfCard; 
 	string typeOfAttack;
 
+	//SpriteRenderer spriteRenderer;
+
 	//private Transform playArea;
 	//private GameObject deckBehaviourObject;
 	private DeckBehaviour deckBehaviour;
@@ -67,7 +69,9 @@ public class CardBehaviour : MonoBehaviour {
 			deckBehaviour.updateCards ();
 		}
 	}
-
+	public void hideCard(){
+		gameObject.transform.localScale = new Vector3(0.0f,0.0f,0.0f);
+	}
 	public void deactivate(){
 		gameObject.SetActive (false);
 	}
