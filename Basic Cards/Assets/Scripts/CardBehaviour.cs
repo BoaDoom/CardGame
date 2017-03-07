@@ -19,17 +19,32 @@ public class CardBehaviour : MonoBehaviour {
 	//private Transform playArea;
 	//private GameObject deckBehaviourObject;
 	private DeckBehaviour deckBehaviour;
+	private GridMaker gridMaker;
 
-	private bool played;
+	private bool clicked;
+	private bool cardInPlayArea;
+	private Sprite storedSprite;
+	private SpriteRenderer spriteRenderer;
+
+
 
 	public void Start() {
-		played = false;
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+		clicked = false;
+		cardInPlayArea = false;
 		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");
 		if(deckBehaviourObject != null){
 			deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour>();
 		}
 		if(deckBehaviourObject == null){
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
+		}
+		GameObject gridMakerObject = GameObject.FindWithTag("PlayArea");
+		if(gridMakerObject != null){
+			gridMaker = gridMakerObject.GetComponent<GridMaker>();
+		}
+		if(gridMakerObject == null){
+			Debug.Log ("Cannot find 'gridMaker'object");
 		}
 		//spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 	}
@@ -58,26 +73,42 @@ public class CardBehaviour : MonoBehaviour {
 	}
 	
 	private void OnMouseDown(){
-		played = false;
+		clicked = false;
 	}
 	private void OnMouseUp(){
-		played = true;
-	}
-	void OnTriggerStay2D(Collider2D other){
-		if (other.CompareTag("PlayArea") && played){
-			deactivate();
+		clicked = true;
+		if (cardInPlayArea) {
+			deactivate ();
 			deckBehaviour.updateCards ();
 		}
 	}
-	public void hideCard(){
-		gameObject.transform.localScale = new Vector3(0.0f,0.0f,0.0f);
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.CompareTag("PlayArea")){
+			hideCard ();
+			cardInPlayArea = true;
+
+		}
 	}
+	void OnTriggerExit2D(Collider2D other){
+		if (other.CompareTag("PlayArea")){
+			showCard ();
+			cardInPlayArea = false;
+		}
+	}
+
+	public void hideCard(){
+		storedSprite = spriteRenderer.sprite;
+		spriteRenderer.sprite = null;
+	}
+	public void showCard(){
+		spriteRenderer.sprite = storedSprite;
+		storedSprite = null;
+	}
+
 	public void deactivate(){
 		gameObject.SetActive (false);
 	}
-	public void Update(){
 
-	}
-	
+
 
 }

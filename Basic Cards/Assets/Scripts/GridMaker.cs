@@ -21,6 +21,8 @@ public class GridMaker : MonoBehaviour {
 
 	public Transform smallSquare;
 	Transform transformOriginal;
+	public Transform playAreaDetector;
+	public PlayAreaDetectorScript playAreaDetectorScript;
 
 	public int boxCountX = 10;
 	public int boxCountY = 10;
@@ -33,8 +35,17 @@ public class GridMaker : MonoBehaviour {
 	Vector3 framingBoxSize;
 	Vector3 firstBoxCord;
 
+	RaycastHit rayHit;
+	Ray ray;
+
+	//public bool mouseOnPlayArea;
+
 	void Start () {
-		
+		//mouseOnPlayArea = false;
+
+		playAreaDetector.localScale = new Vector3(1.0f, 1.0f,1.0f);
+		playAreaDetector.position = gameObject.transform.position;
+
 		Transform smallSquareInst;
 		transformOriginal = gameObject.transform;
 		framingBoxSize = new Vector3(1.0f/boxCountX, 1.0f/boxCountY, 1.0f);
@@ -56,7 +67,38 @@ public class GridMaker : MonoBehaviour {
 		}
 	}
 
+//	void hoverOverHighlight(){
+//		RaycastHit hit2;
+//		Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+//		if (Physics.Raycast(ray, out hit2)){
+//			rayHit.collider.enabled = false;
+//			Debug.Log ("raycasted");
+//		}
+//	}
+//	void OnMouseEnter(){
+//		mouseOnPlayArea = true;
+//		Debug.Log ("gridmaker mouseonplayarea true");
+//	}
+//	void OnMouseExit(){
+//		mouseOnPlayArea = false;
+//		Debug.Log ("gridmaker mouseonplayarea false");
+//	}
 	void Update () {
-		
+			RaycastHit hit;
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast (ray, out hit)) {
+				if (hit.collider.tag == "Card") {
+					hit.collider.enabled = false;
+					Debug.Log ("raycasted");
+				}
+		}
+//		if 
+//		ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+//			RaycastHit hit2;
+//			Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+//			if (Physics.Raycast(ray, out hit2)){
+//				rayHit.collider.enabled = false;
+//				Debug.Log ("raycasted");
+//			}
 	}
 }

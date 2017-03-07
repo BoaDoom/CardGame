@@ -22,4 +22,5 @@ public class Draggable : MonoBehaviour
 		transform.position = curPosition;
 	}
 
+
 }

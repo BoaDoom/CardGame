@@ -9,7 +9,10 @@ public class GameControllerScript : MonoBehaviour {
 	public Button discardEverythingButton;
 	//public DeckBehaviour deckBehav;
 	public DeckBehaviour deckBehaviour;
+	public Transform playArea;
+
 	// Use this for initialization
+
 	void Start () {
 		shuffleButton.onClick.AddListener(pressShuffle);
 		shuffleEverythingButton.onClick.AddListener(shuffleEverything);
@@ -21,12 +24,21 @@ public class GameControllerScript : MonoBehaviour {
 			if(deckBehaviourObject == null){
 				Debug.Log ("Cannot find 'DeckBehaviour'object");
 			}
-	}
-	
-	// Update is called once per frame
-	void Update () {
+		GameObject playAreaObject = GameObject.FindWithTag("PlayArea");
+		if(playAreaObject != null){
+			playArea = playAreaObject.GetComponent<Transform>();
+		}
+		if(playAreaObject == null){
+			Debug.Log ("Cannot find 'DeckBehaviour'object");
+		}
 		
 	}
+	void Update(){
+		
+
+	}
+	
+
 
 	public void pressShuffle(){
 		deckBehaviour.shuffleAll();

@@ -119,4 +119,5 @@ public class DeckBehaviour : MonoBehaviour {
 		}
 		updateCards ();
 	}
+
 }
