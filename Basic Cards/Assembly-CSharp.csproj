@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ActiveSquareBehaviour.cs" />
      <Compile Include="Assets\Scripts\CardBehaviour.cs" />
      <Compile Include="Assets\Scripts\DeckBehaviour.cs" />
      <Compile Include="Assets\Scripts\Draggable.cs" />
