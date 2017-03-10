@@ -12,7 +12,7 @@ public class GridMaker : MonoBehaviour {
 	public int boxCountX = 10;
 	public int boxCountY = 10;
 
-	public float sizeRatioOfSmallBox = 0.8f;
+	float sizeRatioOfSmallBox = 0.95f;
 
 	//public List<Transform> gridList;
 	private ActiveSquareBehaviour[][] grid;
@@ -46,25 +46,14 @@ public class GridMaker : MonoBehaviour {
 				smallSquareInst.transform.SetParent (gameObject.transform);
 				smallSquareInst.transform.localScale = framingBoxSize * sizeRatioOfSmallBox;
 				smallSquareInst.transform.localPosition = firstBoxCord + new Vector3(framingBoxSize.x*x, -framingBoxSize.y*y, -0.1f);
-				smallSquareInst.GridCordX = x;
-				smallSquareInst.GridCordY = y;
-				Debug.Log (smallSquareInst.GridCordX);
-				Debug.Log (smallSquareInst.GridCordX);
+				smallSquareInst.SetGridCordX (x);
+				smallSquareInst.SetGridCordY (y);
+
 				grid[x][y] = smallSquareInst;
-				Debug.Log (x);
-				Debug.Log (y);
+
 			}
 		}
 	}
-		
-//	void OnMouseEnter(){
-//		mouseOnPlayArea = true;
-//		Debug.Log ("gridmaker mouseonplayarea true");
-//	}
-//	void OnMouseExit(){
-//		mouseOnPlayArea = false;
-//		Debug.Log ("gridmaker mouseonplayarea false");
-//	}
 	void Update () {
 		
 	}

@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\CardBehaviour.cs" />
      <Compile Include="Assets\Scripts\DeckBehaviour.cs" />
      <Compile Include="Assets\Scripts\Draggable.cs" />
+     <Compile Include="Assets\Scripts\DraggableGrid.cs" />
      <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
      <Compile Include="Assets\Scripts\FadeBackwards.cs" />
      <Compile Include="Assets\Scripts\GameControllerScript.cs" />

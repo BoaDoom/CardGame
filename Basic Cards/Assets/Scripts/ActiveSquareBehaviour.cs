@@ -4,15 +4,47 @@ using UnityEngine;
 
 public class ActiveSquareBehaviour : MonoBehaviour {
 
+//	[SerializeField]
 	int gridCordX;
+//	[SerializeField]
 	int gridCordY;
 
-	public int GridCordX{
-		get{return gridCordX;}
-		set{gridCordX = GridCordX;}
+	public Sprite activatedSprite;
+	Sprite defaultSprite;
+
+	SpriteRenderer spriteRenderer;
+
+
+
+	void Start(){
+		SpriteRenderer spriteRendererTemp = gameObject.GetComponent<SpriteRenderer>();
+		if(spriteRendererTemp != null){
+			spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+			//activatedSprite =
+			defaultSprite = spriteRenderer.sprite;
+		}
+		if(spriteRendererTemp == null){
+			Debug.Log ("Cannot find 'spriteRendererTemp'object");
+		}
 	}
-	public int GridCordY{
-		get{return gridCordY;}
-		set{gridCordX = GridCordY;}
+	public void SetGridCordX(int cordx){
+		gridCordX = cordx;
+	}
+	public void SetGridCordY(int cordy){
+		gridCordY = cordy;
+	}
+	public int GetGridCordX(){
+		return gridCordX;
+	}
+	public int GetGridCordY(){
+		return gridCordY;
+	}
+
+		
+	void OnMouseEnter(){
+		spriteRenderer.sprite = activatedSprite;
+	}
+	void OnMouseExit(){
+		spriteRenderer.sprite = defaultSprite;
 	}
 }

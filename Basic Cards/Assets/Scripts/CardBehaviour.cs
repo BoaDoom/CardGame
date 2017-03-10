@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class CardBehaviour : MonoBehaviour {
 
-	//public Sprite[] cardFace;
-//	private int cardNumber;
-//	public float cardAttackValue;
-	//public Sprite backOfCard;
 	int cardSpriteNum;
 	string nameOfCard; 
 	int rankOfCard; 
 	int attackDamageOfCard; 
 	string typeOfAttack;
 
-	//SpriteRenderer spriteRenderer;
-
-	//private Transform playArea;
-	//private GameObject deckBehaviourObject;
 	private DeckBehaviour deckBehaviour;
 	private GridMaker gridMaker;
 
@@ -25,8 +17,6 @@ public class CardBehaviour : MonoBehaviour {
 	private bool cardInPlayArea;
 	private Sprite storedSprite;
 	private SpriteRenderer spriteRenderer;
-
-
 
 	public void Start() {
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -46,7 +36,6 @@ public class CardBehaviour : MonoBehaviour {
 		if(gridMakerObject == null){
 			Debug.Log ("Cannot find 'gridMaker'object");
 		}
-		//spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 	}
 	public void setFace(Sprite cardFaceGraphic){
 		gameObject.GetComponent<SpriteRenderer>().sprite = cardFaceGraphic;
