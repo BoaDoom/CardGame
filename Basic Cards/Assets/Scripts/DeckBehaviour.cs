@@ -30,12 +30,12 @@ public class DeckBehaviour : MonoBehaviour {
 	private float cardWidthX;			//the width of the card, used for spacing of the spawn points
 
 	void Start () {
-		GameObject XMLloaderObject = GameObject.FindWithTag("Loader");
-		if(XMLloaderObject != null){
-			cardData = XMLloaderObject.GetComponent<XMLloaderScript>().data;
+		GameObject XMLCardLoaderObject = GameObject.FindWithTag("CardLoader");
+		if(XMLCardLoaderObject != null){
+			cardData = XMLCardLoaderObject.GetComponent<XMLCardLoaderScript>().data;
 		}
-		if(XMLloaderObject == null){
-			Debug.Log ("Cannot find 'XMLloaderObject'object");
+		if(XMLCardLoaderObject == null){
+			Debug.Log ("Cannot find 'XMLCardLoaderObject'object");
 		}
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards

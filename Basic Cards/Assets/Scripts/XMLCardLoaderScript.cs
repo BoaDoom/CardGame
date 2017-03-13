@@ -7,7 +7,7 @@ using System.Xml.Serialization; //Needed for XML Functionality
 using System.IO;
 using System.Xml.Linq; //Needed for XDocument
 
-public class XMLloaderScript : MonoBehaviour {
+public class XMLCardLoaderScript : MonoBehaviour {
 
 	XDocument xmlDoc; //create Xdocument. Will be used later to read XML file 
 	IEnumerable<XElement> items; //Create an Ienumerable list. Will be used to store XML Items. 

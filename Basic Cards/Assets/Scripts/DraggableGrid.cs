@@ -12,13 +12,13 @@ public class DraggableGrid : MonoBehaviour
 	private float gridWidth;
 	private float gridHeight;
 
-	private float currentXSnap;
-	private float currentYSnap;
+	//private float currentXSnap;
+	//private float currentYSnap;
 
 	private Vector3 gridStartPoint;
 	void Start(){
-		currentXSnap = 0.0f;
-		currentXSnap = 0.0f;
+		//currentXSnap = 0.0f;
+		//currentXSnap = 0.0f;
 		gridWidth = 1.2f;
 		gridHeight = 1.2f;
 	}

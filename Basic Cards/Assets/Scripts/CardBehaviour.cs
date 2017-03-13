@@ -13,14 +13,14 @@ public class CardBehaviour : MonoBehaviour {
 	private DeckBehaviour deckBehaviour;
 	private GridMaker gridMaker;
 
-	private bool clicked;
+	//private bool clicked;
 	private bool cardInPlayArea;
 	private Sprite storedSprite;
 	private SpriteRenderer spriteRenderer;
 
 	public void Start() {
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-		clicked = false;
+		//clicked = false;
 		cardInPlayArea = false;
 		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");
 		if(deckBehaviourObject != null){
@@ -62,10 +62,10 @@ public class CardBehaviour : MonoBehaviour {
 	}
 	
 	private void OnMouseDown(){
-		clicked = false;
+		//clicked = false;
 	}
 	private void OnMouseUp(){
-		clicked = true;
+		//clicked = true;
 		if (cardInPlayArea) {
 			deactivate ();
 			deckBehaviour.updateCards ();

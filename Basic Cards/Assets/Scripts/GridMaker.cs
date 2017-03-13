@@ -35,8 +35,8 @@ public class GridMaker : MonoBehaviour {
 		transformOriginal = gameObject.transform;
 		framingBoxSize = new Vector3(1.0f/boxCountX, 1.0f/boxCountY, 1.0f);
 		firstBoxCord = zeroCord + new Vector3 ((-0.5f + framingBoxSize.x / 2), (0.5f - framingBoxSize.y / 2), 0.0f);
-		int yi = 0;
-		int xi = 0;
+		//int yi = 0;
+		//int xi = 0;
 		grid = new ActiveSquareBehaviour[(int)gridDimensions.x][];
 		for (int x = 0; x < gridDimensions.x; x++){
 			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
