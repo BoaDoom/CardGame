@@ -6,37 +6,34 @@ using System.Xml; //Needed for XML functionality
 using System.Xml.Serialization; //Needed for XML Functionality
 using System.IO;
 using System.Xml.Linq; //Needed for XDocument
+using System.Linq;
 
 public class XMLWeaponHitLoaderScript : MonoBehaviour {
 
 	XDocument xmlDoc; //create Xdocument. Will be used later to read XML file 
 	IEnumerable<XElement> items; //Create an Ienumerable list. Will be used to store XML Items. 
-	//public List <XMLWeaponData> data = new List <XMLWeaponData>(); //Initialize List of XMLWeaponData objects.
+	IEnumerable<XElement> linesOfHit;
+	public List <XMLWeaponHitData> data = new List <XMLWeaponHitData>(); //Initialize List of XMLWeaponData objects.
 
-	int iteration = 0;
+	//int iteration = 0;
+	//bool newName = true;
 	//int tempvar = 0;
 	//bool finishedLoading = false;
 
-	string nameOfAttack; 
+	string nameOfAttack = "none"; 
 	string placement;
-	bool[][] gridOfHit; 
+	XElement designShape;
+	int[][] gridOfHit; 
 	//int attackDamageOfCard; 
 	//string typeOfAttack;
-	int lineOneValue;
+
+
 
 	void Start ()
 	{
 		//DontDestroyOnLoad (gameObject); //Allows Loader to carry over into new scene 
 		LoadXML (); //Loads XML File. Code below. 
 		StartCoroutine(AssignData()); //Starts assigning XML data to data List. Code below
-	}
-	void Update ()
-	{
-//		if (finishedLoading)
-//		{
-//			SceneManager.LoadScene("_Main"); //Only happens if coroutine is finished 
-//			finishedLoading = false;
-//		}
 	}
 
 	void LoadXML()
@@ -56,35 +53,32 @@ public class XMLWeaponHitLoaderScript : MonoBehaviour {
 		/*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/ 
 		foreach (var item in items)
 		{
-			if (iteration == 0 && item.Parent.Attribute ("name").Value != null) {
+
+			if (nameOfAttack != item.Parent.Attribute ("name").Value.Trim ()) {		//if the next element has a parent with a new name, select that parrent and assign all it's children to these values
 				nameOfAttack = item.Parent.Attribute ("name").Value.Trim ();
-			}
-			if (item.Parent.Attribute ("name").Value = nameOfAttack) {
-				//nameOfAttack = item.Parent.Attribute ("name").Value.Trim ();
-//				lineOneValue = int.Parse (item.Parent.Element ("lineOne").Value.Trim ());
-				//Debug.Log (nameOfAttack);
-			} else {
-				
-			}
+				placement = item.Parent.Element ("placement").Value.Trim ();
 
+				int interationX = 0;
 
-//			Debug.Log (item.Parent.Attribute("number").Value);
-//			Debug.Log (iteration.ToString ());
-			/*Determine if the <page number> attribute in the XML is equal to whatever our current iteration of the loop is. If it is, then we want to assign our variables to the value of the XML Element that we need.*/
-//			if(item.Parent.Attribute("name").Value == iteration.ToString ())
-//			{
-//				cardSpriteNum = int.Parse (item.Parent.Attribute ("number").Value.Trim ()); 
-//				nameOfCard = item.Parent.Element("name").Value.Trim (); 
-//				rankOfCard = int.Parse (item.Parent.Element("rank").Value.Trim ()); 
-//				attackDamageOfCard = int.Parse (item.Parent.Element("attack").Value.Trim ()); 
-//				typeOfAttack = item.Parent.Element ("attackType").Value.Trim ();
-//				/*Create a new Index in the List, which will be a new XMLWeaponData object and pass the previously assigned variables as arguments so they get assigned to the new object’s variables.*/
-//				data.Add (new XMLWeaponData(cardSpriteNum, nameOfCard, rankOfCard, attackDamageOfCard, typeOfAttack));
-//				/*To test and make sure the data has been applied to properly, print out the musicClip name from the data list’s current index. This will let us know if the objects in the list have been created successfully and if their variables have been assigned the right values.*/
-////				Debug.Log (data[iteration-1].nameOfCard);
-////				Debug.Log (data[iteration-1].cardSpriteNum);
-//				iteration++; //increment the iteration by 1
-//			}
+				int numberXCord = item.Parent.Element("designShape").Element("line").Value.Trim().Length;	//the length of the design shape line of 1's and 0's
+				linesOfHit = item.Parent.Element("designShape").Descendants();
+				int numberYCord = item.Parent.Element("designShape").Descendants().Count();		//counts how many lines there are in the targeting grid, giving Y cords size
+				gridOfHit = new int[(int)numberXCord][];
+				foreach (XElement line in linesOfHit){
+					int interationY = 0;
+					gridOfHit[interationX] = new int[(int)numberYCord];
+					string lineOfNUmbers = line.Value;
+					foreach (char num in lineOfNUmbers) {
+						int newNum = (int)char.GetNumericValue(num);
+						gridOfHit [interationX] [interationY] = newNum;
+						interationY++;
+					}
+					interationX++;
+				}
+				//Debug.Log(gridOfHit[0][0]);
+				data.Add (new XMLWeaponHitData(nameOfAttack, placement, gridOfHit));
+//
+			}
 		}
 		//finishedLoading = true; //tell the program that we’ve finished loading data. 
 		yield return null;
@@ -92,17 +86,15 @@ public class XMLWeaponHitLoaderScript : MonoBehaviour {
 }
 
 // This class is used to assign our XML Data to objects in a list so we can call on them later. 
-//public class XMLWeaponData {
-//	public string nameOfCard, typeOfAttack;
-//	public int cardSpriteNum, rankOfCard, attackDamageOfCard;
-//// Create a constructor that will accept multiple arguments that can be assigned to our variables. 
-//	public XMLWeaponData (int spriteNum, string name, int rank, int attack, string atkType)
-//	{
-//		cardSpriteNum = spriteNum;
-//		nameOfCard = name;
-//		rankOfCard = rank;
-//		attackDamageOfCard = attack;
-//		typeOfAttack = atkType;
-//	}
-//
-//}
+public class XMLWeaponHitData {
+	public string nameOfAttack, placement;
+	public int[][] gridOfHit;
+// Create a constructor that will accept multiple arguments that can be assigned to our variables. 
+	public XMLWeaponHitData (string nameOfAttackT, string placementT, int[][] gridOfHitT)
+	{
+		nameOfAttack = nameOfAttackT;
+		placement = placementT;
+		gridOfHit = gridOfHitT;
+	}
+
+}

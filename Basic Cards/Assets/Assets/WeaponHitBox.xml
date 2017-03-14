@@ -2,31 +2,31 @@
 	<hitbox name = "pinpointshot">
 		<placement>default</placement>
 		<designShape>
-			<lineOne>1</lineOne>
+			<line>1</line>
 		</designShape>
 	</hitbox>
 	<hitbox name = "spreadshot">
 		<placement>default</placement>
 		<designShape>
-			<lineOne>010</lineOne>
-			<lineTwo>111</lineTwo>
-			<lineThree>010</lineThree>
+			<line>010</line>
+			<line>111</line>
+			<line>010</line>
 		</designShape>
 	</hitbox>
 	<hitbox name = "areashot">
 		<placement>default</placement>
 		<designShape>
-			<lineOne>0110</lineOne>
-			<lineTwo>1111</lineTwo>
-			<lineThree>1111</lineThree>
-			<lineFour>0110</lineFour>
+			<line>0110</line>
+			<line>1111</line>
+			<line>1111</line>
+			<line>0110</line>
 		</designShape>
 	</hitbox>
 	<hitbox name = "randomshot">
 		<placement>random</placement>
 		<designShape>
-			<lineOne>11</lineOne>
-			<lineTwo>11</lineTwo>
+			<line>11</line>
+			<line>11</line>
 		</designShape>
 	</hitbox>
 </hitboxlist>

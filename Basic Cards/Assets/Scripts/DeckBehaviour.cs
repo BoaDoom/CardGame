@@ -15,6 +15,8 @@ public class DeckBehaviour : MonoBehaviour {
 	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
 	public EnemyBehaviour enemyBehaviour;
 
+	public List<XMLWeaponHitData> weaponHitBoxLoader;
+
 	//public XMLloaderScript XMLloader;
 	public List<XMLData> cardData;
 
@@ -36,6 +38,13 @@ public class DeckBehaviour : MonoBehaviour {
 		}
 		if(XMLCardLoaderObject == null){
 			Debug.Log ("Cannot find 'XMLCardLoaderObject'object");
+		}
+		GameObject XMLWeaponHitLoaderScriptTEMP = GameObject.FindWithTag("hitBoxLoader");
+		if(XMLWeaponHitLoaderScriptTEMP != null){
+			weaponHitBoxLoader = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;
+		}
+		if(XMLWeaponHitLoaderScriptTEMP == null){
+			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");
 		}
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
