@@ -56,10 +56,17 @@ public class XMLWeaponHitLoaderScript : MonoBehaviour {
 		/*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/ 
 		foreach (var item in items)
 		{
-			if (item.Parent.Attribute ("name").Value != null) {
-				lineOneValue = int.Parse (item.Parent.Element ("lineOne").Value.Trim ());
-				Debug.Log (lineOneValue);
+			if (iteration == 0 && item.Parent.Attribute ("name").Value != null) {
+				nameOfAttack = item.Parent.Attribute ("name").Value.Trim ();
 			}
+			if (item.Parent.Attribute ("name").Value = nameOfAttack) {
+				//nameOfAttack = item.Parent.Attribute ("name").Value.Trim ();
+//				lineOneValue = int.Parse (item.Parent.Element ("lineOne").Value.Trim ());
+				//Debug.Log (nameOfAttack);
+			} else {
+				
+			}
+
 
 //			Debug.Log (item.Parent.Attribute("number").Value);
 //			Debug.Log (iteration.ToString ());

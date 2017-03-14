@@ -5,14 +5,14 @@
       <File FileName="Assets\Scripts\GameControllerScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\DeckBehaviour.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CardBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\UndrawnDeck.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UndrawnDeck.cs" Line="25" Column="3" />
       <File FileName="Assets\Scripts\EnemyBehaviour.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Draggable.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GridMaker.cs" Line="39" Column="5" />
+      <File FileName="Assets\Scripts\GridMaker.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ActiveSquareBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DraggableGrid.cs" Line="21" Column="5" />
-      <File FileName="Assets\Scripts\XMLCardLoaderScript.cs" Line="82" Column="17" />
-      <File FileName="Assets\Scripts\XMLWeaponHitLoaderScript.cs" Line="82" Column="75" />
+      <File FileName="Assets\Scripts\DraggableGrid.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\XMLCardLoaderScript.cs" Line="32" Column="16" />
+      <File FileName="Assets\Scripts\XMLWeaponHitLoaderScript.cs" Line="73" Column="146" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
