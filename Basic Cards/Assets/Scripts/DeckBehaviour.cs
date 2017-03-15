@@ -15,7 +15,7 @@ public class DeckBehaviour : MonoBehaviour {
 	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
 	public EnemyBehaviour enemyBehaviour;
 
-	public List<XMLWeaponHitData> weaponHitBoxLoader;
+	public List<XMLWeaponHitData> weaponHitBoxData;
 
 	//public XMLloaderScript XMLloader;
 	public List<XMLData> cardData;
@@ -31,21 +31,32 @@ public class DeckBehaviour : MonoBehaviour {
 	public float cardGapX;				//the gap between the cards, used for spacing of the spawn points
 	private float cardWidthX;			//the width of the card, used for spacing of the spawn points
 
+	private ActiveSquareBehaviour smallSquareSize;		//example of the square needed for the grid targeting
+	private ActiveSquareBehaviour exampleSmallSquare;
+	private Vector3 playAreaCurrentRatioSize;
+	public GridMaker PlayArea;
+
 	void Start () {
 		GameObject XMLCardLoaderObject = GameObject.FindWithTag("CardLoader");
 		if(XMLCardLoaderObject != null){
-			cardData = XMLCardLoaderObject.GetComponent<XMLCardLoaderScript>().data;
-		}
+			cardData = XMLCardLoaderObject.GetComponent<XMLCardLoaderScript>().data;}
 		if(XMLCardLoaderObject == null){
-			Debug.Log ("Cannot find 'XMLCardLoaderObject'object");
-		}
-		GameObject XMLWeaponHitLoaderScriptTEMP = GameObject.FindWithTag("hitBoxLoader");
+			Debug.Log ("Cannot find 'XMLCardLoaderObject'object");}
+
+		GameObject XMLWeaponHitLoaderScriptTEMP = GameObject.FindWithTag("HitBoxLoader");
 		if(XMLWeaponHitLoaderScriptTEMP != null){
-			weaponHitBoxLoader = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;
-		}
+			weaponHitBoxData = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;}
 		if(XMLWeaponHitLoaderScriptTEMP == null){
-			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");
-		}
+			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
+
+		GameObject playAreaTemp = GameObject.FindWithTag("PlayArea");
+		if(playAreaTemp != null){
+			//PlayArea = playAreaTemp;
+			playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
+			smallSquareSize = playAreaTemp.GetComponent<GridMaker>().getSmallSquare();}
+		if(playAreaTemp == null){
+			Debug.Log ("Cannot find 'playArea'object");}
+
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
@@ -53,9 +64,12 @@ public class DeckBehaviour : MonoBehaviour {
 			orderOfDrawPile.Add(i);
 		}
 		shuffleAll();							//shuffles all the cards in orderOfDrawPile
+
+		exampleSmallSquare = Instantiate (smallSquareSize, deckStartPosition.position, deckStartPosition.rotation);
+		exampleSmallSquare.transform.localScale = new Vector3(playAreaCurrentRatioSize.x*exampleSmallSquare.transform.localScale.x,playAreaCurrentRatioSize.y*exampleSmallSquare.transform.localScale.y,1.0f);
 	}
 	public void DealCard(){
-		for (int i=0; i < 5; i++){
+		for (int i=0; i < 1; i++){
 			if (drawnCards.Count < 5 && orderOfDrawPile.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
 				createCard();
 				relocateDrawnCards();	
@@ -72,6 +86,9 @@ public class DeckBehaviour : MonoBehaviour {
 		instCard.CardAttributes = cardData[orderOfDrawPile[0]];
 		instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
 		orderOfDrawPile.RemoveAt(0);
+		string instAttackType = instCard.TypeOfAttack;
+		XMLWeaponHitData hitBoxDataForCard = weaponHitBoxData.Find (XMLWeaponHitData => XMLWeaponHitData.nameOfAttack == instAttackType);
+		CreateWeaponHitGrid (instCard, hitBoxDataForCard);
 	}
 
 	private void relocateDrawnCards(){
@@ -127,6 +144,23 @@ public class DeckBehaviour : MonoBehaviour {
 			drawnCard.deactivate ();
 		}
 		updateCards ();
+	}
+	private void CreateWeaponHitGrid(CardBehaviour card, XMLWeaponHitData weaponHitData){
+		//Debug.Log (weaponHitData.gridOfHit.Length);
+
+		float widthOfTotalSquares = (exampleSmallSquare.transform.localScale.x * ((weaponHitData.gridOfHit.Length)-1) / 2) / PlayArea.sizeRatioOfSmallBox;
+		float heightOfTotalSquares = (exampleSmallSquare.transform.localScale.y * ((weaponHitData.gridOfHit[0].Length)-1) / 2) / PlayArea.sizeRatioOfSmallBox;
+		Vector3 LocationStart = Vector3.zero - new Vector3 ((widthOfTotalSquares / 2), (heightOfTotalSquares / 2), 0.0f);
+		//ActiveSquareBehaviour weaponHitSquare2 = Instantiate (exampleSmallSquare, tableLocation, cardStartPosition.rotation);
+		for (int x = 0; weaponHitData.gridOfHit.Length > x; x++) {
+			for (int y = 0; weaponHitData.gridOfHit[0].Length > y; y++) {
+				//Vector3 LocationVector = LocationStart + new Vector3 (exampleSmallSquare.transform.localScale.x*x, exampleSmallSquare.transform.localScale.y*y, 1.0f);
+				ActiveSquareBehaviour weaponHitSquare = Instantiate (exampleSmallSquare, Vector3.zero, cardStartPosition.rotation);
+				weaponHitSquare.transform.SetParent (card.transform);
+				weaponHitSquare.transform.localPosition = LocationStart +
+					new Vector3 ((exampleSmallSquare.transform.localScale.x*x/2)/PlayArea.sizeRatioOfSmallBox, (exampleSmallSquare.transform.localScale.y*y/2)/PlayArea.sizeRatioOfSmallBox, 0.0f);
+			}
+		}
 	}
 
 }

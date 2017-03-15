@@ -46,6 +46,9 @@ public class CardBehaviour : MonoBehaviour {
 	public float AttackValue{
 		get{return attackDamageOfCard;}
 	}
+	public string TypeOfAttack{
+		get{ return typeOfAttack; }
+	}
 
 	public XMLData CardAttributes{
 		set{

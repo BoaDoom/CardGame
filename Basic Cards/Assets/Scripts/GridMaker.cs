@@ -12,7 +12,7 @@ public class GridMaker : MonoBehaviour {
 	public int boxCountX = 10;
 	public int boxCountY = 10;
 
-	float sizeRatioOfSmallBox = 0.95f;
+	public float sizeRatioOfSmallBox = 0.95f;
 
 	//public List<Transform> gridList;
 	private ActiveSquareBehaviour[][] grid;
@@ -53,6 +53,10 @@ public class GridMaker : MonoBehaviour {
 
 			}
 		}
+	}
+	public ActiveSquareBehaviour getSmallSquare(){
+		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
+		return grid [0] [0];
 	}
 	void Update () {
 		
