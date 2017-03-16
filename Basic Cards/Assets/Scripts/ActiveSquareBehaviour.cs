@@ -39,12 +39,21 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	public int GetGridCordY(){
 		return gridCordY;
 	}
-
+	void OnTriggerStay2D(Collider2D other){
+		if (other.CompareTag("weaponHitBox")){
+			spriteRenderer.sprite = activatedSprite;
+		}
+	}
+	void OnTriggerExit2D(Collider2D other){
+		if (other.CompareTag("weaponHitBox")){
+			spriteRenderer.sprite = defaultSprite;
+		}
+	}
 		
-	void OnMouseEnter(){
-		spriteRenderer.sprite = activatedSprite;
-	}
-	void OnMouseExit(){
-		spriteRenderer.sprite = defaultSprite;
-	}
+//	void OnMouseEnter(){
+//		spriteRenderer.sprite = activatedSprite;
+//	}
+//	void OnMouseExit(){
+//		spriteRenderer.sprite = defaultSprite;
+//	}
 }

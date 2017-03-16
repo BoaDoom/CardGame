@@ -15,12 +15,13 @@ public class CardBehaviour : MonoBehaviour {
 
 	//private bool clicked;
 	private bool cardInPlayArea;
+	private bool active;
 	private Sprite storedSprite;
 	private SpriteRenderer spriteRenderer;
 
 	public void Start() {
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-		//clicked = false;
+		active = true;
 		cardInPlayArea = false;
 		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");
 		if(deckBehaviourObject != null){
@@ -75,26 +76,28 @@ public class CardBehaviour : MonoBehaviour {
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.CompareTag("PlayArea")){
+		if (other.CompareTag("PlayArea") && active){
 			hideCard ();
 			cardInPlayArea = true;
 
 		}
 	}
 	void OnTriggerExit2D(Collider2D other){
-		if (other.CompareTag("PlayArea")){
+		if (other.CompareTag("PlayArea") && !active){
 			showCard ();
 			cardInPlayArea = false;
 		}
 	}
 
 	public void hideCard(){
+		active = false;
 		storedSprite = spriteRenderer.sprite;
 		spriteRenderer.sprite = null;
 	}
 	public void showCard(){
+		active = true;
 		spriteRenderer.sprite = storedSprite;
-		storedSprite = null;
+		//storedSprite = null;
 	}
 
 	public void deactivate(){

@@ -50,10 +50,11 @@ public class DeckBehaviour : MonoBehaviour {
 			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 
 		GameObject playAreaTemp = GameObject.FindWithTag("PlayArea");
-		if(playAreaTemp != null){
+		if (playAreaTemp != null) {
 			//PlayArea = playAreaTemp;
 			playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
-			smallSquareSize = playAreaTemp.GetComponent<GridMaker>().getSmallSquare();}
+			smallSquareSize = playAreaTemp.GetComponent<GridMaker> ().getSmallSquare ();}
+
 		if(playAreaTemp == null){
 			Debug.Log ("Cannot find 'playArea'object");}
 
@@ -66,6 +67,7 @@ public class DeckBehaviour : MonoBehaviour {
 		shuffleAll();							//shuffles all the cards in orderOfDrawPile
 
 		exampleSmallSquare = Instantiate (smallSquareSize, deckStartPosition.position, deckStartPosition.rotation);
+		exampleSmallSquare.tag="weaponHitBox";
 		exampleSmallSquare.transform.localScale = new Vector3(playAreaCurrentRatioSize.x*exampleSmallSquare.transform.localScale.x,playAreaCurrentRatioSize.y*exampleSmallSquare.transform.localScale.y,1.0f);
 	}
 	public void DealCard(){
