@@ -12,6 +12,9 @@ public class CardBehaviour : MonoBehaviour {
 
 	private DeckBehaviour deckBehaviour;
 	private GridMaker gridMaker;
+	private List<ActiveSquareBehaviour> hitSquares;
+	private ActiveSquareBehaviour tempSquares;
+	private Vector3 offSetDistance;
 
 	//private bool clicked;
 	private bool cardInPlayArea;
@@ -20,6 +23,7 @@ public class CardBehaviour : MonoBehaviour {
 	private SpriteRenderer spriteRenderer;
 
 	public void Start() {
+		//ActiveSquareBehaviour[] hitSquares;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 		active = true;
 		cardInPlayArea = false;
@@ -60,6 +64,20 @@ public class CardBehaviour : MonoBehaviour {
 			typeOfAttack = value.typeOfAttack;
 		}
 	}
+	public void takeInHitSquares(List<ActiveSquareBehaviour> newHitSquares/*, float widthOfall, float heightOfall*/){
+//		hitSquares = newHitSquares;
+		//ActiveSquareBehaviour tempThing;
+		tempSquares.transform.localPosition = newHitSquares[0].transform.localPosition;
+//		offSetDistance = new Vector3(hitSquares[0].transform.localScale.x,hitSquares[0].transform.localScale.y,hitSquares[0].transform.localScale.z);
+//		offSetDistance = new Vector3 (offSetDistance.x -(widthOfall/2), offSetDistance.y -(heightOfall/2), 0.0f);
+//		int incriment = 0;
+//		foreach (ActiveSquareBehaviour hitSquare in hitSquares) {
+//			hitSquare.transform.localPosition = offSetDistance;
+//		}
+	}
+
+
+
 
 	public void moveCard(Vector3 newPosition){
 		gameObject.transform.position = newPosition;

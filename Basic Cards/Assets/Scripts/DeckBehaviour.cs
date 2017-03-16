@@ -16,6 +16,7 @@ public class DeckBehaviour : MonoBehaviour {
 	public EnemyBehaviour enemyBehaviour;
 
 	public List<XMLWeaponHitData> weaponHitBoxData;
+	//public
 
 	//public XMLloaderScript XMLloader;
 	public List<XMLData> cardData;
@@ -57,7 +58,8 @@ public class DeckBehaviour : MonoBehaviour {
 
 		if(playAreaTemp == null){
 			Debug.Log ("Cannot find 'playArea'object");}
-
+	
+		//weaponHitSmallBoxes = new ActiveSquareBehaviour[100];
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
@@ -149,7 +151,8 @@ public class DeckBehaviour : MonoBehaviour {
 	}
 	private void CreateWeaponHitGrid(CardBehaviour card, XMLWeaponHitData weaponHitData){
 		//Debug.Log (weaponHitData.gridOfHit.Length);
-
+		List<ActiveSquareBehaviour> weaponHitSmallBoxes = new List<ActiveSquareBehaviour>();
+		int incriment = 0;
 		float widthOfTotalSquares = (exampleSmallSquare.transform.localScale.x * ((weaponHitData.gridOfHit.Length)-1) / 2) / PlayArea.sizeRatioOfSmallBox;
 		float heightOfTotalSquares = (exampleSmallSquare.transform.localScale.y * ((weaponHitData.gridOfHit[0].Length)-1) / 2) / PlayArea.sizeRatioOfSmallBox;
 		Vector3 LocationStart = Vector3.zero - new Vector3 ((widthOfTotalSquares / 2), (heightOfTotalSquares / 2), 0.0f);
@@ -157,12 +160,20 @@ public class DeckBehaviour : MonoBehaviour {
 		for (int x = 0; weaponHitData.gridOfHit.Length > x; x++) {
 			for (int y = 0; weaponHitData.gridOfHit[0].Length > y; y++) {
 				//Vector3 LocationVector = LocationStart + new Vector3 (exampleSmallSquare.transform.localScale.x*x, exampleSmallSquare.transform.localScale.y*y, 1.0f);
-				ActiveSquareBehaviour weaponHitSquare = Instantiate (exampleSmallSquare, Vector3.zero, cardStartPosition.rotation);
-				weaponHitSquare.transform.SetParent (card.transform);
-				weaponHitSquare.transform.localPosition = LocationStart +
-					new Vector3 ((exampleSmallSquare.transform.localScale.x*x/2)/PlayArea.sizeRatioOfSmallBox, (exampleSmallSquare.transform.localScale.y*y/2)/PlayArea.sizeRatioOfSmallBox, 0.0f);
+				if (weaponHitData.gridOfHit [x][y] == 1) {
+					ActiveSquareBehaviour weaponHitSquare = Instantiate (exampleSmallSquare, Vector3.zero, cardStartPosition.rotation);
+					weaponHitSquare.transform.localPosition = LocationStart +
+						new Vector3 ((exampleSmallSquare.transform.localScale.x*x/2)/PlayArea.sizeRatioOfSmallBox, (exampleSmallSquare.transform.localScale.y*y/2)/PlayArea.sizeRatioOfSmallBox, 0.0f);
+					weaponHitSmallBoxes.Add(weaponHitSquare);
+					//weaponHitSquare.transform.SetParent (card.transform);
+				}
+				incriment++;
+
 			}
 		}
+		card.takeInHitSquares(weaponHitSmallBoxes/*, widthOfTotalSquares, heightOfTotalSquares*/);
+		//Debug.Log(weaponHitSmallBoxes[0].name);
+
 	}
 
 }
