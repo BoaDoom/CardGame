@@ -58,7 +58,6 @@ public class DeckBehaviour : MonoBehaviour {
 			//PlayArea = playAreaTemp;
 			playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
 			smallSquareSize = playAreaTemp.GetComponent<GridMaker> ().getSmallSquare ();}
-
 		if(playAreaTemp == null){
 			Debug.Log ("Cannot find 'playArea'object");}
 	
@@ -154,32 +153,28 @@ public class DeckBehaviour : MonoBehaviour {
 		updateCards ();
 	}
 	private void CreateWeaponHitGrid(CardBehaviour card, XMLWeaponHitData weaponHitData){
-		//Debug.Log (weaponHitData.gridOfHit.Length);
-		//List<ActiveSquareBehaviour> weaponHitSmallBoxes = new List<ActiveSquareBehaviour>();
+
 		int incriment = 0;
-		float widthOfTotalSquares = (weaponSmallSquare.transform.localScale.x * ((weaponHitData.gridOfHit.Length)-1) / 2) / PlayArea.sizeRatioOfSmallBox;
-		float heightOfTotalSquares = (weaponSmallSquare.transform.localScale.y * ((weaponHitData.gridOfHit[0].Length)-1) / 2) / PlayArea.sizeRatioOfSmallBox;
+		float widthOfTotalSquares = (weaponSmallSquare.transform.localScale.x * ((weaponHitData.gridOfHit.Length)-1) ) / PlayArea.sizeRatioOfSmallBox;
+		float heightOfTotalSquares = (weaponSmallSquare.transform.localScale.y * ((weaponHitData.gridOfHit[0].Length)-1) ) / PlayArea.sizeRatioOfSmallBox;
 		Vector3 LocationStart = Vector3.zero - new Vector3 ((widthOfTotalSquares / 2), (heightOfTotalSquares / 2), 0.0f);
 		//ActiveSquareBehaviour weaponHitSquare2 = Instantiate (weaponSmallSquare, tableLocation, cardStartPosition.rotation);
-		weaponHitContainerBehaviour cardsWeaponHitContainer = Instantiate (weaponHitSquaresPrefab, Vector3.zero, cardStartPosition.rotation);
+		weaponHitContainerBehaviour cardsWeaponHitContainer = Instantiate (weaponHitSquaresPrefab, PlayArea.firstBoxCord, cardStartPosition.rotation);
 		for (int x = 0; weaponHitData.gridOfHit.Length > x; x++) {
 			for (int y = 0; weaponHitData.gridOfHit[0].Length > y; y++) {
-				//Vector3 LocationVector = LocationStart + new Vector3 (weaponSmallSquare.transform.localScale.x*x, weaponSmallSquare.transform.localScale.y*y, 1.0f);
 				if (weaponHitData.gridOfHit [x][y] == 1) {
 					SpriteRenderer weaponHitSquare = Instantiate (weaponSmallSquare, Vector3.zero, cardStartPosition.rotation);
+
 					weaponHitSquare.transform.localPosition = LocationStart +
 						new Vector3 ((weaponSmallSquare.transform.localScale.x*x)/PlayArea.sizeRatioOfSmallBox, (weaponSmallSquare.transform.localScale.y*y)/PlayArea.sizeRatioOfSmallBox, 0.0f);
-					//weaponHitSmallBoxes.Add(weaponHitSquare);
 					weaponHitSquare.transform.SetParent (cardsWeaponHitContainer.transform);
 				}
 				incriment++;
 
 			}
 		}
-		//Debug.Log(weaponHitSmallBoxes[0].name);
-		//return card;
-
-		card.takeInHitContainer(cardsWeaponHitContainer, widthOfTotalSquares, heightOfTotalSquares);
+		cardsWeaponHitContainer.takeInHitSquares(card, widthOfTotalSquares, heightOfTotalSquares, weaponSmallSquare.transform.localScale.x, weaponSmallSquare.transform.localScale.y);
+		card.takeInHitContainer(cardsWeaponHitContainer);
 	}
 
 }

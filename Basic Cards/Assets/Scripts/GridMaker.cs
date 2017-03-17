@@ -12,7 +12,7 @@ public class GridMaker : MonoBehaviour {
 	public int boxCountX = 10;
 	public int boxCountY = 10;
 
-	public float sizeRatioOfSmallBox = 0.95f;
+	public float sizeRatioOfSmallBox = 1.0f;
 
 	//public List<Transform> gridList;
 	private ActiveSquareBehaviour[][] grid;
@@ -20,12 +20,16 @@ public class GridMaker : MonoBehaviour {
 
 	Vector3 zeroCord = Vector3.zero;
 	Vector3 framingBoxSize;
-	Vector3 firstBoxCord;
+	public Vector3 firstBoxCord;
 
 
 
 
 	void Start () {
+
+
+
+
 		gridDimensions = new Vector2(boxCountX, boxCountY);
 
 		playAreaDetector.localScale = new Vector3(1.0f, 1.0f,1.0f);

@@ -14,9 +14,9 @@ public class CardBehaviour : MonoBehaviour {
 	private GridMaker gridMaker;
 	private weaponHitContainerBehaviour weaponHitSquares;
 	private ActiveSquareBehaviour tempSquares;
-	private Vector3 offSetDistance;
-	float heightOfHitSquares;
-	float widthOfHitSquares;
+//	private Vector3 offSetDistance;
+//	float heightOfHitSquares;
+//	float widthOfHitSquares;
 
 	//private bool clicked;
 	private bool cardInPlayArea;
@@ -66,10 +66,10 @@ public class CardBehaviour : MonoBehaviour {
 			typeOfAttack = value.typeOfAttack;
 		}
 	}
-	public void takeInHitContainer(weaponHitContainerBehaviour newHitSquares, float widthOfall, float heightOfall){
+	public void takeInHitContainer(weaponHitContainerBehaviour newHitSquares){
 		weaponHitSquares = newHitSquares;
-		heightOfHitSquares = heightOfall;
-		widthOfHitSquares = widthOfall;
+//		heightOfHitSquares = heightOfall;
+//		widthOfHitSquares = widthOfall;
 
 	}
 //	public void takeInHitSquares(List<ActiveSquareBehaviour> newHitSquares, float widthOfall, float heightOfall){

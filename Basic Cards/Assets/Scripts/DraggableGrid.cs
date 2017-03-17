@@ -45,9 +45,6 @@ public class DraggableGrid : MonoBehaviour
 			Vector3 newYposition = new Vector3(startingV3.x, curPosition.y, startingV3.z);
 			transform.position = newYposition;
 			startingV3 = newYposition;
-
 		}
 	}
-
-
 }
