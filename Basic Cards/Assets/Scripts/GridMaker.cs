@@ -45,7 +45,7 @@ public class GridMaker : MonoBehaviour {
 				smallSquareInst = Instantiate (smallSquare, zeroCord, transformOriginal.rotation);
 				smallSquareInst.transform.SetParent (gameObject.transform);
 				smallSquareInst.transform.localScale = framingBoxSize * sizeRatioOfSmallBox;
-				smallSquareInst.transform.localPosition = firstBoxCord + new Vector3(framingBoxSize.x*x, -framingBoxSize.y*y, -0.1f);
+				smallSquareInst.transform.localPosition = firstBoxCord + new Vector3(framingBoxSize.x*x, -framingBoxSize.y*y, 0.0f);
 				smallSquareInst.SetGridCordX (x);
 				smallSquareInst.SetGridCordY (y);
 

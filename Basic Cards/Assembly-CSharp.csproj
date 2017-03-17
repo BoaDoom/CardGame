@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\UndrawnDeck.cs" />
      <Compile Include="Assets\Scripts\XMLCardLoaderScript.cs" />
      <Compile Include="Assets\Scripts\XMLWeaponHitLoaderScript.cs" />
+     <Compile Include="Assets\Scripts\weaponHitContainerBehaviour.cs" />
      <None Include="Assets\Assets\WeaponHitBox.xml" />
      <None Include="Assets\Assets\Cards.xml" />
  <Reference Include="UnityEngine.UI">
