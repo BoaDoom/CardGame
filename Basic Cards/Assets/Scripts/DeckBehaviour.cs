@@ -171,8 +171,9 @@ public class DeckBehaviour : MonoBehaviour {
 
 			}
 		}
-		card.takeInHitSquares(weaponHitSmallBoxes/*, widthOfTotalSquares, heightOfTotalSquares*/);
+		card.takeInHitSquares(weaponHitSmallBoxes, widthOfTotalSquares, heightOfTotalSquares);
 		//Debug.Log(weaponHitSmallBoxes[0].name);
+		//return card;
 
 	}
 
