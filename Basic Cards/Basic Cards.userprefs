@@ -4,12 +4,12 @@
     <Files>
       <File FileName="Assets\Scripts\GameControllerScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\DeckBehaviour.cs" Line="162" Column="115" />
-      <File FileName="Assets\Scripts\CardBehaviour.cs" Line="82" Column="16" />
-      <File FileName="Assets\Scripts\weaponHitContainerBehaviour.cs" Line="14" Column="2" />
-      <File FileName="Assets\Scripts\DraggableGrid.cs" Line="47" Column="30" />
-      <File FileName="Assets\Scripts\ActiveSquareBehaviour.cs" Line="45" Column="4" />
-      <File FileName="Assets\Scripts\Draggable.cs" Line="21" Column="55" />
-      <File FileName="Assets\Scripts\GridMaker.cs" Line="23" Column="9" />
+      <File FileName="Assets\Scripts\CardBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\weaponHitContainerBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DraggableGrid.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ActiveSquareBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Draggable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GridMaker.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\XMLCardLoaderScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\XMLWeaponHitLoaderScript.cs" Line="1" Column="1" />
     </Files>
