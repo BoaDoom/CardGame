@@ -41,11 +41,11 @@ public class weaponHitContainerBehaviour : MonoBehaviour {
 //		if(GameControllerTemp == null){
 //			Debug.Log ("Cannot find 'GameController'object");}
 
-		GameObject playAreaT = GameObject.FindWithTag("PlayArea");
-		if(playAreaT != null){
-			startingV3 = playAreaT.GetComponent<GridMaker>().firstBoxCord;}
-		if(playAreaT == null){
-			Debug.Log ("Cannot find 'PlayArea'object");}
+//		GameObject playAreaT = GameObject.FindWithTag("PlayArea");
+//		if(playAreaT != null){
+//			startingV3 = playAreaT.GetComponent<GridMaker>().firstBoxCord;}
+//		if(playAreaT == null){
+//			Debug.Log ("Cannot find 'PlayArea'object");}
 
 	}
 	public void locationUpdate(Vector3 cardsPosition){

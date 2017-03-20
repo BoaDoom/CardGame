@@ -50,9 +50,9 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 		}
 	}
 		
-//	void OnMouseEnter(){
-//		spriteRenderer.sprite = activatedSprite;
-//	}
+	void OnMouseEnter(){
+		spriteRenderer.sprite = activatedSprite;
+	}
 //	void OnMouseExit(){
 //		spriteRenderer.sprite = defaultSprite;
 //	}

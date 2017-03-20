@@ -7,7 +7,7 @@ public class GridMaker : MonoBehaviour {
 	public ActiveSquareBehaviour smallSquare;
 	Transform transformOriginal;
 	public Transform playAreaDetector;
-	public PlayAreaDetectorScript playAreaDetectorScript;
+	//public PlayAreaDetectorScript playAreaDetectorScript;
 
 	public int boxCountX = 10;
 	public int boxCountY = 10;
@@ -63,6 +63,6 @@ public class GridMaker : MonoBehaviour {
 		return grid [0] [0];
 	}
 	void Update () {
-		
+
 	}
 }

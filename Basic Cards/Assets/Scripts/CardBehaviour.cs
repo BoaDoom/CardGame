@@ -11,7 +11,7 @@ public class CardBehaviour : MonoBehaviour {
 	string typeOfAttack;
 
 	private DeckBehaviour deckBehaviour;
-	private GridMaker gridMaker;
+	//private GridMaker gridMaker;
 	private weaponHitContainerBehaviour weaponHitSquares;
 	private ActiveSquareBehaviour tempSquares;
 //	private Vector3 offSetDistance;
@@ -36,13 +36,6 @@ public class CardBehaviour : MonoBehaviour {
 		if(deckBehaviourObject == null){
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
 		}
-		GameObject gridMakerObject = GameObject.FindWithTag("PlayArea");
-		if(gridMakerObject != null){
-			gridMaker = gridMakerObject.GetComponent<GridMaker>();
-		}
-		if(gridMakerObject == null){
-			Debug.Log ("Cannot find 'gridMaker'object");
-		}
 	}
 	public void setFace(Sprite cardFaceGraphic){
 		gameObject.GetComponent<SpriteRenderer>().sprite = cardFaceGraphic;
@@ -66,21 +59,10 @@ public class CardBehaviour : MonoBehaviour {
 			typeOfAttack = value.typeOfAttack;
 		}
 	}
-	public void takeInHitContainer(weaponHitContainerBehaviour newHitSquares){
-		weaponHitSquares = newHitSquares;
-//		heightOfHitSquares = heightOfall;
-//		widthOfHitSquares = widthOfall;
 
-	}
-//	public void takeInHitSquares(List<ActiveSquareBehaviour> newHitSquares, float widthOfall, float heightOfall){
-//		hitSquares = newHitSquares;
-//		heightOfHitSquares = heightOfall;
-//		widthOfHitSquares = widthOfall;
-//
-//	}
+
 
 	void Update(){
-		weaponHitSquares.locationUpdate (gameObject.transform.localPosition);
 ////		//Debug.Log(hitSquares[0].transform.localPosition);
 ////		//Debug.Log(gameObject.transform.localPosition);
 ////		offSetDistance = hitSquares[0].transform.localPosition - gameObject.transform.localPosition;
