@@ -13,7 +13,7 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	Sprite defaultSprite;
 
 	SpriteRenderer spriteRenderer;
-
+	GridHitController gridHitController;
 
 
 	void Start(){
@@ -25,6 +25,14 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 		}
 		if(spriteRendererTemp == null){
 			Debug.Log ("Cannot find 'spriteRendererTemp'object");
+		}
+
+		GameObject gridHitControllerImport = GameObject.FindWithTag ("PlayArea");
+		if(gridHitControllerImport != null){
+			gridHitController = gridHitControllerImport.GetComponent<GridHitController>();
+		}
+		if(gridHitControllerImport == null){
+			Debug.Log ("Cannot find 'gridHitControllerImport'object");
 		}
 	}
 	public void SetGridCordX(int cordx){
@@ -39,19 +47,29 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	public int GetGridCordY(){
 		return gridCordY;
 	}
-	void OnTriggerStay2D(Collider2D other){
-		if (other.CompareTag("weaponHitBox")){
-			spriteRenderer.sprite = activatedSprite;
-		}
-	}
-	void OnTriggerExit2D(Collider2D other){
-		if (other.CompareTag("weaponHitBox")){
-			spriteRenderer.sprite = defaultSprite;
-		}
-	}
+//	void OnTriggerStay2D(Collider2D other){
+//		if (other.CompareTag("weaponHitBox")){
+//			spriteRenderer.sprite = activatedSprite;
+//		}
+//	}
+//	void OnTriggerExit2D(Collider2D other){
+//		if (other.CompareTag("weaponHitBox")){
+//			spriteRenderer.sprite = defaultSprite;
+//		}
+//	}
 		
 	void OnMouseEnter(){
+		gridHitController.squareHoveredOver (gridCordX, gridCordY);
+		Debug.Log (gridCordX);
+		Debug.Log (gridCordY);
+		//Debug.Log ("test");
+	}
+
+	public void ActivateSquare(){
 		spriteRenderer.sprite = activatedSprite;
+	}
+	public void DeactivateSquare(){
+		spriteRenderer.sprite = defaultSprite;
 	}
 //	void OnMouseExit(){
 //		spriteRenderer.sprite = defaultSprite;

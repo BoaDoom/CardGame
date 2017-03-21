@@ -9,11 +9,14 @@ public class GameControllerScript : MonoBehaviour {
 	public Button discardEverythingButton;
 	//public DeckBehaviour deckBehav;
 	public DeckBehaviour deckBehaviour;
-	public Transform playArea;
+	public GridHitController playArea;
 
-	// Use this for initialization
+	private XMLWeaponHitData currentClickedOnCardWeaponMatrix;
+	private bool boolCardClickedOn;
 
 	void Start () {
+		boolCardClickedOn = false;
+
 		shuffleButton.onClick.AddListener(pressShuffle);
 		shuffleEverythingButton.onClick.AddListener(shuffleEverything);
 		discardEverythingButton.onClick.AddListener(discardEverything);
@@ -26,7 +29,7 @@ public class GameControllerScript : MonoBehaviour {
 			}
 		GameObject playAreaObject = GameObject.FindWithTag("PlayArea");
 		if(playAreaObject != null){
-			playArea = playAreaObject.GetComponent<Transform>();
+			playArea = playAreaObject.GetComponent<GridHitController>();
 		}
 		if(playAreaObject == null){
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
@@ -34,10 +37,13 @@ public class GameControllerScript : MonoBehaviour {
 		
 	}
 	void Update(){
-		
-
 	}
-	
+	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix){
+		currentClickedOnCardWeaponMatrix = WeaponHitMatrix;
+	}
+	public void cardClickedOff(){
+		playArea.resetSmallSquares ();
+	}
 
 
 	public void pressShuffle(){

@@ -12,7 +12,7 @@ public class CardBehaviour : MonoBehaviour {
 
 	private DeckBehaviour deckBehaviour;
 	//private GridMaker gridMaker;
-	private weaponHitContainerBehaviour weaponHitSquares;
+	//private weaponHitContainerBehaviour weaponHitSquares;
 	private ActiveSquareBehaviour tempSquares;
 //	private Vector3 offSetDistance;
 //	float heightOfHitSquares;
@@ -23,23 +23,42 @@ public class CardBehaviour : MonoBehaviour {
 	private bool active;
 	private Sprite storedSprite;
 	private SpriteRenderer spriteRenderer;
+	private int hitSquareOverflow;
+
+	private XMLWeaponHitData hitBoxDataForCard;
+
+	private GameControllerScript gameControllerScript;
 
 	public void Start() {
 		//ActiveSquareBehaviour[] hitSquares;
-		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
 		active = true;
 		cardInPlayArea = false;
-		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");
-		if(deckBehaviourObject != null){
-			deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour>();
+		hitSquareOverflow = 0;
+		GameObject deckBehaviourObject = GameObject.FindWithTag ("DeckBehaviour");
+		if (deckBehaviourObject != null) {
+			deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour> ();
 		}
-		if(deckBehaviourObject == null){
+		if (deckBehaviourObject == null) {
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
+		}
+
+		GameObject gameControllerScriptImport = GameObject.FindWithTag ("GameController");
+		if (gameControllerScriptImport != null) {
+			gameControllerScript = gameControllerScriptImport.GetComponent<GameControllerScript> ();
+		}
+		if (gameControllerScriptImport == null) {
+			Debug.Log ("Cannot find 'GameController'object");
 		}
 	}
 	public void setFace(Sprite cardFaceGraphic){
 		gameObject.GetComponent<SpriteRenderer>().sprite = cardFaceGraphic;
 	}
+	public void setWeaponHitBox(XMLWeaponHitData hitBoxDataForCardImport){
+		hitBoxDataForCard = hitBoxDataForCardImport;
+	}
+
+
 	public int CardNumber{
 		get{return cardSpriteNum;}
 	}
@@ -82,9 +101,10 @@ public class CardBehaviour : MonoBehaviour {
 	}
 	
 	private void OnMouseDown(){
-		//clicked = false;
+		gameControllerScript.cardClickedOn (hitBoxDataForCard);
 	}
 	private void OnMouseUp(){
+		gameControllerScript.cardClickedOff();
 		//clicked = true;
 		if (cardInPlayArea) {
 			deactivate ();
@@ -92,14 +112,15 @@ public class CardBehaviour : MonoBehaviour {
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.CompareTag("PlayArea") && active){
+		if (other.CompareTag("ActiveSquare") && active && (hitSquareOverflow<=0)){
 			hideCard ();
 			cardInPlayArea = true;
-
 		}
+		hitSquareOverflow++;
 	}
 	void OnTriggerExit2D(Collider2D other){
-		if (other.CompareTag("PlayArea") && !active){
+		hitSquareOverflow--;
+		if (other.CompareTag("ActiveSquare") && !active && (hitSquareOverflow<=0)){
 			showCard ();
 			cardInPlayArea = false;
 		}

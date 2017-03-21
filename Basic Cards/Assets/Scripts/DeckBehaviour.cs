@@ -28,7 +28,7 @@ public class DeckBehaviour : MonoBehaviour {
 	public Transform deckStartPosition;			//undrawnDeck start position
 	public Transform offScreenDeck;				//the actual location for storage of all the cards in the deck **//need to fix to be more efficient. Maybe not instantiate the cards untill drawn?
 
-	public weaponHitContainerBehaviour weaponHitSquaresPrefab;
+	//public weaponHitContainerBehaviour weaponHitSquaresPrefab;
 
 	private Vector3 tableLocation;		//the variable location for each new card that is drawn
 	public float cardGapX;				//the gap between the cards, used for spacing of the spawn points
@@ -37,7 +37,7 @@ public class DeckBehaviour : MonoBehaviour {
 	public SpriteRenderer weaponHitSmallSquarePrefab;
 	private ActiveSquareBehaviour smallSquareSize;		//example of the square needed for the grid targeting
 	private SpriteRenderer weaponSmallSquare;
-	private Vector3 playAreaCurrentRatioSize;
+	//private Vector3 playAreaCurrentRatioSize;
 	//public GridMaker PlayArea;
 
 	void Start () {
@@ -56,7 +56,7 @@ public class DeckBehaviour : MonoBehaviour {
 		GameObject playAreaTemp = GameObject.FindWithTag("PlayArea");
 		if (playAreaTemp != null) {
 			//PlayArea = playAreaTemp;
-			playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
+			//playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
 		}
 		if(playAreaTemp == null){
 			Debug.Log ("Cannot find 'playArea'object");}
@@ -93,9 +93,9 @@ public class DeckBehaviour : MonoBehaviour {
 		instCard.CardAttributes = cardData[orderOfDrawPile[0]];
 		instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
 		orderOfDrawPile.RemoveAt(0);
-		string instAttackType = instCard.TypeOfAttack;
+		string instAttackType = instCard.TypeOfAttack;			//matching the card's attack with the same name of attack from the database of weaponhitdata to get the matrix of what is hit
 		XMLWeaponHitData hitBoxDataForCard = weaponHitBoxData.Find (XMLWeaponHitData => XMLWeaponHitData.nameOfAttack == instAttackType);
-		//CreateWeaponHitGrid (instCard, hitBoxDataForCard);
+		instCard.setWeaponHitBox(hitBoxDataForCard);
 	}
 
 	private void relocateDrawnCards(){

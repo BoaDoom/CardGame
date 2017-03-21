@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridMaker : MonoBehaviour {
+public class GridHitController : MonoBehaviour {
 
 	public ActiveSquareBehaviour smallSquare;
 	Transform transformOriginal;
@@ -22,6 +22,7 @@ public class GridMaker : MonoBehaviour {
 	Vector3 framingBoxSize;
 	public Vector3 firstBoxCord;
 
+	Vector2 testVec2;
 
 
 
@@ -61,6 +62,18 @@ public class GridMaker : MonoBehaviour {
 	public ActiveSquareBehaviour getSmallSquare(){
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
 		return grid [0] [0];
+	}
+
+	public void squareHoveredOver(int xCord, int yCord){
+		grid [xCord] [yCord].ActivateSquare ();
+		testVec2 = new Vector2 (xCord, yCord);
+	}
+	public void resetSmallSquares(){
+		foreach(ActiveSquareBehaviour[] gridY in grid){
+			foreach (ActiveSquareBehaviour square in gridY) {
+				square.DeactivateSquare ();
+			}
+		}
 	}
 	void Update () {
 
