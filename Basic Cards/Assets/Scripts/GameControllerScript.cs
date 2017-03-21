@@ -11,12 +11,12 @@ public class GameControllerScript : MonoBehaviour {
 	public DeckBehaviour deckBehaviour;
 	public GridHitController playArea;
 
-	private XMLWeaponHitData currentClickedOnCardWeaponMatrix;
-	private bool boolCardClickedOn;
+	public CurrentWeaponHitBox currentClickedOnCardWeaponMatrix;
+	//private bool boolCardClickedOn;
 
 	void Start () {
-		boolCardClickedOn = false;
-
+		//boolCardClickedOn = false;
+		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null);
 		shuffleButton.onClick.AddListener(pressShuffle);
 		shuffleEverythingButton.onClick.AddListener(shuffleEverything);
 		discardEverythingButton.onClick.AddListener(discardEverything);
@@ -39,11 +39,14 @@ public class GameControllerScript : MonoBehaviour {
 	void Update(){
 	}
 	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix){
-		currentClickedOnCardWeaponMatrix = WeaponHitMatrix;
+		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(true, WeaponHitMatrix);
+		//boolCardClickedOn = true;
 	}
 	public void cardClickedOff(){
 		playArea.resetSmallSquares ();
+		currentClickedOnCardWeaponMatrix.isCardClickedOn = false;
 	}
+
 
 
 	public void pressShuffle(){
@@ -56,4 +59,12 @@ public class GameControllerScript : MonoBehaviour {
 		deckBehaviour.discardEverything();
 	}
 
+}
+public class CurrentWeaponHitBox{
+	public bool isCardClickedOn;
+	public XMLWeaponHitData weaponHitData;
+	public CurrentWeaponHitBox(bool incomingCardClickedData, XMLWeaponHitData incomingWeaponHitData){
+		isCardClickedOn = incomingCardClickedData;
+		weaponHitData = incomingWeaponHitData;
+	}
 }

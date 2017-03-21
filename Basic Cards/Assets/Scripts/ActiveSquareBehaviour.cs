@@ -60,10 +60,14 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 		
 	void OnMouseEnter(){
 		gridHitController.squareHoveredOver (gridCordX, gridCordY);
-		Debug.Log (gridCordX);
-		Debug.Log (gridCordY);
+//		Debug.Log (gridCordX);
+//		Debug.Log (gridCordY);
 		//Debug.Log ("test");
 	}
+	void OnMouseExit(){
+		gridHitController.squareHoveredOff (gridCordX, gridCordY);
+	}
+		
 
 	public void ActivateSquare(){
 		spriteRenderer.sprite = activatedSprite;

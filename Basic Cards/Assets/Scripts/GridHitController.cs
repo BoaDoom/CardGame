@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GridHitController : MonoBehaviour {
 
-	public ActiveSquareBehaviour smallSquare;
+	public ActiveSquareBehaviour smallSquare; //added manually inside unity from prefabs
 	Transform transformOriginal;
-	public Transform playAreaDetector;
+	public Transform playAreaDetector; //added manually inside unity
 	//public PlayAreaDetectorScript playAreaDetectorScript;
+	public GameControllerScript gameControllerScript; //added manually inside unity
 
 	public int boxCountX = 10;
 	public int boxCountY = 10;
@@ -22,14 +23,11 @@ public class GridHitController : MonoBehaviour {
 	Vector3 framingBoxSize;
 	public Vector3 firstBoxCord;
 
-	Vector2 testVec2;
+	//Vector2 testVec2;
 
 
 
 	void Start () {
-
-
-
 
 		gridDimensions = new Vector2(boxCountX, boxCountY);
 
@@ -64,9 +62,39 @@ public class GridHitController : MonoBehaviour {
 		return grid [0] [0];
 	}
 
-	public void squareHoveredOver(int xCord, int yCord){
-		grid [xCord] [yCord].ActivateSquare ();
-		testVec2 = new Vector2 (xCord, yCord);
+	public void squareHoveredOver(int xCord, int yCord){		//method used by the grid of active squares to signal that they are being hovered over
+		if(gameControllerScript.currentClickedOnCardWeaponMatrix.isCardClickedOn){	//checks the main game controller to see if a card on the table has sent the signal that it is clicked on
+
+
+
+			Vector2 middleOfWeaponHitArea = new Vector2(Mathf.Round((gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length/2)),
+				Mathf.Round((gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length/2)));		//rounding the dimensions of the weaponhitArea to find the 'center' to base activate the grid
+			//if (
+			Vector2 upperLeftStartingPoint = new Vector2(xCord - middleOfWeaponHitArea.x, yCord - middleOfWeaponHitArea.y);
+			//Debug.Log ("test");
+			for (int x =0; x < gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length; x++){
+				//grid [upperLeftStartingPoint.x + i] [upperLeftStartingPoint.y].ActivateSquare ();
+				for (int y = 0; y < gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length; y++) {
+					if (gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[x][y] == 1){
+						grid [(int)upperLeftStartingPoint.x + x] [(int)upperLeftStartingPoint.y + y].ActivateSquare ();						
+					}
+//					Debug.Log (x);
+//					Debug.Log (y);
+				}
+			}
+
+			//Debug.Log(middleOfWeaponHitArea);
+
+			//Debug.Log(gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length);
+			//Debug.Log(gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length);
+			//grid [xCord] [yCord].ActivateSquare ();	
+		}
+
+		//testVec2 = new Vector2 (xCord, yCord);
+	}
+	public void squareHoveredOff(int xCord, int yCord){
+		resetSmallSquares ();
+		//grid [xCord] [yCord].DeactivateSquare ();	
 	}
 	public void resetSmallSquares(){
 		foreach(ActiveSquareBehaviour[] gridY in grid){
