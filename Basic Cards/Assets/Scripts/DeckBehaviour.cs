@@ -13,9 +13,10 @@ public class DeckBehaviour : MonoBehaviour {
 	public CardBehaviour card;		//the gameobject of the actual cards
 
 	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
-	public EnemyBehaviour enemyBehaviour;
+	//public EnemyBehaviour enemyBehaviour;
 
 	public List<XMLWeaponHitData> weaponHitBoxData;
+	public GameControllerScript gameController;
 	//public
 
 	//public XMLloaderScript XMLloader;
@@ -60,6 +61,12 @@ public class DeckBehaviour : MonoBehaviour {
 		}
 		if(playAreaTemp == null){
 			Debug.Log ("Cannot find 'playArea'object");}
+
+//		GameObject gameControllerTemp = GameObject.FindWithTag("GameController");
+//		if(XMLWeaponHitLoaderScriptTEMP != null){
+//			gameController = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;}
+//		if(XMLWeaponHitLoaderScriptTEMP == null){
+//			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 	
 		//weaponHitSmallBoxes = new ActiveSquareBehaviour[100];
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
@@ -111,7 +118,8 @@ public class DeckBehaviour : MonoBehaviour {
 		for (int i = 0; i < drawnCards.Count; i++){ //CardBehaviour drawnCard in drawnCards) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
 				discardedCards.Add(drawnCards[i].CardNumber);			//moves any non active cards to discarded pile
-				enemyBehaviour.takeDamage(drawnCards[i].AttackValue);
+				//enemyBehaviour.takeDamage(drawnCards[i].AttackValue);
+				gameController.enemyCardDamage(drawnCards[i].AttackValue);
 				Destroy(drawnCards[i].gameObject);
 				drawnCards.RemoveAt(i);						//removes the non active card from the drawn pile
 				i--;

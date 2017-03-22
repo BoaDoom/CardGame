@@ -10,6 +10,7 @@ public class GameControllerScript : MonoBehaviour {
 	//public DeckBehaviour deckBehav;
 	public DeckBehaviour deckBehaviour;
 	public GridHitController playArea;
+	public EnemyBehaviour enemyBehaviour;
 
 	public CurrentWeaponHitBox currentClickedOnCardWeaponMatrix;
 	//private bool boolCardClickedOn;
@@ -46,9 +47,6 @@ public class GameControllerScript : MonoBehaviour {
 		playArea.resetSmallSquares ();
 		currentClickedOnCardWeaponMatrix.isCardClickedOn = false;
 	}
-
-
-
 	public void pressShuffle(){
 		deckBehaviour.shuffleAll();
 	}
@@ -57,6 +55,11 @@ public class GameControllerScript : MonoBehaviour {
 	}
 	public void discardEverything(){
 		deckBehaviour.discardEverything();
+	}
+
+
+	public void enemyCardDamage(float incomingDamage){
+		enemyBehaviour.takeDamage (incomingDamage);
 	}
 
 }

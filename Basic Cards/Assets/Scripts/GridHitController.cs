@@ -10,8 +10,8 @@ public class GridHitController : MonoBehaviour {
 	//public PlayAreaDetectorScript playAreaDetectorScript;
 	public GameControllerScript gameControllerScript; //added manually inside unity
 
-	public int boxCountX = 10;
-	public int boxCountY = 10;
+	int boxCountX = 7;
+	int boxCountY = 7;
 
 	public float sizeRatioOfSmallBox = 1.0f;
 
@@ -23,12 +23,20 @@ public class GridHitController : MonoBehaviour {
 	Vector3 framingBoxSize;
 	public Vector3 firstBoxCord;
 
+	public List<XMLBodyHitData> bodyLoaderData;
 	//Vector2 testVec2;
 
 
 
 	void Start () {
+		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
+		if(XMLBodyHitLoaderScriptTEMP != null){
+			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().data;}
+		if(XMLBodyHitLoaderScriptTEMP == null){
+			Debug.Log ("Cannot find 'BodyLoader'object");}
 
+		boxCountX = bodyLoaderData [0].XDimOfBody;
+		boxCountY = bodyLoaderData [0].YDimOfBody;
 		gridDimensions = new Vector2(boxCountX, boxCountY);
 
 		playAreaDetector.localScale = new Vector3(1.0f, 1.0f,1.0f);
@@ -53,9 +61,27 @@ public class GridHitController : MonoBehaviour {
 				smallSquareInst.SetGridCordY (y);
 
 				grid[x][y] = smallSquareInst;
+//				Debug.Log (x);
+//				Debug.Log (y);
+//				Debug.Log (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y]);
+//				if (bodyLoaderData.Find(XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y] == 1) {
+//					activateSmallSquare();
+//				}
 
 			}
 		}
+		//activateSmallSquare ();
+
+	}
+	public void activateSmallSquare(){
+		for (int x = 0; x < gridDimensions.x; x++){
+			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
+			for (int y = 0; y < gridDimensions.y; y++)
+			{
+				grid [x] [y].ActivateSquare ();
+			}
+		}
+		//grid [x] [y].ActivateSquare ();
 	}
 	public ActiveSquareBehaviour getSmallSquare(){
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
@@ -85,7 +111,7 @@ public class GridHitController : MonoBehaviour {
 					if (gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[x][y] != 0	//checks the grid hit area to see if its turned 'on' with 1, or 'off' with 0
 							&& ((tempStartingPoint.x +x)>=0) && ((tempStartingPoint.y +y)>=0)						//checks if the grid hit area is outside of the grid target up and to the left
 							&& ((tempStartingPoint.x +x)<boxCountX) && ((tempStartingPoint.y +y)<boxCountY)){		//checks if the grid hit area is outside of the grid target down and to the right
-						grid [(int)tempStartingPoint.x + x] [(int)tempStartingPoint.y + y].ActivateSquare ();		//activates the squares inside the area
+						grid [(int)tempStartingPoint.x + x] [(int)tempStartingPoint.y + y].TargetSquare ();		//activates the squares inside the area
 					}
 //					Debug.Log (x);
 //					Debug.Log (y);
@@ -108,7 +134,7 @@ public class GridHitController : MonoBehaviour {
 	public void resetSmallSquares(){
 		foreach(ActiveSquareBehaviour[] gridY in grid){
 			foreach (ActiveSquareBehaviour square in gridY) {
-				square.DeactivateSquare ();
+				square.UntargetSquare ();
 			}
 		}
 	}

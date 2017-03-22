@@ -52,16 +52,16 @@
      <Compile Include="Assets\Scripts\Draggable.cs" />
      <Compile Include="Assets\Scripts\DraggableGrid.cs" />
      <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
-     <Compile Include="Assets\Scripts\FadeBackwards.cs" />
      <Compile Include="Assets\Scripts\GameControllerScript.cs" />
      <Compile Include="Assets\Scripts\GridHitController.cs" />
-     <Compile Include="Assets\Scripts\PlayAreaDetectorScript.cs" />
      <Compile Include="Assets\Scripts\ShuffleButtonScript.cs" />
      <Compile Include="Assets\Scripts\UIBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\UndrawnDeck.cs" />
-     <Compile Include="Assets\Scripts\XMLCardLoaderScript.cs" />
-     <Compile Include="Assets\Scripts\XMLWeaponHitLoaderScript.cs" />
+     <Compile Include="Assets\Scripts\XMLScripts\XMLBodyLoaderScript.cs" />
+     <Compile Include="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" />
+     <Compile Include="Assets\Scripts\XMLScripts\XMLWeaponHitLoaderScript.cs" />
      <None Include="Assets\Assets\WeaponHitBox.xml" />
+     <None Include="Assets\Assets\BodyHitBox.xml" />
      <None Include="Assets\Assets\Cards.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

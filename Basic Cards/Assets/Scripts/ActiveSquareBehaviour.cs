@@ -10,7 +10,9 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	int gridCordY;
 
 	public Sprite activatedSprite;
+	public Sprite targetedSprite;
 	Sprite defaultSprite;
+	Sprite storedDefault;
 
 	SpriteRenderer spriteRenderer;
 	GridHitController gridHitController;
@@ -22,6 +24,7 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 			spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 			//activatedSprite =
 			defaultSprite = spriteRenderer.sprite;
+			storedDefault = spriteRenderer.sprite;
 		}
 		if(spriteRendererTemp == null){
 			Debug.Log ("Cannot find 'spriteRendererTemp'object");
@@ -68,11 +71,19 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 		gridHitController.squareHoveredOff (gridCordX, gridCordY);
 	}
 		
-
+	public void TargetSquare(){
+		spriteRenderer.sprite = targetedSprite;
+	}
+	public void UntargetSquare(){
+		spriteRenderer.sprite = defaultSprite;
+	}
 	public void ActivateSquare(){
 		spriteRenderer.sprite = activatedSprite;
+//		storedDefault = defaultSprite;
+//		defaultSprite = activatedSprite;
 	}
 	public void DeactivateSquare(){
+//		defaultSprite = storedDefault;
 		spriteRenderer.sprite = defaultSprite;
 	}
 //	void OnMouseExit(){
