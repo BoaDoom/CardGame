@@ -75,8 +75,17 @@ public class GridHitController : MonoBehaviour {
 			for (int x =0; x < gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length; x++){
 				//grid [upperLeftStartingPoint.x + i] [upperLeftStartingPoint.y].ActivateSquare ();
 				for (int y = 0; y < gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length; y++) {
-					if (gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[x][y] == 1){
-						grid [(int)upperLeftStartingPoint.x + x] [(int)upperLeftStartingPoint.y + y].ActivateSquare ();						
+					Vector2 tempStartingPoint = new Vector2 (upperLeftStartingPoint.x, upperLeftStartingPoint.y);
+//					if (upperLeftStartingPoint.x<0){
+//						tempStartingPoint.x = 0;
+//					}
+//					if (upperLeftStartingPoint.y<0){
+//						tempStartingPoint.y = 0;
+//					}
+					if (gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[x][y] != 0	//checks the grid hit area to see if its turned 'on' with 1, or 'off' with 0
+							&& ((tempStartingPoint.x +x)>=0) && ((tempStartingPoint.y +y)>=0)						//checks if the grid hit area is outside of the grid target up and to the left
+							&& ((tempStartingPoint.x +x)<boxCountX) && ((tempStartingPoint.y +y)<boxCountY)){		//checks if the grid hit area is outside of the grid target down and to the right
+						grid [(int)tempStartingPoint.x + x] [(int)tempStartingPoint.y + y].ActivateSquare ();		//activates the squares inside the area
 					}
 //					Debug.Log (x);
 //					Debug.Log (y);
