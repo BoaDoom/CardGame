@@ -20,7 +20,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Update () {
 		
 	}
-	public void takeDamage(float incomingDamage){
+	public void takeDamage(float incomingDamage){			//only sent from GameController script
 		Vector3 tempHealth = healthBarStartingScale;
 		remainingHealth -= incomingDamage;
 		tempHealth.x = healthBarStartingScale.x * (remainingHealth / healthMax);

@@ -9,38 +9,46 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 //	[SerializeField]
 	int gridCordY;
 
-	public Sprite activatedSprite;
-	public Sprite targetedSprite;
+	public Sprite occupiedUntargetedSprite;
+	public Sprite occupiedTargetedSprite;
+	public Sprite targetMissedSprite;
 	Sprite defaultSprite;
-	Sprite storedDefault;
+
+	Sprite trueUntarget;
+	Sprite trueTarget;
 //	private int startingIntValue;
 
+	public ActiveSquareState activeSquareState;
+
 	SpriteRenderer spriteRenderer;
-	PlayArea gridHitController;
+	PlayArea playArea;
 //	ActiveSquareBehaviour(int startingIntValueImport){
 //		startingIntValue = startingIntValueImport;
 //	}
 
 	void Awake(){
-		
+		activeSquareState = new ActiveSquareState();
 		SpriteRenderer spriteRendererTemp = gameObject.GetComponent<SpriteRenderer>();
 		if(spriteRendererTemp != null){
 			spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-			//activatedSprite =
+			//occupiedSprite =
 			defaultSprite = spriteRenderer.sprite;
-			storedDefault = spriteRenderer.sprite;
+//			trueUntarget = spriteRenderer.sprite;
 		}
+		trueUntarget = defaultSprite;
+		trueTarget = targetMissedSprite;
 		if(spriteRendererTemp == null){
 			Debug.Log ("Cannot find 'spriteRendererTemp'object");
 		}
 
-		GameObject gridHitControllerImport = GameObject.FindWithTag ("PlayArea");
-		if(gridHitControllerImport != null){
-			gridHitController = gridHitControllerImport.GetComponent<PlayArea>();
+		GameObject playAreaImport = GameObject.FindWithTag ("PlayArea");
+		if(playAreaImport != null){
+			playArea = playAreaImport.GetComponent<PlayArea>();
 		}
-		if(gridHitControllerImport == null){
-			Debug.Log ("Cannot find 'gridHitControllerImport'object");
+		if(playAreaImport == null){
+			Debug.Log ("Cannot find 'playAreaImport'object");
 		}
+		hardUntargetSquare ();
 	}
 	public void SetGridCordX(int cordx){
 		gridCordX = cordx;
@@ -59,7 +67,7 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	}
 //	void OnTriggerStay2D(Collider2D other){
 //		if (other.CompareTag("weaponHitBox")){
-//			spriteRenderer.sprite = activatedSprite;
+//			spriteRenderer.sprite = occupiedSprite;
 //		}
 //	}
 //	void OnTriggerExit2D(Collider2D other){
@@ -69,32 +77,75 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 //	}
 		
 	void OnMouseEnter(){
-		gridHitController.squareHoveredOver (gridCordX, gridCordY);
-//		Debug.Log (gridCordX);
-//		Debug.Log (gridCordY);
-		//Debug.Log ("test");
+		playArea.squareHoveredOver (gridCordX, gridCordY);
+
 	}
 	void OnMouseExit(){
-		gridHitController.squareHoveredOff (gridCordX, gridCordY);
+		playArea.squareHoveredOff ();
 	}
 		
-	public void TargetSquare(){
-		spriteRenderer.sprite = targetedSprite;
+	public void TargetSquare(){		//used by playarea to turn on and off targetting
+		spriteRenderer.sprite = trueTarget;
+		activeSquareState.setHardTargetedState(true);
+		activeSquareState.setSoftTargetedState(true);
+//		Debug.Log ("target triggered");
+
 	}
-	public void UntargetSquare(){
-		spriteRenderer.sprite = defaultSprite;
+	public void softUntargetSquare(){	//used by playarea to turn on and off targetting
+		spriteRenderer.sprite = trueUntarget;
+		activeSquareState.setHardTargetedState(false);
+//		Debug.Log ("soft untarget triggered");
 	}
-	public void ActivateSquare(){
-//		Debug.Log (spriteRenderer.name);
-		spriteRenderer.sprite = activatedSprite;
-		storedDefault = defaultSprite;
-		defaultSprite = activatedSprite;
+	public void hardUntargetSquare(){	//used by playarea to turn on and off targetting
+		spriteRenderer.sprite = trueUntarget;
+		activeSquareState.setSoftTargetedState(false);
+		activeSquareState.setHardTargetedState(false);		//redundent but needed
+//		Debug.Log ("hard untarget triggered");
 	}
-	public void DeactivateSquare(){
-//		defaultSprite = storedDefault;
-		spriteRenderer.sprite = defaultSprite;
+
+
+
+
+
+	public void OccupiedSquare(){	//used by playarea to turn on and off if the enemy occupies the space
+		trueTarget = occupiedTargetedSprite;
+		trueUntarget = occupiedUntargetedSprite;
+		activeSquareState.setOccupiedState(true);
 	}
+	public void DeactivateSquare(){		//used by playarea to turn on and off if the enemy occupies the space
+		trueUntarget = defaultSprite;
+		trueTarget = targetMissedSprite;
+		activeSquareState.setOccupiedState(false);
+	}
+
+//	public ActiveSquareState getStateOfSquare(){
+//		return activeSquareState;
+//	}
 //	void OnMouseExit(){
 //		spriteRenderer.sprite = defaultSprite;
 //	}
+}
+public class ActiveSquareState{
+	bool occupied = false;
+	bool hardTargeted = false;
+	bool softTargeted = false;
+	public ActiveSquareState(){
+	}
+	public bool getOccupiedState(){
+		return occupied;}
+	public void setOccupiedState(bool incomingState){
+		occupied = incomingState;}
+
+	public bool getHardTargetedState(){
+		return hardTargeted;}
+	public void setHardTargetedState(bool incomingState){
+		hardTargeted = incomingState;
+	}
+
+	public bool getSoftTargetedState(){
+		return softTargeted;}
+	public void setSoftTargetedState(bool incomingState){
+		softTargeted = incomingState;
+	}
+
 }

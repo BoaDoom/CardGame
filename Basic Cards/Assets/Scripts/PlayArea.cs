@@ -22,6 +22,7 @@ public class PlayArea: MonoBehaviour {
 
 	private ActiveSquareBehaviour[][] grid;
 	private Vector2 gridDimensions;
+	private ActiveSquareState[][] gridOfStates;
 
 	Vector3 zeroCord = Vector3.zero;
 	Vector3 framingBoxSize;
@@ -36,7 +37,7 @@ public class PlayArea: MonoBehaviour {
 		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
 		if(XMLBodyHitLoaderScriptTEMP != null){
 			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
-			Debug.Log ("bodyLoaderData count " +bodyLoaderData.Count);
+//			Debug.Log ("bodyLoaderData count " +bodyLoaderData.Count);
 		}
 			
 		if(XMLBodyHitLoaderScriptTEMP == null){
@@ -56,8 +57,10 @@ public class PlayArea: MonoBehaviour {
 		firstBoxCord = zeroCord + new Vector3 ((-0.5f + framingBoxSize.x / 2), (0.5f - framingBoxSize.y / 2), 0.0f);
 		//int yi = 0;
 		//int xi = 0;
-		grid = new ActiveSquareBehaviour[(int)gridDimensions.x][];
+		gridOfStates = new ActiveSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
+		grid = new ActiveSquareBehaviour[(int)gridDimensions.x][];		//grid of prefab ActiveSquare
 		for (int x = 0; x < gridDimensions.x; x++){
+			gridOfStates [x] = new ActiveSquareState[(int)gridDimensions.y];
 			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
 			for (int y = 0; y < gridDimensions.y; y++)
 			{
@@ -69,11 +72,13 @@ public class PlayArea: MonoBehaviour {
 				smallSquareInst.SetGridCordY (y);
 
 				if (bodyLoaderData.Find(XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y] == 1) {
-					smallSquareInst.ActivateSquare();
+					smallSquareInst.OccupiedSquare();
 
 				}
 
 				grid[x][y] = smallSquareInst;
+				gridOfStates[x][y] = smallSquareInst.activeSquareState;
+
 //				grid[x][y].ActivateSquare ();
 //				Debug.Log (x);
 //				Debug.Log (y);
@@ -84,7 +89,7 @@ public class PlayArea: MonoBehaviour {
 			}
 		}
 		//activateSmallSquare ();
-		Debug.Log (grid.Length +" "+ grid[0].Length );
+//		Debug.Log (grid.Length +" "+ grid[0].Length );
 	}
 //	public void activateSmallSquare(){
 //		
@@ -101,12 +106,33 @@ public class PlayArea: MonoBehaviour {
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
 		return grid [0] [0];
 	}
+//	public ActiveSquareState[][] getActiveSquaresStates(){
+//		//ActiveSquareState[][] gridOfStates;
+//		int x = 0;
+//		gridOfStates = new ActiveSquareState[(int)gridDimensions.x][];
+////		Debug.Log ("x " + gridDimensions.x);
+//		foreach(ActiveSquareBehaviour[] gridY in grid){
+//			int y = 0;
+////			Debug.Log ("y " + gridDimensions.y);
+//			gridOfStates [x] = new ActiveSquareState[(int)gridDimensions.y];
+//			foreach (ActiveSquareBehaviour square in gridY) {
+//				gridOfStates[x][y] = square.activeSquareState;
+//				//Debug.Log("state inside loop " +square.activeSquareState.getOccupiedState ());
+//
+//			}
+//			x++;
+//		}
+//		return gridOfStates;
+//	}
+	public bool getActiveSquareStateSoftTarget(int xcordT, int ycordT){
+		return gridOfStates [xcordT] [ycordT].getSoftTargetedState ();
+	}
+	public bool getActiveSquareStateOccupied(int xcordT, int ycordT){
+		return gridOfStates [xcordT] [ycordT].getOccupiedState ();
+	}
 
 	public void squareHoveredOver(int xCord, int yCord){		//method used by the grid of active squares to signal that they are being hovered over
 		if(gameControllerScript.currentClickedOnCardWeaponMatrix.isCardClickedOn){	//checks the main game controller to see if a card on the table has sent the signal that it is clicked on
-
-
-
 			Vector2 middleOfWeaponHitArea = new Vector2(Mathf.Round((gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length/2)),
 				Mathf.Round((gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length/2)));		//rounding the dimensions of the weaponhitArea to find the 'center' to base activate the grid
 			//if (
@@ -127,30 +153,31 @@ public class PlayArea: MonoBehaviour {
 							&& ((tempStartingPoint.x +x)<boxCountX) && ((tempStartingPoint.y +y)<boxCountY)){		//checks if the grid hit area is outside of the grid target down and to the right
 						grid [(int)tempStartingPoint.x + x] [(int)tempStartingPoint.y + y].TargetSquare ();		//activates the squares inside the area
 					}
-//					Debug.Log (x);
-//					Debug.Log (y);
+
 				}
 			}
-
-			//Debug.Log(middleOfWeaponHitArea);
-
-			//Debug.Log(gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length);
-			//Debug.Log(gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length);
-			//grid [xCord] [yCord].ActivateSquare ();	
 		}
+		//gameControllerScript.square
 
 		//testVec2 = new Vector2 (xCord, yCord);
 	}
-	public void squareHoveredOff(int xCord, int yCord){
-		resetSmallSquares ();
+	public void squareHoveredOff(){
+		hardResetSmallSquares ();
 		//grid [xCord] [yCord].DeactivateSquare ();	
 	}
-	public void resetSmallSquares(){
+	public void softResetSmallSquares(){
 		foreach(ActiveSquareBehaviour[] gridY in grid){
 			foreach (ActiveSquareBehaviour square in gridY) {
-				square.UntargetSquare ();
+				square.softUntargetSquare ();
 			}
 		}
 	}
-
+	public void hardResetSmallSquares(){		//gamecontroller sent once another card is clicked on
+		foreach(ActiveSquareBehaviour[] gridY in grid){
+			foreach (ActiveSquareBehaviour square in gridY) {
+				square.hardUntargetSquare ();
+			}
+		}
+	}
 }
+//public class activeSquareState

@@ -79,7 +79,7 @@ public class DeckBehaviour : MonoBehaviour {
 		for (int i=0; i < cardsFaces.Length; i++){															//making as many cards as there are graphics for faces, gets the number from the Card prefab
 			orderOfDrawPile.Add(i);
 		}
-		shuffleAll();							//shuffles all the cards in orderOfDrawPile
+		discardDrawThenShuffle();							//shuffles all the cards in orderOfDrawPile
 
 //		weaponSmallSquare = Instantiate (weaponHitSmallSquarePrefab, deckStartPosition.position, deckStartPosition.rotation);
 //		weaponSmallSquare.transform.localScale = smallSquareSize.transform.localScale;
@@ -118,22 +118,23 @@ public class DeckBehaviour : MonoBehaviour {
 		}
 	}
 
-	public void updateCards(){								//is called when there are possible cards played and need to be resorted into the discard pile
+	public void updateCards(){								//is called when there are possible cards played and need to be resorted into the discard pile. Is called by shuffle(), discard() and from a cardbehaviour when it's played and used
 		for (int i = 0; i < drawnCards.Count; i++){ //CardBehaviour drawnCard in drawnCards) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
 				discardedCards.Add(drawnCards[i].CardNumber);			//moves any non active cards to discarded pile
 				//enemyBehaviour.takeDamage(drawnCards[i].AttackValue);
-				gameController.enemyCardDamage(drawnCards[i].AttackValue);
+				gameController.enemyCardDamage();
 				Destroy(drawnCards[i].gameObject);
 				drawnCards.RemoveAt(i);						//removes the non active card from the drawn pile
 				i--;
 			}
 		}
 	}
-	public void shuffleAll(){												//a shuffle all command. Takes every single card from the original deck and reshuffles them.
+	public void discardDrawThenShuffle(){									//a shuffle all command. Takes every single card from the original deck and reshuffles them. Is called after the deck is created, and after shuffleEverything()
+																			//and called from gamecontroller scripte by button press
 		if (orderOfDrawPile.Count > 0) {										//checks the orderOfDrawPile has cards before trying to discard the remainder
 			int tempCount = orderOfDrawPile.Count;							//store the current number of cards in DeckToDrawFrom
-			for (int i = 0; i < tempCount; i++) {
+			for (int i = 0; i < tempCount; i++) {							//discards all the cards in drawpile
 				discardedCards.Add (orderOfDrawPile [0]);						//adds first card in list to discard deck
 				orderOfDrawPile.RemoveAt (0);									//removes first card in list of DeckToDrawFrom
 			}
@@ -141,22 +142,11 @@ public class DeckBehaviour : MonoBehaviour {
 			//Debug.Log ("the stack of cards being shuffled does not have any cards in it");
 			Debug.Log (orderOfDrawPile.Count);
 		}
-		shuffleDiscard ();													//calls the shuffle discard function every time
-
-
-//		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
-//		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
-//		if(XMLBodyHitLoaderScriptTEMP != null){
-////			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
-//			Debug.Log ("JJ bodyLoaderData count " +XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData.Count);}
-//
-//		if(XMLBodyHitLoaderScriptTEMP == null){
-//			Debug.Log ("Cannot find 'BodyLoader'object");}
-
-
+		shuffleDiscard ();										//calls the shuffle discard function after putting all cards into the discard.
 
 	}
-	public void shuffleDiscard(){											//function for the times when there are cards in play that you don't want to grab when you want to reshuffle
+	public void shuffleDiscard(){											//function for the times when there are cards in play that you don't want to grab when you want to reshuffle, is called by shuffle discard button and at the end of shuffleall()
+																	//and called from gamecontroller scripte by button press
 		int tempCount = discardedCards.Count;								//stores total number of discard cards
 		for (int i=0; i <tempCount; i++){									//loops for every card in discard pile
 			int rand = Random.Range(0,discardedCards.Count);				//picks a random number from 0 to current number of cards of discard. Subtracted one because count starts at 1, actual deck starts at 0
@@ -164,17 +154,18 @@ public class DeckBehaviour : MonoBehaviour {
 			discardedCards.RemoveAt(rand);
 		}
 	}
-	public void shuffleEverything(){
+	public void discardAllActiveShuffle(){									//deactivates all active cards and then updates to add them to the discard pile and discarddrawthenshuffles to add draw pile cards to shuffle as well
+																		//and called from gamecontroller scripte by button press	
 		foreach (CardBehaviour drawnCard in drawnCards) {
 			drawnCard.deactivate ();
 		}
 		updateCards ();
-		shuffleAll ();
+		discardDrawThenShuffle ();
 	}
-	public void discardEverything(){
-		foreach (CardBehaviour drawnCard in drawnCards) {
-			drawnCard.deactivate ();
-		}
-		updateCards ();
-	}
+//	public void discardEverything(){
+//		foreach (CardBehaviour drawnCard in drawnCards) {
+//			drawnCard.deactivate ();
+//		}
+//		updateCards ();
+//	}
 }

@@ -101,14 +101,14 @@ public class CardBehaviour : MonoBehaviour {
 	}
 	
 	private void OnMouseDown(){
-		gameControllerScript.cardClickedOn (hitBoxDataForCard);
+		gameControllerScript.cardClickedOn (hitBoxDataForCard);		//sends the info about attack attached to the card to the gamecontroller
 	}
 	private void OnMouseUp(){
 		gameControllerScript.cardClickedOff();
 		//clicked = true;
 		if (cardInPlayArea) {
 			deactivate ();
-			deckBehaviour.updateCards ();
+			deckBehaviour.updateCards ();		//lets the deck know that a card was played and to update the active cards
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
