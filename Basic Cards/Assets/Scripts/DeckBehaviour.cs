@@ -58,13 +58,13 @@ public class DeckBehaviour : MonoBehaviour {
 		if(XMLWeaponHitLoaderScriptTEMP == null){
 			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 
-		GameObject playAreaTemp = GameObject.FindWithTag("PlayArea");
-		if (playAreaTemp != null) {
-			//PlayArea = playAreaTemp;
-			//playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
-		}
-		if(playAreaTemp == null){
-			Debug.Log ("Cannot find 'playArea'object");}
+//		GameObject playAreaTemp = GameObject.FindWithTag("PlayArea");
+//		if (playAreaTemp != null) {
+//			//PlayArea = playAreaTemp;
+//			//playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
+//		}
+//		if(playAreaTemp == null){
+//			Debug.Log ("Cannot find 'playArea'object");}
 
 //		GameObject gameControllerTemp = GameObject.FindWithTag("GameController");
 //		if(XMLWeaponHitLoaderScriptTEMP != null){
@@ -144,14 +144,14 @@ public class DeckBehaviour : MonoBehaviour {
 		shuffleDiscard ();													//calls the shuffle discard function every time
 
 
-		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
-		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
-		if(XMLBodyHitLoaderScriptTEMP != null){
-//			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
-			Debug.Log ("JJ bodyLoaderData count " +XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData.Count);}
-
-		if(XMLBodyHitLoaderScriptTEMP == null){
-			Debug.Log ("Cannot find 'BodyLoader'object");}
+//		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
+//		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
+//		if(XMLBodyHitLoaderScriptTEMP != null){
+////			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
+//			Debug.Log ("JJ bodyLoaderData count " +XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData.Count);}
+//
+//		if(XMLBodyHitLoaderScriptTEMP == null){
+//			Debug.Log ("Cannot find 'BodyLoader'object");}
 
 
 

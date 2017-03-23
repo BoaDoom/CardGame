@@ -36,7 +36,7 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 		//DontDestroyOnLoad (gameObject); //Allows Loader to carry over into new scene 
 		LoadXML (); //Loads XML File. Code below. 
 		StartCoroutine(AssignData()); //Starts assigning XML data to data List. Code below
-		Debug.Log("inside bodydata count "+bodyData.Count);
+//		Debug.Log("inside bodydata count "+bodyData.Count);
 	}
 
 	void LoadXML()
@@ -97,12 +97,12 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 				//
 			}
 		}
-		Debug.Log ("bodydata after add " + bodyData.Count);
+//		Debug.Log ("bodydata after add " + bodyData.Count);
 		//finishedLoading = true; //tell the program that we’ve finished loading data. 
 		yield return null;
 	}
 	public void getBodyData(){
-		Debug.Log("Count grab "+bodyData.Count);
+//		Debug.Log("Count grab "+bodyData.Count);
 	}
 }
 

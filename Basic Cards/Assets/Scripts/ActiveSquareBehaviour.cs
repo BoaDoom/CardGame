@@ -13,12 +13,16 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	public Sprite targetedSprite;
 	Sprite defaultSprite;
 	Sprite storedDefault;
+//	private int startingIntValue;
 
 	SpriteRenderer spriteRenderer;
 	PlayArea gridHitController;
+//	ActiveSquareBehaviour(int startingIntValueImport){
+//		startingIntValue = startingIntValueImport;
+//	}
 
-
-	void Start(){
+	void Awake(){
+		
 		SpriteRenderer spriteRendererTemp = gameObject.GetComponent<SpriteRenderer>();
 		if(spriteRendererTemp != null){
 			spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -50,6 +54,9 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	public int GetGridCordY(){
 		return gridCordY;
 	}
+	public void TestMethod(){
+		Debug.Log ("test method");
+	}
 //	void OnTriggerStay2D(Collider2D other){
 //		if (other.CompareTag("weaponHitBox")){
 //			spriteRenderer.sprite = activatedSprite;
@@ -78,9 +85,10 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 		spriteRenderer.sprite = defaultSprite;
 	}
 	public void ActivateSquare(){
+//		Debug.Log (spriteRenderer.name);
 		spriteRenderer.sprite = activatedSprite;
-//		storedDefault = defaultSprite;
-//		defaultSprite = activatedSprite;
+		storedDefault = defaultSprite;
+		defaultSprite = activatedSprite;
 	}
 	public void DeactivateSquare(){
 //		defaultSprite = storedDefault;

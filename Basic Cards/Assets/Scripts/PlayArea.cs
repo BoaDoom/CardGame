@@ -36,11 +36,12 @@ public class PlayArea: MonoBehaviour {
 		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
 		if(XMLBodyHitLoaderScriptTEMP != null){
 			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
-			Debug.Log ("bodyLoaderData count " +bodyLoaderData.Count);}
+			Debug.Log ("bodyLoaderData count " +bodyLoaderData.Count);
+		}
 			
 		if(XMLBodyHitLoaderScriptTEMP == null){
 			Debug.Log ("Cannot find 'BodyLoader'object");}
-		XMLBODYloaDER.getBodyData();
+//		XMLBODYloaDER.getBodyData();
 //		Debug.Log(bodyLoaderData.Count);
 //		boxCountX = bodyLoaderData [0].XDimOfBody;
 //		boxCountY = bodyLoaderData [0].YDimOfBody;
@@ -67,31 +68,35 @@ public class PlayArea: MonoBehaviour {
 				smallSquareInst.SetGridCordX (x);
 				smallSquareInst.SetGridCordY (y);
 
-				grid[x][y] = smallSquareInst;
+				if (bodyLoaderData.Find(XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y] == 1) {
+					smallSquareInst.ActivateSquare();
 
+				}
+
+				grid[x][y] = smallSquareInst;
+//				grid[x][y].ActivateSquare ();
 //				Debug.Log (x);
 //				Debug.Log (y);
 //				Debug.Log (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").nameOfBody);
 //				Debug.Log (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y]);
-//				if (bodyLoaderData.Find(XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y] == 1) {
-////					activateSmallSquare();
-//				}
+
 
 			}
 		}
 		//activateSmallSquare ();
-
+		Debug.Log (grid.Length +" "+ grid[0].Length );
 	}
-	public void activateSmallSquare(){
-		for (int x = 0; x < gridDimensions.x; x++){
-			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
-			for (int y = 0; y < gridDimensions.y; y++)
-			{
-				grid [x] [y].ActivateSquare ();
-			}
-		}
-		//grid [x] [y].ActivateSquare ();
-	}
+//	public void activateSmallSquare(){
+//		
+//		for (int x = 0; x < gridDimensions.x; x++){
+////			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
+//			for (int y = 0; y < gridDimensions.y; y++)
+//			{
+////				grid [x] [y].ActivateSquare ();
+//			}
+//		}
+//		//grid [x] [y].ActivateSquare ();
+//	}
 	public ActiveSquareBehaviour getSmallSquare(){
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
 		return grid [0] [0];
