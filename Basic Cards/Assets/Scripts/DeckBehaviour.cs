@@ -44,13 +44,17 @@ public class DeckBehaviour : MonoBehaviour {
 	void Start () {
 		GameObject XMLCardLoaderObject = GameObject.FindWithTag("CardLoader");
 		if(XMLCardLoaderObject != null){
-			cardData = XMLCardLoaderObject.GetComponent<XMLCardLoaderScript>().data;}
+			cardData = XMLCardLoaderObject.GetComponent<XMLCardLoaderScript>().data;
+//			Debug.Log ("cardData " + cardData.Count);
+		}
 		if(XMLCardLoaderObject == null){
 			Debug.Log ("Cannot find 'XMLCardLoaderObject'object");}
 
 		GameObject XMLWeaponHitLoaderScriptTEMP = GameObject.FindWithTag("HitBoxLoader");
 		if(XMLWeaponHitLoaderScriptTEMP != null){
-			weaponHitBoxData = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;}
+			weaponHitBoxData = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;
+//			Debug.Log ("weaponHitBoxData " + weaponHitBoxData.Count);
+		}
 		if(XMLWeaponHitLoaderScriptTEMP == null){
 			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 
@@ -138,6 +142,19 @@ public class DeckBehaviour : MonoBehaviour {
 			Debug.Log (orderOfDrawPile.Count);
 		}
 		shuffleDiscard ();													//calls the shuffle discard function every time
+
+
+		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
+		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
+		if(XMLBodyHitLoaderScriptTEMP != null){
+//			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
+			Debug.Log ("JJ bodyLoaderData count " +XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData.Count);}
+
+		if(XMLBodyHitLoaderScriptTEMP == null){
+			Debug.Log ("Cannot find 'BodyLoader'object");}
+
+
+
 	}
 	public void shuffleDiscard(){											//function for the times when there are cards in play that you don't want to grab when you want to reshuffle
 		int tempCount = discardedCards.Count;								//stores total number of discard cards

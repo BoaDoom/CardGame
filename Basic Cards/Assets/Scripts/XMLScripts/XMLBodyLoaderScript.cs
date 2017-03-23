@@ -13,7 +13,7 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 	XDocument xmlDoc; //create Xdocument. Will be used later to read XML file 
 	IEnumerable<XElement> items; //Create an Ienumerable list. Will be used to store XML Items. 
 	IEnumerable<XElement> linesOfHitBox;
-	public List <XMLBodyHitData> data = new List <XMLBodyHitData>(); //Initialize List of XMLWeaponData objects.
+	public List <XMLBodyHitData> bodyData = new List <XMLBodyHitData>(); //Initialize List of XMLWeaponData objects.
 
 	//int iteration = 0;
 	//bool newName = true;
@@ -21,7 +21,7 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 	//bool finishedLoading = false;
 
 	string nameOfBody = "none"; 
-	string placement;
+	string placement = "none";
 	XElement designShape;
 	int[][] gridOfBody; 
 	//int attackDamageOfCard; 
@@ -36,6 +36,7 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 		//DontDestroyOnLoad (gameObject); //Allows Loader to carry over into new scene 
 		LoadXML (); //Loads XML File. Code below. 
 		StartCoroutine(AssignData()); //Starts assigning XML data to data List. Code below
+		Debug.Log("inside bodydata count "+bodyData.Count);
 	}
 
 	void LoadXML()
@@ -91,12 +92,17 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 
 				}
 				//Debug.Log(gridOfBody[0][0]);
-				data.Add (new XMLBodyHitData(nameOfBody, placement, gridOfBody, XDimOfBody, YDimOfBody));
+				bodyData.Add (new XMLBodyHitData(nameOfBody, placement, gridOfBody, XDimOfBody, YDimOfBody));
+
 				//
 			}
 		}
+		Debug.Log ("bodydata after add " + bodyData.Count);
 		//finishedLoading = true; //tell the program that we’ve finished loading data. 
 		yield return null;
+	}
+	public void getBodyData(){
+		Debug.Log("Count grab "+bodyData.Count);
 	}
 }
 
@@ -113,6 +119,8 @@ public class XMLBodyHitData {
 		gridOfBody = gridOfBodyT;
 		XDimOfBody = Xdim;
 		YDimOfBody = Ydim;
+//		Debug.Log (nameOfBody +" "+ placement +" "+ XDimOfBody +" "+ YDimOfBody );
+
 	}
 
 }

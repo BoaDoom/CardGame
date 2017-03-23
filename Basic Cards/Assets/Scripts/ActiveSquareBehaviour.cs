@@ -15,7 +15,7 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	Sprite storedDefault;
 
 	SpriteRenderer spriteRenderer;
-	GridHitController gridHitController;
+	PlayArea gridHitController;
 
 
 	void Start(){
@@ -32,7 +32,7 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 
 		GameObject gridHitControllerImport = GameObject.FindWithTag ("PlayArea");
 		if(gridHitControllerImport != null){
-			gridHitController = gridHitControllerImport.GetComponent<GridHitController>();
+			gridHitController = gridHitControllerImport.GetComponent<PlayArea>();
 		}
 		if(gridHitControllerImport == null){
 			Debug.Log ("Cannot find 'gridHitControllerImport'object");

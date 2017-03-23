@@ -1,21 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml; //Needed for XML functionality
+using System.Xml.Serialization; //Needed for XML Functionality
+using System.IO;
 using UnityEngine;
 
-public class GridHitController : MonoBehaviour {
+public class PlayArea: MonoBehaviour {
+
+	public List<XMLBodyHitData> bodyLoaderData;
+
+	public XMLBodyLoaderScript XMLBODYloaDER;
 
 	public ActiveSquareBehaviour smallSquare; //added manually inside unity from prefabs
 	Transform transformOriginal;
-	public Transform playAreaDetector; //added manually inside unity
-	//public PlayAreaDetectorScript playAreaDetectorScript;
 	public GameControllerScript gameControllerScript; //added manually inside unity
 
 	int boxCountX = 7;
-	int boxCountY = 7;
+	int boxCountY = 8;
 
 	public float sizeRatioOfSmallBox = 1.0f;
 
-	//public List<Transform> gridList;
 	private ActiveSquareBehaviour[][] grid;
 	private Vector2 gridDimensions;
 
@@ -23,24 +27,27 @@ public class GridHitController : MonoBehaviour {
 	Vector3 framingBoxSize;
 	public Vector3 firstBoxCord;
 
-	public List<XMLBodyHitData> bodyLoaderData;
-	//Vector2 testVec2;
+
 
 
 
 	void Start () {
 		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
+		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
 		if(XMLBodyHitLoaderScriptTEMP != null){
-			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().data;}
+			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
+			Debug.Log ("bodyLoaderData count " +bodyLoaderData.Count);}
+			
 		if(XMLBodyHitLoaderScriptTEMP == null){
 			Debug.Log ("Cannot find 'BodyLoader'object");}
-
-		boxCountX = bodyLoaderData [0].XDimOfBody;
-		boxCountY = bodyLoaderData [0].YDimOfBody;
+		XMLBODYloaDER.getBodyData();
+//		Debug.Log(bodyLoaderData.Count);
+//		boxCountX = bodyLoaderData [0].XDimOfBody;
+//		boxCountY = bodyLoaderData [0].YDimOfBody;
 		gridDimensions = new Vector2(boxCountX, boxCountY);
 
-		playAreaDetector.localScale = new Vector3(1.0f, 1.0f,1.0f);
-		playAreaDetector.position = gameObject.transform.position;
+		//playAreaDetector.localScale = new Vector3(1.0f, 1.0f,1.0f);
+		//playAreaDetector.position = gameObject.transform.position;
 
 		ActiveSquareBehaviour smallSquareInst;
 		transformOriginal = gameObject.transform;
@@ -61,11 +68,13 @@ public class GridHitController : MonoBehaviour {
 				smallSquareInst.SetGridCordY (y);
 
 				grid[x][y] = smallSquareInst;
+
 //				Debug.Log (x);
 //				Debug.Log (y);
+//				Debug.Log (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").nameOfBody);
 //				Debug.Log (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y]);
 //				if (bodyLoaderData.Find(XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y] == 1) {
-//					activateSmallSquare();
+////					activateSmallSquare();
 //				}
 
 			}
@@ -138,7 +147,5 @@ public class GridHitController : MonoBehaviour {
 			}
 		}
 	}
-	void Update () {
 
-	}
 }

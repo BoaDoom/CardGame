@@ -9,7 +9,7 @@ public class GameControllerScript : MonoBehaviour {
 	public Button discardEverythingButton;
 	//public DeckBehaviour deckBehav;
 	public DeckBehaviour deckBehaviour;
-	public GridHitController playArea;
+	public PlayArea playArea;
 	public EnemyBehaviour enemyBehaviour;
 
 	public CurrentWeaponHitBox currentClickedOnCardWeaponMatrix;
@@ -30,7 +30,7 @@ public class GameControllerScript : MonoBehaviour {
 			}
 		GameObject playAreaObject = GameObject.FindWithTag("PlayArea");
 		if(playAreaObject != null){
-			playArea = playAreaObject.GetComponent<GridHitController>();
+			playArea = playAreaObject.GetComponent<PlayArea>();
 		}
 		if(playAreaObject == null){
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
