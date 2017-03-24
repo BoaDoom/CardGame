@@ -9,8 +9,6 @@ public class PlayArea: MonoBehaviour {
 
 	public List<XMLBodyHitData> bodyLoaderData;
 
-	public XMLBodyLoaderScript XMLBODYloaDER;
-
 	public ActiveSquareBehaviour smallSquare; //added manually inside unity from prefabs
 	Transform transformOriginal;
 	public GameControllerScript gameControllerScript; //added manually inside unity
@@ -29,15 +27,10 @@ public class PlayArea: MonoBehaviour {
 	public Vector3 firstBoxCord;
 
 
-
-
-
 	void Start () {
 		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
-		//Debug.Log ("XMLBODYTEMP "+ XMLBodyHitLoaderScriptTEMP);
 		if(XMLBodyHitLoaderScriptTEMP != null){
 			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
-//			Debug.Log ("bodyLoaderData count " +bodyLoaderData.Count);
 		}
 			
 		if(XMLBodyHitLoaderScriptTEMP == null){
@@ -47,9 +40,6 @@ public class PlayArea: MonoBehaviour {
 //		boxCountX = bodyLoaderData [0].XDimOfBody;
 //		boxCountY = bodyLoaderData [0].YDimOfBody;
 		gridDimensions = new Vector2(boxCountX, boxCountY);
-
-		//playAreaDetector.localScale = new Vector3(1.0f, 1.0f,1.0f);
-		//playAreaDetector.position = gameObject.transform.position;
 
 		ActiveSquareBehaviour smallSquareInst;
 		transformOriginal = gameObject.transform;
@@ -73,24 +63,15 @@ public class PlayArea: MonoBehaviour {
 
 				if (bodyLoaderData.Find(XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y] == 1) {
 					smallSquareInst.OccupiedSquare();
-
 				}
 
 				grid[x][y] = smallSquareInst;
 				gridOfStates[x][y] = smallSquareInst.activeSquareState;
 
-//				grid[x][y].ActivateSquare ();
-//				Debug.Log (x);
-//				Debug.Log (y);
-//				Debug.Log (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").nameOfBody);
-//				Debug.Log (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y]);
-
-
 			}
 		}
-		//activateSmallSquare ();
-//		Debug.Log (grid.Length +" "+ grid[0].Length );
 	}
+
 //	public void activateSmallSquare(){
 //		
 //		for (int x = 0; x < gridDimensions.x; x++){
@@ -131,23 +112,20 @@ public class PlayArea: MonoBehaviour {
 		return gridOfStates [xcordT] [ycordT].getOccupiedState ();
 	}
 
+	public Vector2 getGridDimensions(){
+		return gridDimensions;
+	}
+
 	public void squareHoveredOver(int xCord, int yCord){		//method used by the grid of active squares to signal that they are being hovered over
 		if(gameControllerScript.currentClickedOnCardWeaponMatrix.isCardClickedOn){	//checks the main game controller to see if a card on the table has sent the signal that it is clicked on
 			Vector2 middleOfWeaponHitArea = new Vector2(Mathf.Round((gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length/2)),
 				Mathf.Round((gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length/2)));		//rounding the dimensions of the weaponhitArea to find the 'center' to base activate the grid
-			//if (
 			Vector2 upperLeftStartingPoint = new Vector2(xCord - middleOfWeaponHitArea.x, yCord - middleOfWeaponHitArea.y);
 			//Debug.Log ("test");
 			for (int x =0; x < gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[0].Length; x++){
-				//grid [upperLeftStartingPoint.x + i] [upperLeftStartingPoint.y].ActivateSquare ();
 				for (int y = 0; y < gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit.Length; y++) {
 					Vector2 tempStartingPoint = new Vector2 (upperLeftStartingPoint.x, upperLeftStartingPoint.y);
-//					if (upperLeftStartingPoint.x<0){
-//						tempStartingPoint.x = 0;
-//					}
-//					if (upperLeftStartingPoint.y<0){
-//						tempStartingPoint.y = 0;
-//					}
+
 					if (gameControllerScript.currentClickedOnCardWeaponMatrix.weaponHitData.gridOfHit[x][y] != 0	//checks the grid hit area to see if its turned 'on' with 1, or 'off' with 0
 							&& ((tempStartingPoint.x +x)>=0) && ((tempStartingPoint.y +y)>=0)						//checks if the grid hit area is outside of the grid target up and to the left
 							&& ((tempStartingPoint.x +x)<boxCountX) && ((tempStartingPoint.y +y)<boxCountY)){		//checks if the grid hit area is outside of the grid target down and to the right

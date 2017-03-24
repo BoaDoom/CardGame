@@ -17,7 +17,7 @@ public class GameControllerScript : MonoBehaviour {
 
 	void Start () {
 		//boolCardClickedOn = false;
-		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null);
+		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null, 0);
 		shuffleDiscardsButton.onClick.AddListener(shuffleDiscard);
 		shuffleEverythingButton.onClick.AddListener(discardDrawThenShuffle);
 		discardEverythingButton.onClick.AddListener(discardAllActiveShuffle);
@@ -38,8 +38,8 @@ public class GameControllerScript : MonoBehaviour {
 		
 	}
 
-	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix){		//command sent from the CardBehaviour script with info about the damage its doing
-		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(true, WeaponHitMatrix);
+	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix, int weaponDamage){		//command sent from the CardBehaviour script with info about the damage its doing
+		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(true, WeaponHitMatrix, weaponDamage);
 		playArea.hardResetSmallSquares ();
 		//boolCardClickedOn = true;
 	}
@@ -63,15 +63,24 @@ public class GameControllerScript : MonoBehaviour {
 		Debug.Log("target: " +playArea.getActiveSquareStateSoftTarget(0,0));
 		Debug.Log("occupied: " +playArea.getActiveSquareStateOccupied(0,0));
 		//enemyBehaviour.takeDamage (currentClickedOnCardWeaponMatrix);
-
+		Vector2 gridDimensions = playArea.getGridDimensions();
+		for (int x = 0; x < gridDimensions.x; x++) {
+			for (int y = 0; y < gridDimensions.y; y++) {
+				if (playArea.getActiveSquareStateSoftTarget(x,y) && playArea.getActiveSquareStateOccupied(x,y)){
+					enemyBehaviour.takeDamage (currentClickedOnCardWeaponMatrix);
+				}
+			}
+		}
 	}
 
 }
 public class CurrentWeaponHitBox{
 	public bool isCardClickedOn;
 	public XMLWeaponHitData weaponHitData;
-	public CurrentWeaponHitBox(bool incomingCardClickedData, XMLWeaponHitData incomingWeaponHitData){
+	public int weaponDamage;
+	public CurrentWeaponHitBox(bool incomingCardClickedData, XMLWeaponHitData incomingWeaponHitData, int weaponDamageT){
 		isCardClickedOn = incomingCardClickedData;
 		weaponHitData = incomingWeaponHitData;
+		weaponDamage = weaponDamageT;
 	}
 }

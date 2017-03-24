@@ -62,7 +62,7 @@ public class CardBehaviour : MonoBehaviour {
 	public int CardNumber{
 		get{return cardSpriteNum;}
 	}
-	public float AttackValue{
+	public int AttackValue{
 		get{return attackDamageOfCard;}
 	}
 	public string TypeOfAttack{
@@ -101,7 +101,7 @@ public class CardBehaviour : MonoBehaviour {
 	}
 	
 	private void OnMouseDown(){
-		gameControllerScript.cardClickedOn (hitBoxDataForCard);		//sends the info about attack attached to the card to the gamecontroller
+		gameControllerScript.cardClickedOn (hitBoxDataForCard, attackDamageOfCard);		//sends the info about attack attached to the card to the gamecontroller
 	}
 	private void OnMouseUp(){
 		gameControllerScript.cardClickedOff();

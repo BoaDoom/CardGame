@@ -11,6 +11,8 @@ public class EnemyBehaviour : MonoBehaviour {
 	public Transform healthBarGraphic;
 	private Vector3 healthBarStartingScale;
 
+	CurrentWeaponHitBox incomingWeaponhitBox;
+
 	void Start () {
 		remainingHealth = healthMax;
 		healthBarStartingScale = healthBarGraphic.localScale;
@@ -20,9 +22,9 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Update () {
 		
 	}
-	public void takeDamage(float incomingDamage){			//only sent from GameController script
+	public void takeDamage(CurrentWeaponHitBox incomingDamage){			//only sent from GameController script
 		Vector3 tempHealth = healthBarStartingScale;
-		remainingHealth -= incomingDamage;
+		remainingHealth -= incomingDamage.weaponDamage;
 		tempHealth.x = healthBarStartingScale.x * (remainingHealth / healthMax);
 		healthBarGraphic.localScale = tempHealth;
 		if (remainingHealth <= 0) {
