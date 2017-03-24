@@ -12,9 +12,13 @@ public class PlayArea: MonoBehaviour {
 	public ActiveSquareBehaviour smallSquare; //added manually inside unity from prefabs
 	Transform transformOriginal;
 	public GameControllerScript gameControllerScript; //added manually inside unity
+	EnemyBehaviour enemyBehaviour;
 
-	int boxCountX = 7;
-	int boxCountY = 8;
+	public int boxCountX = 7;
+	public int boxCountY = 8;
+
+	int bodyHitBoxWidth;
+	int bodyHitBoxHeight;
 
 	public float sizeRatioOfSmallBox = 1.0f;
 
@@ -32,23 +36,34 @@ public class PlayArea: MonoBehaviour {
 		if(XMLBodyHitLoaderScriptTEMP != null){
 			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
 		}
-			
 		if(XMLBodyHitLoaderScriptTEMP == null){
 			Debug.Log ("Cannot find 'BodyLoader'object");}
-//		XMLBODYloaDER.getBodyData();
-//		Debug.Log(bodyLoaderData.Count);
-//		boxCountX = bodyLoaderData [0].XDimOfBody;
-//		boxCountY = bodyLoaderData [0].YDimOfBody;
+
+
+		GameObject EnemyBehaviourTemp = GameObject.FindWithTag("EnemyController");
+		if(EnemyBehaviourTemp != null){
+			//enemyBehaviour = EnemyBehaviourTemp.GetComponent<EnemyBehaviour>();
+		}
+		if(EnemyBehaviourTemp == null){
+			Debug.Log ("Cannot find 'BodyLoader'object");}
+
+
+		bodyHitBoxWidth = bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody.Length;
+		bodyHitBoxHeight = bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [0].Length;
+
 		gridDimensions = new Vector2(boxCountX, boxCountY);
 
 		ActiveSquareBehaviour smallSquareInst;
 		transformOriginal = gameObject.transform;
-		framingBoxSize = new Vector3(1.0f/boxCountX, 1.0f/boxCountY, 1.0f);
-		firstBoxCord = zeroCord + new Vector3 ((-0.5f + framingBoxSize.x / 2), (0.5f - framingBoxSize.y / 2), 0.0f);
+		framingBoxSize = new Vector3(1.0f/boxCountX, 1.0f/boxCountY, 0.0f);
+		firstBoxCord = zeroCord + new Vector3 ((-0.5f + framingBoxSize.x / 2), (-0.5f + framingBoxSize.y / 2), 0.0f);
 		//int yi = 0;
 		//int xi = 0;
 		gridOfStates = new ActiveSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
 		grid = new ActiveSquareBehaviour[(int)gridDimensions.x][];		//grid of prefab ActiveSquare
+		Vector2 offSetToCenter = new Vector2(Mathf.Round(boxCountX/2)-Mathf.Round(bodyHitBoxWidth/2),0);
+
+		//Debug.Log (offSetToCenter);
 		for (int x = 0; x < gridDimensions.x; x++){
 			gridOfStates [x] = new ActiveSquareState[(int)gridDimensions.y];
 			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
@@ -57,16 +72,21 @@ public class PlayArea: MonoBehaviour {
 				smallSquareInst = Instantiate (smallSquare, zeroCord, transformOriginal.rotation);
 				smallSquareInst.transform.SetParent (gameObject.transform);
 				smallSquareInst.transform.localScale = framingBoxSize * sizeRatioOfSmallBox;
-				smallSquareInst.transform.localPosition = firstBoxCord + new Vector3(framingBoxSize.x*x, -framingBoxSize.y*y, 0.0f);
+				smallSquareInst.transform.localPosition = firstBoxCord + new Vector3(framingBoxSize.x*x, framingBoxSize.y*y, 0.0f);
 				smallSquareInst.SetGridCordX (x);
 				smallSquareInst.SetGridCordY (y);
-
-				if (bodyLoaderData.Find(XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x] [y] == 1) {
-					smallSquareInst.OccupiedSquare();
-				}
-
 				grid[x][y] = smallSquareInst;
 				gridOfStates[x][y] = smallSquareInst.activeSquareState;
+
+				if ((offSetToCenter.x <= x) && (bodyHitBoxWidth+offSetToCenter.x > x)) {
+					if ((bodyHitBoxHeight > y + offSetToCenter.y)) {
+						if (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x-(int)offSetToCenter.x] [y] == 1) {
+							smallSquareInst.OccupiedSquare ();
+						}
+					}
+				}
+
+
 
 			}
 		}

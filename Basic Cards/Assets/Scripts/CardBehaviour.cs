@@ -72,8 +72,8 @@ public class CardBehaviour : MonoBehaviour {
 	public XMLData CardAttributes{
 		set{
 			cardSpriteNum = value.cardSpriteNum;
-			nameOfCard = value.nameOfCard; 
-			rankOfCard = value.rankOfCard; 
+			//nameOfCard = value.nameOfCard; /////////////////////////////////////Keep
+			//rankOfCard = value.rankOfCard; /////////////////////////////////////Keep
 			attackDamageOfCard = value.attackDamageOfCard; 
 			typeOfAttack = value.typeOfAttack;
 		}
@@ -112,17 +112,22 @@ public class CardBehaviour : MonoBehaviour {
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.CompareTag("ActiveSquare") && active && (hitSquareOverflow<=0)){
-			hideCard ();
-			cardInPlayArea = true;
+
+		if (other.CompareTag("ActiveSquare")){		//does not trigger anything if its colliding with anything else
+			if (active && (hitSquareOverflow<=0)){
+				hideCard ();
+				cardInPlayArea = true;
+			}
+			hitSquareOverflow++;			//the sum of all the small squares the card has entered. If number is 0, its left play area and can becom active again
 		}
-		hitSquareOverflow++;
 	}
 	void OnTriggerExit2D(Collider2D other){
-		hitSquareOverflow--;
-		if (other.CompareTag("ActiveSquare") && !active && (hitSquareOverflow<=0)){
-			showCard ();
-			cardInPlayArea = false;
+		if (other.CompareTag("ActiveSquare")){
+			hitSquareOverflow--;
+			if (!active && (hitSquareOverflow<=0)){
+				showCard ();
+				cardInPlayArea = false;
+			}
 		}
 	}
 

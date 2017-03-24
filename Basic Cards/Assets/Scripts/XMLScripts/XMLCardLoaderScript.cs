@@ -31,11 +31,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 	}
 	void Update ()
 	{
-//		if (finishedLoading)
-//		{
-//			SceneManager.LoadScene("_Main"); //Only happens if coroutine is finished 
-//			finishedLoading = false;
-//		}
+
 	}
 
 	void LoadXML()

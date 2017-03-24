@@ -62,11 +62,12 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 				placement = item.Parent.Element ("placement").Value.Trim ();
 				XDimOfBody = int.Parse (item.Parent.Element("Xdimensions").Value.Trim ());
 				YDimOfBody = int.Parse (item.Parent.Element("Ydimensions").Value.Trim ());
-				int interationY = 0;
+
 
 				int numberXCord = item.Parent.Element("designShape").Element("line").Value.Trim().Length;	//the length of the design shape line of 1's and 0's
 				linesOfHitBox = item.Parent.Element("designShape").Descendants();
 				int numberYCord = item.Parent.Element("designShape").Descendants().Count();		//counts how many lines there are in the targeting grid, giving Y cords size
+				int interationY = numberYCord-1;
 //				Debug.Log(numberXCord);
 //				Debug.Log(numberYCord);
 				gridOfBody = new int[(int)numberXCord][];
@@ -87,7 +88,7 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 						interationX++;
 
 					}
-					interationY++;
+					interationY--;
 
 
 				}

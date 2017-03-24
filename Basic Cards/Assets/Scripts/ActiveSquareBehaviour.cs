@@ -62,9 +62,6 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	public int GetGridCordY(){
 		return gridCordY;
 	}
-	public void TestMethod(){
-		Debug.Log ("test method");
-	}
 //	void OnTriggerStay2D(Collider2D other){
 //		if (other.CompareTag("weaponHitBox")){
 //			spriteRenderer.sprite = occupiedSprite;

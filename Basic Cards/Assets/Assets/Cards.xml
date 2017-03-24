@@ -29,7 +29,7 @@
 			<name>PPSstrong</name>
 			<rank>5</rank>
 			<attack>30</attack>
-			<attackType>SpreadShot</attackType>
+			<attackType>PinpointShot</attackType>
 		</card>
 	</pinpointshotcard>
 	<spreadshotcard>

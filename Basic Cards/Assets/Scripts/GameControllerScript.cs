@@ -60,8 +60,8 @@ public class GameControllerScript : MonoBehaviour {
 
 
 	public void enemyCardDamage(){		//is sent by the deckbahviour script that the active card was just played
-		Debug.Log("target: " +playArea.getActiveSquareStateSoftTarget(0,0));
-		Debug.Log("occupied: " +playArea.getActiveSquareStateOccupied(0,0));
+//		Debug.Log("target: " +playArea.getActiveSquareStateSoftTarget(0,0));
+//		Debug.Log("occupied: " +playArea.getActiveSquareStateOccupied(0,0));
 		//enemyBehaviour.takeDamage (currentClickedOnCardWeaponMatrix);
 		Vector2 gridDimensions = playArea.getGridDimensions();
 		for (int x = 0; x < gridDimensions.x; x++) {
