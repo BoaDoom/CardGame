@@ -18,7 +18,7 @@ public class TargetSquareScript : MonoBehaviour {
 	Sprite trueTarget;
 //	private int startingIntValue;
 
-	public ActiveSquareState activeSquareState;
+	public TargetSquareState activeSquareState;
 
 	SpriteRenderer spriteRenderer;
 	PlayAreaScript playArea;
@@ -27,7 +27,7 @@ public class TargetSquareScript : MonoBehaviour {
 //	}
 
 	void Awake(){
-		activeSquareState = new ActiveSquareState();
+		activeSquareState = new TargetSquareState();
 		SpriteRenderer spriteRendererTemp = gameObject.GetComponent<SpriteRenderer>();
 		if(spriteRendererTemp != null){
 			spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -88,12 +88,13 @@ public class TargetSquareScript : MonoBehaviour {
 //		Debug.Log ("target triggered");
 
 	}
-	public void softUntargetSquare(){	//used by playarea to turn on and off targetting
+	public void softUntargetSquare(){	//used by playarea to turn on and off targetting. The point of this is to turn off squares that arn't hovered over anymore, but to keep track of
+										//where the last place the weapon shape was hovered over in case the user releases and 'fires' the weapon within the bounderies, the correct portions are hit
 		spriteRenderer.sprite = trueUntarget;
 		activeSquareState.setHardTargetedState(false);
 //		Debug.Log ("soft untarget triggered");
 	}
-	public void hardUntargetSquare(){	//used by playarea to turn on and off targetting
+	public void hardUntargetSquare(){	//used by playarea to turn on and off targetting. Hard reset happens when Another
 		spriteRenderer.sprite = trueUntarget;
 		activeSquareState.setSoftTargetedState(false);
 		activeSquareState.setHardTargetedState(false);		//redundent but needed
@@ -115,18 +116,18 @@ public class TargetSquareScript : MonoBehaviour {
 		activeSquareState.setOccupiedState(false);
 	}
 
-//	public ActiveSquareState getStateOfSquare(){
+//	public TargetSquareState getStateOfSquare(){
 //		return activeSquareState;
 //	}
 //	void OnMouseExit(){
 //		spriteRenderer.sprite = defaultSprite;
 //	}
 }
-public class ActiveSquareState{
+public class TargetSquareState{
 	bool occupied = false;
 	bool hardTargeted = false;
 	bool softTargeted = false;
-	public ActiveSquareState(){
+	public TargetSquareState(){
 	}
 	public bool getOccupiedState(){
 		return occupied;}

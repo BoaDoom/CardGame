@@ -1,19 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TargetSquareScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BPartScripts\BPartMakerScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameControllerScript.cs" Line="13" Column="36" />
+      <File FileName="Assets\Scripts\GameControllerScript.cs" Line="77" Column="34" />
       <File FileName="Assets\Scripts\CardScript.cs" Line="107" Column="17" />
-      <File FileName="Assets\Scripts\DeckScript.cs" Line="39" Column="28" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="6" Column="25" />
-      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="46" Column="4" />
-      <File FileName="Assets\Scripts\TargetSquareScript.cs" Line="44" Column="72" />
-      <File FileName="Assets\Scripts\UndrawnDeckScript.cs" Line="23" Column="13" />
-      <File FileName="Assets\Scripts\DraggableScript.cs" Line="5" Column="29" />
-      <File FileName="Assets\Scripts\XMLScripts\XMLBodyLoaderScript.cs" Line="46" Column="42" />
-      <File FileName="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" Line="41" Column="42" />
-      <File FileName="Assets\Scripts\XMLScripts\XMLWeaponHitLoaderScript.cs" Line="43" Column="42" />
-      <File FileName="Assets\Scripts\UIScripts\UIBehaviourScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="156" Column="176" />
+      <File FileName="Assets\Scripts\EnemyScript.cs" Line="44" Column="1" />
+      <File FileName="Assets\Scripts\XMLScripts\XMLBodyLoaderScript.cs" Line="89" Column="7" />
+      <File FileName="Assets\Scripts\BPartScripts\BPartMakerScript.cs" Line="41" Column="41" />
+      <File FileName="Assets\Scripts\BPartScripts\BPartGenericScript.cs" Line="33" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

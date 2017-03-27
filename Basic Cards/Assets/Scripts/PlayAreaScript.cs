@@ -24,7 +24,7 @@ public class PlayAreaScript: MonoBehaviour {
 
 	private TargetSquareScript[][] grid;
 	private Vector2 gridDimensions;
-	private ActiveSquareState[][] gridOfStates;
+	private TargetSquareState[][] gridOfStates;		//tracks the states of the squares in the targeting box. Boolean of Occupied, HardTargeted, SoftTargeted
 
 	Vector3 zeroCord = Vector3.zero;
 	Vector3 framingBoxSize;
@@ -32,11 +32,11 @@ public class PlayAreaScript: MonoBehaviour {
 
 
 	void Start () {
-		GameObject XMLBodyHitLoaderScriptTEMP = GameObject.FindWithTag("BodyLoader");
-		if(XMLBodyHitLoaderScriptTEMP != null){
-			bodyLoaderData = XMLBodyHitLoaderScriptTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
+		GameObject XMLBodyHitLoaderTEMP = GameObject.FindWithTag("BodyLoader");
+		if(XMLBodyHitLoaderTEMP != null){
+			bodyLoaderData = XMLBodyHitLoaderTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
 		}
-		if(XMLBodyHitLoaderScriptTEMP == null){
+		if(XMLBodyHitLoaderTEMP == null){
 			Debug.Log ("Cannot find 'BodyLoader'object");}
 
 
@@ -59,13 +59,13 @@ public class PlayAreaScript: MonoBehaviour {
 		firstBoxCord = zeroCord + new Vector3 ((-0.5f + framingBoxSize.x / 2), (-0.5f + framingBoxSize.y / 2), 0.0f);
 		//int yi = 0;
 		//int xi = 0;
-		gridOfStates = new ActiveSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
+		gridOfStates = new TargetSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
 		grid = new TargetSquareScript[(int)gridDimensions.x][];		//grid of prefab ActiveSquare
 		Vector2 offSetToCenter = new Vector2(Mathf.Round(boxCountX/2)-Mathf.Round(bodyHitBoxWidth/2),0);
 
 		//Debug.Log (offSetToCenter);
 		for (int x = 0; x < gridDimensions.x; x++){
-			gridOfStates [x] = new ActiveSquareState[(int)gridDimensions.y];
+			gridOfStates [x] = new TargetSquareState[(int)gridDimensions.y];
 			grid[x] = new TargetSquareScript[(int)gridDimensions.y];
 			for (int y = 0; y < gridDimensions.y; y++)
 			{
@@ -107,28 +107,11 @@ public class PlayAreaScript: MonoBehaviour {
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
 		return grid [0] [0];
 	}
-//	public ActiveSquareState[][] getActiveSquaresStates(){
-//		//ActiveSquareState[][] gridOfStates;
-//		int x = 0;
-//		gridOfStates = new ActiveSquareState[(int)gridDimensions.x][];
-////		Debug.Log ("x " + gridDimensions.x);
-//		foreach(TargetSquareScript[] gridY in grid){
-//			int y = 0;
-////			Debug.Log ("y " + gridDimensions.y);
-//			gridOfStates [x] = new ActiveSquareState[(int)gridDimensions.y];
-//			foreach (TargetSquareScript square in gridY) {
-//				gridOfStates[x][y] = square.activeSquareState;
-//				//Debug.Log("state inside loop " +square.activeSquareState.getOccupiedState ());
-//
-//			}
-//			x++;
-//		}
-//		return gridOfStates;
-//	}
-	public bool getActiveSquareStateSoftTarget(int xcordT, int ycordT){
+
+	public bool getTargetSquareStateSoftTarget(int xcordT, int ycordT){
 		return gridOfStates [xcordT] [ycordT].getSoftTargetedState ();
 	}
-	public bool getActiveSquareStateOccupied(int xcordT, int ycordT){
+	public bool getTargetSquareStateOccupied(int xcordT, int ycordT){
 		return gridOfStates [xcordT] [ycordT].getOccupiedState ();
 	}
 
@@ -159,7 +142,7 @@ public class PlayAreaScript: MonoBehaviour {
 
 		//testVec2 = new Vector2 (xCord, yCord);
 	}
-	public void squareHoveredOff(){
+	public void squareHoveredOff(){ 			//used by the TargetSquareScript to send a signal that it is no longer activated by the player
 		hardResetSmallSquares ();
 		//grid [xCord] [yCord].DeactivateSquare ();	
 	}
@@ -170,7 +153,7 @@ public class PlayAreaScript: MonoBehaviour {
 			}
 		}
 	}
-	public void hardResetSmallSquares(){		//gamecontroller sent once another card is clicked on
+	public void hardResetSmallSquares(){		//gamecontroller uses this once another card is clicked on, signalling that the previous kept data from another card is no longer needed
 		foreach(TargetSquareScript[] gridY in grid){
 			foreach (TargetSquareScript square in gridY) {
 				square.hardUntargetSquare ();

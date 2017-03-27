@@ -66,7 +66,7 @@ public class GameControllerScript : MonoBehaviour {
 		Vector2 gridDimensions = playAreaController.getGridDimensions();
 		for (int x = 0; x < gridDimensions.x; x++) {
 			for (int y = 0; y < gridDimensions.y; y++) {
-				if (playAreaController.getActiveSquareStateSoftTarget(x,y) && playAreaController.getActiveSquareStateOccupied(x,y)){
+				if (playAreaController.getTargetSquareStateSoftTarget(x,y) && playAreaController.getTargetSquareStateSoftTarget(x,y)){
 					enemyController.takeDamage (currentClickedOnCardWeaponMatrix);
 				}
 			}
