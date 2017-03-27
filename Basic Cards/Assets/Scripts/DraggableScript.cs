@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class Draggable : MonoBehaviour 
+public class DraggableScript : MonoBehaviour 
 {
 
 	private Vector3 screenPoint;

@@ -6,11 +6,11 @@ using System.IO;
 using UnityEngine;
 
 
-public class DeckBehaviour : MonoBehaviour {
+public class DeckScript : MonoBehaviour {
 	
 	public Sprite[] cardsFaces;		//all of the sprites to use for dealing cards
 	public Sprite cardBack;			//the image for the back of the cards
-	public CardBehaviour card;		//the gameobject of the actual cards
+	public CardScript card;		//the gameobject of the actual cards
 
 	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
 	//public EnemyBehaviour enemyBehaviour;
@@ -24,7 +24,7 @@ public class DeckBehaviour : MonoBehaviour {
 
 	public List<int> orderOfDrawPile;		//the current undrawn deck of cards
 	public List<int> discardedCards;		//the cards that are out of play and used
-	public List<CardBehaviour> drawnCards;			//the cards that have been drawn and are in play
+	public List<CardScript> drawnCards;			//the cards that have been drawn and are in play
 	public Transform cardStartPosition;			//the location marker for the first card drawn
 	public Transform deckStartPosition;			//undrawnDeck start position
 	public Transform offScreenDeck;				//the actual location for storage of all the cards in the deck **//need to fix to be more efficient. Maybe not instantiate the cards untill drawn?
@@ -36,7 +36,7 @@ public class DeckBehaviour : MonoBehaviour {
 	private float cardWidthX;			//the width of the card, used for spacing of the spawn points
 
 	public SpriteRenderer weaponHitSmallSquarePrefab;
-	private ActiveSquareBehaviour smallSquareSize;		//example of the square needed for the grid targeting
+	private TargetSquareScript smallSquareSize;		//example of the square needed for the grid targeting
 	private SpriteRenderer weaponSmallSquare;
 	//private Vector3 playAreaCurrentRatioSize;
 	//public GridMaker PlayArea;
@@ -72,7 +72,7 @@ public class DeckBehaviour : MonoBehaviour {
 //		if(XMLWeaponHitLoaderScriptTEMP == null){
 //			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 	
-		//weaponHitSmallBoxes = new ActiveSquareBehaviour[100];
+		//weaponHitSmallBoxes = new TargetSquareScript[100];
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
@@ -98,7 +98,7 @@ public class DeckBehaviour : MonoBehaviour {
 		}
 	}
 	private void createCard(){
-		CardBehaviour instCard;
+		CardScript instCard;
 		instCard = Instantiate (card, offScreenDeck.position, cardStartPosition.rotation);
 		drawnCards.Add(instCard);
 		instCard.CardAttributes = cardData[orderOfDrawPile[0]];
@@ -119,7 +119,7 @@ public class DeckBehaviour : MonoBehaviour {
 	}
 
 	public void updateCards(){								//is called when there are possible cards played and need to be resorted into the discard pile. Is called by shuffle(), discard() and from a cardbehaviour when it's played and used
-		for (int i = 0; i < drawnCards.Count; i++){ //CardBehaviour drawnCard in drawnCards) {				//runs through all drawn cards
+		for (int i = 0; i < drawnCards.Count; i++){ //CardScript drawnCard in drawnCards) {				//runs through all drawn cards
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
 				discardedCards.Add(drawnCards[i].CardNumber);			//moves any non active cards to discarded pile
 				//enemyBehaviour.takeDamage(drawnCards[i].AttackValue);
@@ -156,14 +156,14 @@ public class DeckBehaviour : MonoBehaviour {
 	}
 	public void discardAllActiveShuffle(){									//deactivates all active cards and then updates to add them to the discard pile and discarddrawthenshuffles to add draw pile cards to shuffle as well
 																		//and called from gamecontroller scripte by button press	
-		foreach (CardBehaviour drawnCard in drawnCards) {
+		foreach (CardScript drawnCard in drawnCards) {
 			drawnCard.deactivate ();
 		}
 		updateCards ();
 		discardDrawThenShuffle ();
 	}
 //	public void discardEverything(){
-//		foreach (CardBehaviour drawnCard in drawnCards) {
+//		foreach (CardScript drawnCard in drawnCards) {
 //			drawnCard.deactivate ();
 //		}
 //		updateCards ();

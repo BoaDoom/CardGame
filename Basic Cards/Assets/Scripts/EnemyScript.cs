@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyBehaviour : MonoBehaviour {
+public class EnemyScript : MonoBehaviour {
 	float healthMax = 200;
 	float remainingHealth;
 	public Text enemyHealthDisplayNumber;

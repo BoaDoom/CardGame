@@ -8,9 +8,9 @@ public class GameControllerScript : MonoBehaviour {
 	public Button shuffleEverythingButton;
 	public Button discardEverythingButton;
 	//public DeckBehaviour deckBehav;
-	public DeckBehaviour deckBehaviour;
-	public PlayArea playArea;
-	public EnemyBehaviour enemyBehaviour;
+	public DeckScript deckController;
+	public PlayAreaScript playAreaController;
+	public EnemyScript enemyController;
 
 	public CurrentWeaponHitBox currentClickedOnCardWeaponMatrix;
 	//private bool boolCardClickedOn;
@@ -21,18 +21,18 @@ public class GameControllerScript : MonoBehaviour {
 		shuffleDiscardsButton.onClick.AddListener(shuffleDiscard);
 		shuffleEverythingButton.onClick.AddListener(discardDrawThenShuffle);
 		discardEverythingButton.onClick.AddListener(discardAllActiveShuffle);
-		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");				//whole block is for grabbing the Deck object so it can deal a card when clicked
-			if(deckBehaviourObject != null){
-				deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour>();
+		GameObject deckControllerObjectTemp = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
+		if(deckControllerObjectTemp != null){
+			deckController = deckControllerObjectTemp.GetComponent<DeckScript>();
 			}
-			if(deckBehaviourObject == null){
-				Debug.Log ("Cannot find 'DeckBehaviour'object");
+		if(deckControllerObjectTemp == null){
+			Debug.Log ("Cannot find 'deckController'object");
 			}
-		GameObject playAreaObject = GameObject.FindWithTag("PlayArea");
-		if(playAreaObject != null){
-			playArea = playAreaObject.GetComponent<PlayArea>();
+		GameObject playAreaControllerTemp = GameObject.FindWithTag("PlayAreaController");
+		if(playAreaControllerTemp != null){
+			playAreaController = playAreaControllerTemp.GetComponent<PlayAreaScript>();
 		}
-		if(playAreaObject == null){
+		if(playAreaControllerTemp == null){
 			Debug.Log ("Cannot find 'DeckBehaviour'object");
 		}
 		
@@ -40,34 +40,34 @@ public class GameControllerScript : MonoBehaviour {
 
 	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix, int weaponDamage){		//command sent from the CardBehaviour script with info about the damage its doing
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(true, WeaponHitMatrix, weaponDamage);
-		playArea.hardResetSmallSquares ();
+		playAreaController.hardResetSmallSquares ();
 		//boolCardClickedOn = true;
 	}
 	public void cardClickedOff(){				//sent from the cardbehaviour
-		playArea.softResetSmallSquares ();			//resets all the targetting squares if the card is released. If not in place, used cards never 'exit'
+		playAreaController.softResetSmallSquares ();			//resets all the targetting squares if the card is released. If not in place, used cards never 'exit'
 		currentClickedOnCardWeaponMatrix.isCardClickedOn = false;
 	}
 
 	public void discardDrawThenShuffle(){
-		deckBehaviour.discardDrawThenShuffle();		//puts all draw pile cards into the discard and then shuffles discard
+		deckController.discardDrawThenShuffle();		//puts all draw pile cards into the discard and then shuffles discard
 	}
 	public void shuffleDiscard(){					//only shuffles discard
-		deckBehaviour.shuffleDiscard();
+		deckController.shuffleDiscard();
 	}
 	public void discardAllActiveShuffle(){			//discards all active cards and cards in draw pile and then shuffles
-		deckBehaviour.discardAllActiveShuffle();
+		deckController.discardAllActiveShuffle();
 	}
 
 
 	public void enemyCardDamage(){		//is sent by the deckbahviour script that the active card was just played
-//		Debug.Log("target: " +playArea.getActiveSquareStateSoftTarget(0,0));
-//		Debug.Log("occupied: " +playArea.getActiveSquareStateOccupied(0,0));
-		//enemyBehaviour.takeDamage (currentClickedOnCardWeaponMatrix);
-		Vector2 gridDimensions = playArea.getGridDimensions();
+//		Debug.Log("target: " +playAreaController.getActiveSquareStateSoftTarget(0,0));
+//		Debug.Log("occupied: " +playAreaController.getActiveSquareStateOccupied(0,0));
+		//enemyController.takeDamage (currentClickedOnCardWeaponMatrix);
+		Vector2 gridDimensions = playAreaController.getGridDimensions();
 		for (int x = 0; x < gridDimensions.x; x++) {
 			for (int y = 0; y < gridDimensions.y; y++) {
-				if (playArea.getActiveSquareStateSoftTarget(x,y) && playArea.getActiveSquareStateOccupied(x,y)){
-					enemyBehaviour.takeDamage (currentClickedOnCardWeaponMatrix);
+				if (playAreaController.getActiveSquareStateSoftTarget(x,y) && playAreaController.getActiveSquareStateOccupied(x,y)){
+					enemyController.takeDamage (currentClickedOnCardWeaponMatrix);
 				}
 			}
 		}

@@ -39,47 +39,46 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ActiveSquareBehaviour.cs" />
-     <Compile Include="Assets\Scripts\CardBehaviour.cs" />
-     <Compile Include="Assets\Scripts\DeckBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Draggable.cs" />
-     <Compile Include="Assets\Scripts\DraggableGrid.cs" />
-     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
+     <Compile Include="Assets\Scripts\CardScript.cs" />
+     <Compile Include="Assets\Scripts\DeckScript.cs" />
+     <Compile Include="Assets\Scripts\DraggableScript.cs" />
+     <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\GameControllerScript.cs" />
-     <Compile Include="Assets\Scripts\PlayArea.cs" />
-     <Compile Include="Assets\Scripts\ShuffleButtonScript.cs" />
-     <Compile Include="Assets\Scripts\UIBehaviourScript.cs" />
-     <Compile Include="Assets\Scripts\UndrawnDeck.cs" />
+     <Compile Include="Assets\Scripts\PlayAreaScript.cs" />
+     <Compile Include="Assets\Scripts\TargetSquareScript.cs" />
+     <Compile Include="Assets\Scripts\UIScripts\UIBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\UndrawnDeckScript.cs" />
      <Compile Include="Assets\Scripts\XMLScripts\XMLBodyLoaderScript.cs" />
      <Compile Include="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" />
      <Compile Include="Assets\Scripts\XMLScripts\XMLWeaponHitLoaderScript.cs" />
-     <None Include="Assets\Assets\WeaponHitBox.xml" />
-     <None Include="Assets\Assets\BodyHitBox.xml" />
-     <None Include="Assets\Assets\Cards.xml" />
+     <Compile Include="Assets\Scripts\z_Old\DraggableGrid.cs" />
+     <None Include="Assets\XMLdata\WeaponHitBox.xml" />
+     <None Include="Assets\XMLdata\BodyHitBox.xml" />
+     <None Include="Assets\XMLdata\Cards.xml" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

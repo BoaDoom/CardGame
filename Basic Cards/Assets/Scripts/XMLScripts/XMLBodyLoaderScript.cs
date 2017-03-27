@@ -43,7 +43,7 @@ public class XMLBodyLoaderScript : MonoBehaviour {
 
 	{
 		//Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
-		xmlDoc = XDocument.Load("assets/assets/BodyHitBox.xml");
+		xmlDoc = XDocument.Load("assets/XMLdata/BodyHitBox.xml");
 
 		//This basically breaks down the XML Document into XML Elements. Used later. 
 		items = xmlDoc.Descendants("body").Elements ();

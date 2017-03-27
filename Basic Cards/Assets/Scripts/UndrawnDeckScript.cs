@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UndrawnDeck : MonoBehaviour {
+public class UndrawnDeckScript : MonoBehaviour {
 
 	//private SpriteRenderer spriteRenderer;
 	private GameObject deckBehaviourObject;
-	private DeckBehaviour deckBehaviour;
+	private DeckScript deckScript;
 
 	public void Start() {
-		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckBehaviour");				//whole block is for grabbing the Deck object so it can deal a card when clicked
+		GameObject deckBehaviourObject = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
 		if(deckBehaviourObject != null){
-			deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour>();
+			deckScript = deckBehaviourObject.GetComponent<DeckScript>();
 		}
 		if(deckBehaviourObject == null){
-			Debug.Log ("Cannot find 'DeckBehaviour'object");
+			Debug.Log ("Cannot find 'DeckController'object");
 		}
 		//spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	void OnMouseDown(){																			//if the deck pile is clicked on, another card is dealt
-		deckBehaviour.DealCard ();
+		deckScript.DealCard ();
 	}
 		
 }

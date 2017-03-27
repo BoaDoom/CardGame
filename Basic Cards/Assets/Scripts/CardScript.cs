@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardBehaviour : MonoBehaviour {
+public class CardScript : MonoBehaviour {
 
 	int cardSpriteNum;
 	string nameOfCard; 
@@ -10,10 +10,10 @@ public class CardBehaviour : MonoBehaviour {
 	int attackDamageOfCard; 
 	string typeOfAttack;
 
-	private DeckBehaviour deckBehaviour;
+	private DeckScript deckScript;
 	//private GridMaker gridMaker;
 	//private weaponHitContainerBehaviour weaponHitSquares;
-	private ActiveSquareBehaviour tempSquares;
+	//private ActiveSquareBehaviour tempSquares;
 //	private Vector3 offSetDistance;
 //	float heightOfHitSquares;
 //	float widthOfHitSquares;
@@ -27,7 +27,7 @@ public class CardBehaviour : MonoBehaviour {
 
 	private XMLWeaponHitData hitBoxDataForCard;
 
-	private GameControllerScript gameControllerScript;
+	private GameControllerScript gameController;
 
 	public void Start() {
 		//ActiveSquareBehaviour[] hitSquares;
@@ -35,19 +35,19 @@ public class CardBehaviour : MonoBehaviour {
 		active = true;
 		cardInPlayArea = false;
 		hitSquareOverflow = 0;
-		GameObject deckBehaviourObject = GameObject.FindWithTag ("DeckBehaviour");
-		if (deckBehaviourObject != null) {
-			deckBehaviour = deckBehaviourObject.GetComponent<DeckBehaviour> ();
+		GameObject deckControllerObjectTemp = GameObject.FindWithTag ("DeckController");
+		if (deckControllerObjectTemp != null) {
+			deckScript = deckControllerObjectTemp.GetComponent<DeckScript> ();
 		}
-		if (deckBehaviourObject == null) {
-			Debug.Log ("Cannot find 'DeckBehaviour'object");
+		if (deckControllerObjectTemp == null) {
+			Debug.Log ("Cannot find 'deckController'object");
 		}
 
-		GameObject gameControllerScriptImport = GameObject.FindWithTag ("GameController");
-		if (gameControllerScriptImport != null) {
-			gameControllerScript = gameControllerScriptImport.GetComponent<GameControllerScript> ();
+		GameObject gameControllerScriptTemp = GameObject.FindWithTag ("GameController");
+		if (gameControllerScriptTemp != null) {
+			gameController = gameControllerScriptTemp.GetComponent<GameControllerScript> ();
 		}
-		if (gameControllerScriptImport == null) {
+		if (gameControllerScriptTemp == null) {
 			Debug.Log ("Cannot find 'GameController'object");
 		}
 	}
@@ -101,19 +101,19 @@ public class CardBehaviour : MonoBehaviour {
 	}
 	
 	private void OnMouseDown(){
-		gameControllerScript.cardClickedOn (hitBoxDataForCard, attackDamageOfCard);		//sends the info about attack attached to the card to the gamecontroller
+		gameController.cardClickedOn (hitBoxDataForCard, attackDamageOfCard);		//sends the info about attack attached to the card to the gamecontroller
 	}
 	private void OnMouseUp(){
-		gameControllerScript.cardClickedOff();
+		gameController.cardClickedOff();
 		//clicked = true;
 		if (cardInPlayArea) {
 			deactivate ();
-			deckBehaviour.updateCards ();		//lets the deck know that a card was played and to update the active cards
+			deckScript.updateCards ();		//lets the deck know that a card was played and to update the active cards
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
 
-		if (other.CompareTag("ActiveSquare")){		//does not trigger anything if its colliding with anything else
+		if (other.CompareTag("TargetSquare")){		//does not trigger anything if its colliding with anything else
 			if (active && (hitSquareOverflow<=0)){
 				hideCard ();
 				cardInPlayArea = true;
@@ -122,7 +122,7 @@ public class CardBehaviour : MonoBehaviour {
 		}
 	}
 	void OnTriggerExit2D(Collider2D other){
-		if (other.CompareTag("ActiveSquare")){
+		if (other.CompareTag("TargetSquare")){
 			hitSquareOverflow--;
 			if (!active && (hitSquareOverflow<=0)){
 				showCard ();

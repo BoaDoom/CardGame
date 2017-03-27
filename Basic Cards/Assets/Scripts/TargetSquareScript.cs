@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveSquareBehaviour : MonoBehaviour {
+public class TargetSquareScript : MonoBehaviour {
 
 //	[SerializeField]
 	int gridCordX;
@@ -21,7 +21,7 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 	public ActiveSquareState activeSquareState;
 
 	SpriteRenderer spriteRenderer;
-	PlayArea playArea;
+	PlayAreaScript playArea;
 //	ActiveSquareBehaviour(int startingIntValueImport){
 //		startingIntValue = startingIntValueImport;
 //	}
@@ -41,11 +41,11 @@ public class ActiveSquareBehaviour : MonoBehaviour {
 			Debug.Log ("Cannot find 'spriteRendererTemp'object");
 		}
 
-		GameObject playAreaImport = GameObject.FindWithTag ("PlayArea");
-		if(playAreaImport != null){
-			playArea = playAreaImport.GetComponent<PlayArea>();
+		GameObject playAreaTemp = GameObject.FindWithTag ("PlayAreaController");
+		if(playAreaTemp != null){
+			playArea = playAreaTemp.GetComponent<PlayAreaScript>();
 		}
-		if(playAreaImport == null){
+		if(playAreaTemp == null){
 			Debug.Log ("Cannot find 'playAreaImport'object");
 		}
 		hardUntargetSquare ();

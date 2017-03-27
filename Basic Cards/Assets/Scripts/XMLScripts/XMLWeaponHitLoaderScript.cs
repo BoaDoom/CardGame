@@ -40,7 +40,7 @@ public class XMLWeaponHitLoaderScript : MonoBehaviour {
 
 	{
 		//Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
-		xmlDoc = XDocument.Load("assets/assets/WeaponHitBox.xml");
+		xmlDoc = XDocument.Load("assets/XMLdata/WeaponHitBox.xml");
 
 		//This basically breaks down the XML Document into XML Elements. Used later. 
 		items = xmlDoc.Descendants("hitbox").Elements ();

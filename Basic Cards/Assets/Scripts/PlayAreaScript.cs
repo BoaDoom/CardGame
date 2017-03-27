@@ -5,14 +5,14 @@ using System.Xml.Serialization; //Needed for XML Functionality
 using System.IO;
 using UnityEngine;
 
-public class PlayArea: MonoBehaviour {
+public class PlayAreaScript: MonoBehaviour {
 
 	public List<XMLBodyHitData> bodyLoaderData;
 
-	public ActiveSquareBehaviour smallSquare; //added manually inside unity from prefabs
+	public TargetSquareScript smallSquare; //added manually inside unity from prefabs
 	Transform transformOriginal;
 	public GameControllerScript gameControllerScript; //added manually inside unity
-	EnemyBehaviour enemyBehaviour;
+	EnemyScript enemyScript;
 
 	public int boxCountX = 7;
 	public int boxCountY = 8;
@@ -22,7 +22,7 @@ public class PlayArea: MonoBehaviour {
 
 	public float sizeRatioOfSmallBox = 1.0f;
 
-	private ActiveSquareBehaviour[][] grid;
+	private TargetSquareScript[][] grid;
 	private Vector2 gridDimensions;
 	private ActiveSquareState[][] gridOfStates;
 
@@ -40,12 +40,12 @@ public class PlayArea: MonoBehaviour {
 			Debug.Log ("Cannot find 'BodyLoader'object");}
 
 
-		GameObject EnemyBehaviourTemp = GameObject.FindWithTag("EnemyController");
-		if(EnemyBehaviourTemp != null){
-			//enemyBehaviour = EnemyBehaviourTemp.GetComponent<EnemyBehaviour>();
+		GameObject EnemyScriptTemp = GameObject.FindWithTag("EnemyController");
+		if(EnemyScriptTemp != null){
+			//enemyScript = EnemyScriptTemp.GetComponent<EnemyScript>();
 		}
-		if(EnemyBehaviourTemp == null){
-			Debug.Log ("Cannot find 'BodyLoader'object");}
+		if(EnemyScriptTemp == null){
+			Debug.Log ("Cannot find 'enemyScript'object");}
 
 
 		bodyHitBoxWidth = bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody.Length;
@@ -53,20 +53,20 @@ public class PlayArea: MonoBehaviour {
 
 		gridDimensions = new Vector2(boxCountX, boxCountY);
 
-		ActiveSquareBehaviour smallSquareInst;
+		TargetSquareScript smallSquareInst;
 		transformOriginal = gameObject.transform;
 		framingBoxSize = new Vector3(1.0f/boxCountX, 1.0f/boxCountY, 0.0f);
 		firstBoxCord = zeroCord + new Vector3 ((-0.5f + framingBoxSize.x / 2), (-0.5f + framingBoxSize.y / 2), 0.0f);
 		//int yi = 0;
 		//int xi = 0;
 		gridOfStates = new ActiveSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
-		grid = new ActiveSquareBehaviour[(int)gridDimensions.x][];		//grid of prefab ActiveSquare
+		grid = new TargetSquareScript[(int)gridDimensions.x][];		//grid of prefab ActiveSquare
 		Vector2 offSetToCenter = new Vector2(Mathf.Round(boxCountX/2)-Mathf.Round(bodyHitBoxWidth/2),0);
 
 		//Debug.Log (offSetToCenter);
 		for (int x = 0; x < gridDimensions.x; x++){
 			gridOfStates [x] = new ActiveSquareState[(int)gridDimensions.y];
-			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
+			grid[x] = new TargetSquareScript[(int)gridDimensions.y];
 			for (int y = 0; y < gridDimensions.y; y++)
 			{
 				smallSquareInst = Instantiate (smallSquare, zeroCord, transformOriginal.rotation);
@@ -95,7 +95,7 @@ public class PlayArea: MonoBehaviour {
 //	public void activateSmallSquare(){
 //		
 //		for (int x = 0; x < gridDimensions.x; x++){
-////			grid[x] = new ActiveSquareBehaviour[(int)gridDimensions.y];
+////			grid[x] = new TargetSquareScript[(int)gridDimensions.y];
 //			for (int y = 0; y < gridDimensions.y; y++)
 //			{
 ////				grid [x] [y].ActivateSquare ();
@@ -103,7 +103,7 @@ public class PlayArea: MonoBehaviour {
 //		}
 //		//grid [x] [y].ActivateSquare ();
 //	}
-	public ActiveSquareBehaviour getSmallSquare(){
+	public TargetSquareScript getSmallSquare(){
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
 		return grid [0] [0];
 	}
@@ -112,11 +112,11 @@ public class PlayArea: MonoBehaviour {
 //		int x = 0;
 //		gridOfStates = new ActiveSquareState[(int)gridDimensions.x][];
 ////		Debug.Log ("x " + gridDimensions.x);
-//		foreach(ActiveSquareBehaviour[] gridY in grid){
+//		foreach(TargetSquareScript[] gridY in grid){
 //			int y = 0;
 ////			Debug.Log ("y " + gridDimensions.y);
 //			gridOfStates [x] = new ActiveSquareState[(int)gridDimensions.y];
-//			foreach (ActiveSquareBehaviour square in gridY) {
+//			foreach (TargetSquareScript square in gridY) {
 //				gridOfStates[x][y] = square.activeSquareState;
 //				//Debug.Log("state inside loop " +square.activeSquareState.getOccupiedState ());
 //
@@ -164,15 +164,15 @@ public class PlayArea: MonoBehaviour {
 		//grid [xCord] [yCord].DeactivateSquare ();	
 	}
 	public void softResetSmallSquares(){
-		foreach(ActiveSquareBehaviour[] gridY in grid){
-			foreach (ActiveSquareBehaviour square in gridY) {
+		foreach(TargetSquareScript[] gridY in grid){
+			foreach (TargetSquareScript square in gridY) {
 				square.softUntargetSquare ();
 			}
 		}
 	}
 	public void hardResetSmallSquares(){		//gamecontroller sent once another card is clicked on
-		foreach(ActiveSquareBehaviour[] gridY in grid){
-			foreach (ActiveSquareBehaviour square in gridY) {
+		foreach(TargetSquareScript[] gridY in grid){
+			foreach (TargetSquareScript square in gridY) {
 				square.hardUntargetSquare ();
 			}
 		}

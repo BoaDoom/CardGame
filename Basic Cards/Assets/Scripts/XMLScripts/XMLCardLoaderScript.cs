@@ -38,7 +38,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 
 	{
 		//Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
-		xmlDoc = XDocument.Load("assets/assets/cards.xml");
+		xmlDoc = XDocument.Load("assets/XMLdata/cards.xml");
 
 		//This basically breaks down the XML Document into XML Elements. Used later. 
 		items = xmlDoc.Descendants("card").Elements ();
