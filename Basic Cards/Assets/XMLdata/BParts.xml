@@ -94,7 +94,7 @@
 				<line>010</line>
 			</gridHitBox>
 			<AnchorPoints>
-				<ArmPoints>
+				<ArmPoint>
 					<xCord>1</xCord>
 					<yCord>1</yCord>
 				</ArmPoint>
