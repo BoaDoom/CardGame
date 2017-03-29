@@ -1,5 +1,5 @@
 <BPartsList>
-	<Arms>
+	<Arm>
 		<Bpart name = "light Arm">
 			<gridHitBox>
 				<line>11</line>
@@ -26,7 +26,7 @@
 			</AnchorPoint>
 			<Health>150</Health>
 		</Bpart>
-	</Arms>
+	</Arm>
 	<Head>
 		<Bpart name = "light head">
 			<gridHitBox>
@@ -40,7 +40,7 @@
 			<Health>100</Health>
 		</Bpart>
 	</Head>
-	<Legs>
+	<Leg>
 		<Bpart name = "light leg">
 			<gridHitBox>
 				<line>1</line>
@@ -67,11 +67,12 @@
 			</AnchorPoint>
 			<Health>150</Health>
 		</Bpart>
-	</Legs>
+	</Leg>
 	<Shoulder>
 		<Bpart name = "light shoulder">
 			<gridHitBox>
 				<line>11</line>
+
 			</gridHitBox>
 			<AnchorPoints>
 				<ArmPoint>

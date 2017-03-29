@@ -54,6 +54,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 //			Debug.Log (item.Parent.Attribute("number").Value);
 //			Debug.Log (iteration.ToString ());
 			/*Determine if the <page number> attribute in the XML is equal to whatever our current iteration of the loop is. If it is, then we want to assign our variables to the value of the XML Element that we need.*/
+			//Debug.Log ("XML card loader: " +item.Name);
 			if(item.Parent.Attribute("number").Value == iteration.ToString ())
 			{
 				cardSpriteNum = int.Parse (item.Parent.Attribute ("number").Value.Trim ()); 

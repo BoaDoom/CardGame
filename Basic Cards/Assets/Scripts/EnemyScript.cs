@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyScript : MonoBehaviour {
+	private BPartMakerScript BpartMaker;
+
 	float healthMax = 200;
 	float remainingHealth;
 	public Text enemyHealthDisplayNumber;
@@ -11,12 +13,16 @@ public class EnemyScript : MonoBehaviour {
 	public Transform healthBarGraphic;
 	private Vector3 healthBarStartingScale;
 
+	private WholeBodyOfParts wholeBodyOfParts;
 	CurrentWeaponHitBox incomingWeaponhitBox;
 
 	void Start () {
+		BpartMaker = gameObject.GetComponent<BPartMakerScript> ();
+
 		remainingHealth = healthMax;
 		healthBarStartingScale = healthBarGraphic.localScale;
 		updateHealthDisplay ();
+
 	}
 
 	void Update () {
@@ -31,6 +37,7 @@ public class EnemyScript : MonoBehaviour {
 			ResetHealthBar ();
 		}
 		updateHealthDisplay ();
+		populateBody ();
 	}
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
@@ -39,6 +46,23 @@ public class EnemyScript : MonoBehaviour {
 	private void updateHealthDisplay(){
 		enemyHealthDisplayNumber.text = remainingHealth.ToString() + "/" + healthMax.ToString();
 	}
+	private void populateBody(){
+		Debug.Log(BpartMaker.getBodyData ("light arm").name);
+		wholeBodyOfParts = new WholeBodyOfParts (BpartMaker.getBodyData("light arm"));
+	}
+}
+public class WholeBodyOfParts{
+	BPartGenericScript leftArm;
+	BPartGenericScript rightArm;
+	BPartGenericScript head;
+	BPartGenericScript leftLeg;
+	BPartGenericScript rightLeg;
+	BPartGenericScript leftShoulder;
+	BPartGenericScript rightShoulder;
+	BPartGenericScript torso;
 
+	public WholeBodyOfParts(BodyPartDataHolder incomingBodyPartData){
+		Debug.Log (incomingBodyPartData.name);
+	}
 }
 

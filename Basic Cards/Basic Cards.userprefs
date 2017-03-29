@@ -4,11 +4,13 @@
     <Files>
       <File FileName="Assets\Scripts\GameControllerScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CardScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="34" Column="17" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="51" Column="3" />
+      <File FileName="Assets\Scripts\EnemyScript.cs" Line="21" Column="3" />
+      <File FileName="Assets\Scripts\BPartScripts\BPartMakerScript.cs" Line="107" Column="25" />
+      <File FileName="Assets\Scripts\BPartScripts\BPartGenericScript.cs" Line="24" Column="27" />
       <File FileName="Assets\Scripts\XMLScripts\XMLBodyLoaderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\BPartScripts\BPartMakerScript.cs" Line="51" Column="44" />
-      <File FileName="Assets\Scripts\BPartScripts\BPartGenericScript.cs" Line="33" Column="3" />
+      <File FileName="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" Line="57" Column="6" />
+      <File FileName="Assets\Scripts\DeckScript.cs" Line="104" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

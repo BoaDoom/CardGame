@@ -21,7 +21,7 @@ public class BPartGenericScript : MonoBehaviour {
 	private bool active;
 	// Use this for initialization
 
-	public BPartGenericScript(){
+	public void CreatNewPart(){
 		
 	}
 }
