@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyScript : MonoBehaviour {
-	private BPartMakerScript BpartMaker;
+	private BodyPartMakerScript BpartMaker;
+
+	public BPartGenericScript bodyPartObject;
 
 	float healthMax = 200;
 	float remainingHealth;
@@ -17,11 +19,12 @@ public class EnemyScript : MonoBehaviour {
 	CurrentWeaponHitBox incomingWeaponhitBox;
 
 	void Start () {
-		BpartMaker = gameObject.GetComponent<BPartMakerScript> ();
+		BpartMaker = gameObject.GetComponent<BodyPartMakerScript> ();
 
 		remainingHealth = healthMax;
 		healthBarStartingScale = healthBarGraphic.localScale;
 		updateHealthDisplay ();
+		wholeBodyOfParts = new WholeBodyOfParts();
 
 	}
 
@@ -30,6 +33,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 	public void takeDamage(CurrentWeaponHitBox incomingDamage){			//only sent from GameController script
 		Vector3 tempHealth = healthBarStartingScale;
+
 		remainingHealth -= incomingDamage.weaponDamage;
 		tempHealth.x = healthBarStartingScale.x * (remainingHealth / healthMax);
 		healthBarGraphic.localScale = tempHealth;
@@ -37,7 +41,7 @@ public class EnemyScript : MonoBehaviour {
 			ResetHealthBar ();
 		}
 		updateHealthDisplay ();
-		populateBody ();
+
 	}
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
@@ -46,23 +50,16 @@ public class EnemyScript : MonoBehaviour {
 	private void updateHealthDisplay(){
 		enemyHealthDisplayNumber.text = remainingHealth.ToString() + "/" + healthMax.ToString();
 	}
-	private void populateBody(){
-		Debug.Log(BpartMaker.getBodyData ("light arm").name);
-		wholeBodyOfParts = new WholeBodyOfParts (BpartMaker.getBodyData("light arm"));
-	}
-}
-public class WholeBodyOfParts{
-	BPartGenericScript leftArm;
-	BPartGenericScript rightArm;
-	BPartGenericScript head;
-	BPartGenericScript leftLeg;
-	BPartGenericScript rightLeg;
-	BPartGenericScript leftShoulder;
-	BPartGenericScript rightShoulder;
-	BPartGenericScript torso;
-
-	public WholeBodyOfParts(BodyPartDataHolder incomingBodyPartData){
-		Debug.Log (incomingBodyPartData.name);
+	public void populateBody(){				//currently invoked by game controller script on mouse down
+		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "left"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "left"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso"));
 	}
 }
 

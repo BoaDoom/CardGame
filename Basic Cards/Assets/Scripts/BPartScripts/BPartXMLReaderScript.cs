@@ -8,7 +8,7 @@ using System.IO;
 using System.Xml.Linq; //Needed for XDocument
 using System.Linq;
 
-public class BPartMakerScript : MonoBehaviour {
+public class BPartXMLReaderScript : MonoBehaviour {
 
 	public BPartGenericScript bPartGenericPrefab;
 
@@ -17,7 +17,9 @@ public class BPartMakerScript : MonoBehaviour {
 	IEnumerable<XElement> typeOfParts; //Create an Ienumerable list. Will be used to store XML Items. 
 	IEnumerable<XElement> listOfParts;
 	IEnumerable<XElement> storedAnchorPoints;
+	IEnumerable<XElement> storedComplexAnchorPoints;
 	public List <BodyPartDataHolder> BPartData = new List <BodyPartDataHolder>(); //Initialize List of XMLWeaponData objects.
+	public List <ComplexAnchorPoints> listOfComplexAnchorPoints;
 //	private BPartGenericScript LeftViewerArm;
 //	private BPartGenericScript RightViewerArm;
 //	private BPartGenericScript Arms;
@@ -31,6 +33,7 @@ public class BPartMakerScript : MonoBehaviour {
 	private int MaxHealth = 0;
 	private int[][] gridOfBodyPart;
 	private Vector2 anchorVector2;
+	private bool complexAnchorPointsBoolCheck;
 
 	void Start ()
 	{
@@ -53,7 +56,7 @@ public class BPartMakerScript : MonoBehaviour {
 	//this is our coroutine that will actually read and assign the XML data to our List 
 	IEnumerator AssignData()
 	{
-		int t = 0;
+//		int t = 0;
 		/*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/ 
 		foreach (var partType in typeOfParts)
 		{
@@ -68,6 +71,14 @@ public class BPartMakerScript : MonoBehaviour {
 					gridHitBox = part.Element ("gridHitBox").Descendants ();
 					int numberYCord = part.Element ("gridHitBox").Descendants ().Count ();		//counts how many lines there are in the targeting grid, giving Y cords size
 					int interationY = numberYCord - 1;
+					string complexBool = part.Element ("ComplexAnchorPoints").Value.Trim ();
+					//Debug.Log (complexBool);
+
+					if (complexBool == "true") {
+						complexAnchorPointsBoolCheck = true;
+					} else {
+						complexAnchorPointsBoolCheck = false;
+					}
 
 					gridOfBodyPart = new int[(int)numberXCord][];
 					for (int i = 0; i < numberXCord; i++) {
@@ -79,14 +90,38 @@ public class BPartMakerScript : MonoBehaviour {
 						foreach (char num in lineOfNumbers) {
 							int newNum = (int)char.GetNumericValue (num);
 							gridOfBodyPart [interationX] [interationY] = newNum;
-						
 							interationX++;
 						}
 						interationY--;
 					}
 					
-					if (partType.Name.ToString() == "Torso" || partType.Name.ToString() == "Shoulder") {
-						anchorVector2 = new Vector2 (0.0f, 0.0f);		//placeholder
+					if (complexAnchorPointsBoolCheck) {
+						listOfComplexAnchorPoints = new List <ComplexAnchorPoints>();
+						ComplexAnchorPoints uniqueAnchorPoints;
+						bool sexOfSocket = false;
+						storedComplexAnchorPoints = part.Element ("AnchorPoints").Elements ();
+						foreach (XElement point in storedComplexAnchorPoints) {
+							//Debug.Log ("complex point: "+point.Name);
+							storedAnchorPoints = point.Elements();
+							foreach (XElement cord in storedAnchorPoints) {
+								//Debug.Log ("cord: "+cord.Name);
+								if (cord.Name == "xCord") {
+									anchorVector2.x = int.Parse (cord.Value);
+								}
+								if (cord.Name == "yCord") {
+									anchorVector2.y = int.Parse (cord.Value);
+								}
+							}
+							if (point.Attribute ("typeOfSocket").Value.Trim () == "male") {
+								sexOfSocket = true;
+							} else {
+								sexOfSocket = false;
+							}
+							uniqueAnchorPoints = new ComplexAnchorPoints (point.Name.ToString(), anchorVector2 , sexOfSocket);
+							listOfComplexAnchorPoints.Add (uniqueAnchorPoints);
+						}
+						BPartData.Add (new BodyPartDataHolder (BpartName, BpartType, MaxHealth, gridOfBodyPart, listOfComplexAnchorPoints));
+						//anchorVector2 = new Vector2 (0.0f, 0.0f);		//placeholder
 					} else {
 						//Debug.Log ((string)partType.Name.ToString());
 						storedAnchorPoints = part.Element ("AnchorPoint").Descendants ();
@@ -98,20 +133,25 @@ public class BPartMakerScript : MonoBehaviour {
 								anchorVector2.y = int.Parse (cord.Value);
 							}
 						}
+						BPartData.Add (new BodyPartDataHolder (BpartName, BpartType, MaxHealth, gridOfBodyPart, anchorVector2));
 					}
-					BPartData.Add (new BodyPartDataHolder (BpartName, BpartType, MaxHealth, gridOfBodyPart, anchorVector2));
 				}
+//				Debug.Log(BPartData[t].name);
+//				Debug.Log (t);
+//				t++;
 			}
 			//		Debug.Log ("bodydata after add " + BPartData.Count);
 			//finishedLoading = true; //tell the program that we’ve finished loading data. 
-			Debug.Log(BPartData[t].name);
-			t++;
+
 			yield return null;
 		}
 	}
+
 	public BodyPartDataHolder getBodyData(string requestedNameOfPart){			//future efficiency, have each part be catagorized acording to their part type for better searching
-		Debug.Log(BPartData.Find (BodyPartDataHolder => BodyPartDataHolder.name == "heavy arm"));
-		return BPartData.Find (BodyPartDataHolder => BodyPartDataHolder.name == "requestedNameOfPart");
+
+
+		//Debug.Log(BPartData.Find (BodyPartDataHolder => BodyPartDataHolder.name == requestedNameOfPart).name);
+		return BPartData.Find (BodyPartDataHolder => BodyPartDataHolder.name == requestedNameOfPart);
 	}
 }
 
@@ -121,6 +161,7 @@ public class BodyPartDataHolder{
 	public int maxHealth;
 	public int[][] bodyPartGrid;
 	public Vector2 anchor;
+	public List<ComplexAnchorPoints> complexAnchorPoints;
 	public BodyPartDataHolder(string BpartName, string incBpartName, int incMaxHealth, int[][] incomingBodyPartGrid, Vector2 AnchorPoint){
 		name = BpartName;
 		typeOfpart = incBpartName;
@@ -133,7 +174,30 @@ public class BodyPartDataHolder{
 				bodyPartGrid [i][j] = incomingBodyPartGrid[i][j];
 			}
 		}
+	}
+	public BodyPartDataHolder(string BpartName, string incBpartName, int incMaxHealth, int[][] incomingBodyPartGrid, List<ComplexAnchorPoints> incomingComplexAnchorPoints){
+		name = BpartName;
+		typeOfpart = incBpartName;
+		maxHealth = incMaxHealth;
+		complexAnchorPoints = incomingComplexAnchorPoints;
+		bodyPartGrid = new int[incomingBodyPartGrid.Length][];
+		for(int i=0; i < incomingBodyPartGrid.Length; i++){	//transfering the int[][] grid
+			bodyPartGrid [i] = new int[incomingBodyPartGrid[0].Length];
+			for(int j=0; j < incomingBodyPartGrid[0].Length; j++){
+				bodyPartGrid [i][j] = incomingBodyPartGrid[i][j];
+			}
+		}
 		//Debug.Log (BpartName);
+	}
+}
+public class ComplexAnchorPoints{
+	public string nameOfPoint;
+	public Vector2 anchorPoint;
+	public bool male;
+	public ComplexAnchorPoints(string incomingName, Vector2 incomingAnchorPoint, bool incomingType){
+		nameOfPoint = incomingName;
+		anchorPoint = incomingAnchorPoint;
+		male = incomingType;
 	}
 }
 

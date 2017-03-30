@@ -7,6 +7,7 @@ public class GameControllerScript : MonoBehaviour {
 	public Button shuffleDiscardsButton;
 	public Button shuffleEverythingButton;
 	public Button discardEverythingButton;
+	public Button makeBodyButton;
 	//public DeckBehaviour deckBehav;
 	public DeckScript deckController;
 	public PlayAreaScript playAreaController;
@@ -21,6 +22,7 @@ public class GameControllerScript : MonoBehaviour {
 		shuffleDiscardsButton.onClick.AddListener(shuffleDiscard);
 		shuffleEverythingButton.onClick.AddListener(discardDrawThenShuffle);
 		discardEverythingButton.onClick.AddListener(discardAllActiveShuffle);
+		makeBodyButton.onClick.AddListener(makeBody);
 		GameObject deckControllerObjectTemp = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
 		if(deckControllerObjectTemp != null){
 			deckController = deckControllerObjectTemp.GetComponent<DeckScript>();
@@ -37,10 +39,14 @@ public class GameControllerScript : MonoBehaviour {
 		}
 		
 	}
+	public void makeBody(){
+		enemyController.populateBody ();
+	}
 
 	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix, int weaponDamage){		//command sent from the CardBehaviour script with info about the damage its doing
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(true, WeaponHitMatrix, weaponDamage);
 		playAreaController.hardResetSmallSquares ();
+
 		//boolCardClickedOn = true;
 	}
 	public void cardClickedOff(){				//sent from the cardbehaviour
