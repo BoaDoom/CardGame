@@ -148,7 +148,7 @@ public class BPartXMLReaderScript : MonoBehaviour {
 	}
 
 	public BodyPartDataHolder getBodyData(string requestedNameOfPart){			//future efficiency, have each part be catagorized acording to their part type for better searching
-
+		//used by BodyPartMakerScript when asked by enemyscript to makebodypart()
 
 		//Debug.Log(BPartData.Find (BodyPartDataHolder => BodyPartDataHolder.name == requestedNameOfPart).name);
 		return BPartData.Find (BodyPartDataHolder => BodyPartDataHolder.name == requestedNameOfPart);
@@ -162,7 +162,9 @@ public class BodyPartDataHolder{
 	public int[][] bodyPartGrid;
 	public Vector2 anchor;
 	public List<ComplexAnchorPoints> complexAnchorPoints;
+	public bool simpleAnchorPoints;
 	public BodyPartDataHolder(string BpartName, string incBpartName, int incMaxHealth, int[][] incomingBodyPartGrid, Vector2 AnchorPoint){
+		simpleAnchorPoints = true;
 		name = BpartName;
 		typeOfpart = incBpartName;
 		maxHealth = incMaxHealth;
@@ -176,6 +178,7 @@ public class BodyPartDataHolder{
 		}
 	}
 	public BodyPartDataHolder(string BpartName, string incBpartName, int incMaxHealth, int[][] incomingBodyPartGrid, List<ComplexAnchorPoints> incomingComplexAnchorPoints){
+		simpleAnchorPoints = false;
 		name = BpartName;
 		typeOfpart = incBpartName;
 		maxHealth = incMaxHealth;

@@ -12,13 +12,13 @@ public class BodyPartMakerScript : MonoBehaviour {
 		bPartXMLReader = gameObject.GetComponent<BPartXMLReaderScript>();
 		//bodyPartObject = gameObject.GetComponent<>();
 	}
-	public BPartGenericScript makeBodyPart(string nameOfpart){
-		Debug.Log ("single: " + nameOfpart);
-		partData = bPartXMLReader.getBodyData (nameOfpart);
-		Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
-		bodyPartObject.CreateNewPart (partData);
-		return bodyPartObject;
-	}
+//	public BPartGenericScript makeBodyPart(string nameOfpart){
+//		Debug.Log ("single: " + nameOfpart);
+//		partData = bPartXMLReader.getBodyData (nameOfpart);
+//		Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
+//		bodyPartObject.CreateNewPart (partData);
+//		return bodyPartObject;
+//	}
 	public BPartGenericScript makeBodyPart(string nameOfpart, string leftOrRight){
 		Debug.Log ("double: " + nameOfpart + " " + leftOrRight);
 		partData = bPartXMLReader.getBodyData (nameOfpart);

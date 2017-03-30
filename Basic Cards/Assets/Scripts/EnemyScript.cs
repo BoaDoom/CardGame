@@ -54,12 +54,12 @@ public class EnemyScript : MonoBehaviour {
 		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "right"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head", "none"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "left"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "right"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "left"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "right"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso", "none"));
 	}
 }
 
