@@ -9,8 +9,8 @@
 			</gridHitBox>
 			<ComplexAnchorPoints>false</ComplexAnchorPoints>
 			<AnchorPoint>
-				<xCord>2</xCord>
-				<yCord>4</yCord>
+				<xCord>1</xCord>
+				<yCord>3</yCord>
 			</AnchorPoint>
 			<Health>100</Health>
 		</Bpart>
@@ -23,8 +23,8 @@
 			</gridHitBox>
 			<ComplexAnchorPoints>false</ComplexAnchorPoints>
 			<AnchorPoint>
-				<xCord>3</xCord>
-				<yCord>4</yCord>
+				<xCord>2</xCord>
+				<yCord>3</yCord>
 			</AnchorPoint>
 			<Health>150</Health>
 		</Bpart>
@@ -37,8 +37,8 @@
 			</gridHitBox>
 			<ComplexAnchorPoints>false</ComplexAnchorPoints>
 			<AnchorPoint>
-				<xCord>1</xCord>
-				<yCord>1</yCord>
+				<xCord>0</xCord>
+				<yCord>0</yCord>
 			</AnchorPoint>
 			<Health>100</Health>
 		</Bpart>
@@ -53,8 +53,8 @@
 			</gridHitBox>
 			<ComplexAnchorPoints>false</ComplexAnchorPoints>
 			<AnchorPoint>
-				<xCord>1</xCord>
-				<yCord>4</yCord>
+				<xCord>0</xCord>
+				<yCord>3</yCord>
 			</AnchorPoint>
 			<Health>100</Health>
 		</Bpart>
@@ -67,8 +67,8 @@
 			</gridHitBox>
 			<ComplexAnchorPoints>false</ComplexAnchorPoints>
 			<AnchorPoint>
-				<xCord>2</xCord>
-				<yCord>4</yCord>
+				<xCord>1</xCord>
+				<yCord>3</yCord>
 			</AnchorPoint>
 			<Health>150</Health>
 		</Bpart>
@@ -82,11 +82,11 @@
 			<AnchorPoints>
 				<ArmPoint typeOfSocket = "male">
 					<xCord>0</xCord>
-					<yCord>1</yCord>
+					<yCord>-1</yCord>
 				</ArmPoint>
 				<TorsoPoint typeOfSocket = "female">
-					<xCord>2</xCord>
-					<yCord>1</yCord>
+					<xCord>1</xCord>
+					<yCord>0</yCord>
 				</TorsoPoint>
 			</AnchorPoints>
 			<Health>100</Health>
@@ -95,31 +95,32 @@
 	<Torso>
 		<Bpart name = "light torso">
 			<gridHitBox>
-				<line>010</line>
+				<line>111</line>
+				<line>111</line>
 				<line>111</line>
 				<line>010</line>
 			</gridHitBox>
 			<ComplexAnchorPoints>true</ComplexAnchorPoints>
 			<AnchorPoints>
 				<LeftShoulderPoint typeOfSocket = "male">
-					<xCord>1</xCord>
-					<yCord>3</yCord>
+					<xCord>0</xCord>
+					<yCord>4</yCord>
 				</LeftShoulderPoint>
 				<RightShoulderPoint typeOfSocket = "male">
-					<xCord>3</xCord>
-					<yCord>3</yCord>
+					<xCord>2</xCord>
+					<yCord>4</yCord>
 				</RightShoulderPoint>
 				<HeadPoint typeOfSocket = "male">
-					<xCord>2</xCord>
+					<xCord>1</xCord>
 					<yCord>4</yCord>
 				</HeadPoint>
 				<LeftLegPoint typeOfSocket = "male">
-					<xCord>1</xCord>
-					<yCord>1</yCord>
+					<xCord>0</xCord>
+					<yCord>0</yCord>
 				</LeftLegPoint>
 				<RightLegPoint typeOfSocket = "male">
-					<xCord>3</xCord>
-					<yCord>1</yCord>
+					<xCord>2</xCord>
+					<yCord>0</yCord>
 				</RightLegPoint>
 			</AnchorPoints>
 			<Health>100</Health>

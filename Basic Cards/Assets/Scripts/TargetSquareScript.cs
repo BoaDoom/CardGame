@@ -123,27 +123,4 @@ public class TargetSquareScript : MonoBehaviour {
 //		spriteRenderer.sprite = defaultSprite;
 //	}
 }
-public class TargetSquareState{
-	bool occupied = false;
-	bool hardTargeted = false;
-	bool softTargeted = false;
-	public TargetSquareState(){
-	}
-	public bool getOccupiedState(){
-		return occupied;}
-	public void setOccupiedState(bool incomingState){
-		occupied = incomingState;}
 
-	public bool getHardTargetedState(){
-		return hardTargeted;}
-	public void setHardTargetedState(bool incomingState){
-		hardTargeted = incomingState;
-	}
-
-	public bool getSoftTargetedState(){
-		return softTargeted;}
-	public void setSoftTargetedState(bool incomingState){
-		softTargeted = incomingState;
-	}
-
-}

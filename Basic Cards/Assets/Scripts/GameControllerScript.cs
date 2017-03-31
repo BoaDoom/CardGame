@@ -59,6 +59,7 @@ public class GameControllerScript : MonoBehaviour {
 	}
 	public void shuffleDiscard(){					//only shuffles discard
 		deckController.shuffleDiscard();
+		playAreaController.populateEnemyPlayAreaSquares ();
 	}
 	public void discardAllActiveShuffle(){			//discards all active cards and cards in draw pile and then shuffles
 		deckController.discardAllActiveShuffle();
@@ -72,8 +73,8 @@ public class GameControllerScript : MonoBehaviour {
 		Vector2 gridDimensions = playAreaController.getGridDimensions();
 		for (int x = 0; x < gridDimensions.x; x++) {
 			for (int y = 0; y < gridDimensions.y; y++) {
-				if (playAreaController.getTargetSquareStateSoftTarget(x,y) && playAreaController.getTargetSquareStateSoftTarget(x,y)){
-					enemyController.takeDamage (currentClickedOnCardWeaponMatrix);
+				if (playAreaController.getTargetSquareStateSoftTarget(x,y) && playAreaController.getTargetSquareStateOccupied(x,y)){
+					enemyController.takeDamage (currentClickedOnCardWeaponMatrix, x, y);
 				}
 			}
 		}

@@ -11,11 +11,11 @@ public class BPartGenericScript : MonoBehaviour {
 	private string bPartName;
 	private BodyPartNode[][] nodesOfBP;		//given an open grid, the list of active hitable points by list of vectors
 	private Vector2 anchorPoint;			//the location in which all parts will be located and placed
-	private List<ComplexAnchorPoints> complexAnchorPoints;
+	private List<ComplexAnchorPoints> listOfComplexAnchorPoints = new List<ComplexAnchorPoints> ();
 	private float maxHealth;
 
 	//dependent but static variables
-	private Vector2 anchorGlobalPointLocation;	//the anchor point location in the game hit area
+	private Vector2 globalOriginPoint;	//the anchor point location in the game hit area
 	private Vector2 dimensions;		//dependent on the farthest location from the source (0,0) of the list of binaryDimensions
 	private bool leftSide;		//default is left side
 
@@ -52,7 +52,6 @@ public class BPartGenericScript : MonoBehaviour {
 		bPartType = incomingBodyPartData.typeOfpart;				//arm,head,legs,shoulder, or torso
 		bPartName = incomingBodyPartData.name;
 
-
 		maxHealth = incomingBodyPartData.maxHealth;
 
 		nodesOfBP = new BodyPartNode[incomingBodyPartData.bodyPartGrid.Length][];
@@ -84,44 +83,118 @@ public class BPartGenericScript : MonoBehaviour {
 			}
 		}
 		dimensions = new Vector2(nodesOfBP.Length, nodesOfBP[0].Length);		//dependent on the farthest location from the source (0,0) of the list of binaryDimensions
+		//Debug.Log ("Dimensions of "+ bPartName +": " + dimensions);
 		//dependent and changable variables
 		if (incomingBodyPartData.simpleAnchorPoints) {			//checking to see if there is one anchor point or more
 			if (leftSide){										//if left side (default design), then transfer anchor point normally
 				anchorPoint = incomingBodyPartData.anchor;			//the location in which all parts will be located and placed
+//				Debug.Log("Left side, anchorpoint: "+anchorPoint+" "+bPartName);
 			}
-			else if(!leftSide){								//iff right side, mirror the anchor point across the X axis
-				anchorPoint = new Vector2 ((dimensions.x - incomingBodyPartData.anchor.x), incomingBodyPartData.anchor.y);
+			else if(!leftSide){								//if right side, mirror the anchor point across the X axis
+				anchorPoint = new Vector2 (((dimensions.x) - (incomingBodyPartData.anchor.x+1)), incomingBodyPartData.anchor.y);
+//				Debug.Log("Right side, anchorpoint: "+anchorPoint+" "+bPartName);
+
 			}
 		} else {
+			//listOfComplexAnchorPoints = incomingBodyPartData.listOfComplexAnchorPoints;	
 			if (leftSide) {										//if left side (default design), then transfer anchor point normally
-				complexAnchorPoints = incomingBodyPartData.complexAnchorPoints;			//the location in which all parts will be located and placed
-			} else if (!leftSide) {								//iff right side, mirror the anchor point across the X axis
-
-
-				/////////////run through loop to mirror every set of Vector2 points contained in the list
-				//complexAnchorPoints = new Vector2 ((dimensions.x - incomingBodyPartData.anchor.x), incomingBodyPartData.anchor.y);
+				listOfComplexAnchorPoints = incomingBodyPartData.listOfComplexAnchorPoints;			//the location in which all parts will be located and placed
+				//Debug.Log("complex list: "+ listOfComplexAnchorPoints.Count);
+			} else 
+			if (!leftSide) {								//if right side, mirror the anchor point across the X axis
+				for (int i = 0; i < incomingBodyPartData.listOfComplexAnchorPoints.Count; i++) {
+						listOfComplexAnchorPoints.Add (new ComplexAnchorPoints(
+							incomingBodyPartData.listOfComplexAnchorPoints[i].nameOfPoint,
+							new Vector2((dimensions.x-1) - (incomingBodyPartData.listOfComplexAnchorPoints[i].anchorPoint.x), incomingBodyPartData.listOfComplexAnchorPoints[i].anchorPoint.y),
+							incomingBodyPartData.listOfComplexAnchorPoints[i].male));
+					//the dimension.x+1 is to account for the origin of the points being at 1,1 rather than 0,0.
+				}
+				//listOfComplexAnchorPoints = 
 			}
+//			Debug.Log ("check anchor points: " + listOfComplexAnchorPoints[0].nameOfPoint + " " + listOfComplexAnchorPoints[0].anchorPoint);
+//			Debug.Log ("check anchor points: " + listOfComplexAnchorPoints[1].nameOfPoint + " " + listOfComplexAnchorPoints[1].anchorPoint);
 		}
+		//Debug.Log (bPartName + " "+ leftSide);
 
 		currentHealth = incomingBodyPartData.maxHealth;
 		resetHealthToFull();
 		active = true;
+		//Debug.Log("complex list for "+bPartName+ " : "+ listOfComplexAnchorPoints.Count);
 	}
 	public void resetHealthToFull(){
 		currentHealth = maxHealth;
 	}
-	public void setGlobalAnchorPoint(Vector2 incomingGlobalAnchorPoint){
-		anchorGlobalPointLocation = incomingGlobalAnchorPoint;
+	public void setTorsoOriginPosition(Vector2 incomingTorsoOriginPoint){
+		//Debug.Log ("setting custom torso origin");
+		globalOriginPoint = incomingTorsoOriginPoint;
 	}
+
+	public void setGlobalPosition(Vector2 incomingGlobalAnchorPoint){
+//		Debug.Log ("body part anchor Point: " + anchorPoint);
+//		Debug.Log ("incoming point: " + incomingGlobalAnchorPoint);
+		//Debug.Log ("setting "+bPartName+" origin");
+		globalOriginPoint = incomingGlobalAnchorPoint - anchorPoint;
+//		Debug.Log ("global Origin outgoing: "+globalOriginPoint);
+	}
+//	public void setAnchorGlobalLocation(Vector2 incomingAnchorSetPoint){
+//		globalOriginPoint = (incomingAnchorSetPoint-anchorPoint);
+//	}
+	public Vector2 getGlobalOriginPoint(){
+		return globalOriginPoint;
+	}
+
+	public void setGlobalPositionOffComplexAnchor(Vector2 incomingGlobalAnchorPoint, string pointOfConnection){
+//		Debug.Log ("complex anchor point1 " + listOfComplexAnchorPoints[0].nameOfPoint+" : " +listOfComplexAnchorPoints[0].anchorPoint);
+//		Debug.Log ("complex anchor point2 " + listOfComplexAnchorPoints[1].nameOfPoint+" : " +listOfComplexAnchorPoints[1].anchorPoint);
+//		Debug.Log (listOfComplexAnchorPoints.Count);
+////		Debug.Log("incoming point: " +incomingGlobalAnchorPoint);
+////		Debug.Log("incoming name of point: " +pointOfConnection);
+//		Debug.Log ("actual found complex anchor point:  "+listOfComplexAnchorPoints.Find (ComplexAnchorPoints => ComplexAnchorPoints.nameOfPoint == pointOfConnection).anchorPoint);
+		globalOriginPoint = incomingGlobalAnchorPoint - (listOfComplexAnchorPoints.Find (ComplexAnchorPoints => ComplexAnchorPoints.nameOfPoint == pointOfConnection).anchorPoint);
+//		Debug.Log ("ouput point: " +globalOriginPoint);
+	}
+	public Vector2 getGlobalAnchorPoint(string requestedAnchorPointName){
+//		Debug.Log ("globalOriginpoint: "+globalOriginPoint+" requested anchor point:"+ getComplexAnchorPoint(requestedAnchorPointName).anchorPoint);
+		return (globalOriginPoint + getComplexAnchorPoint(requestedAnchorPointName).anchorPoint);
+	}
+
+
 	public string getName(){
 		return bPartName;
 	}
 	public string getType(){
 		return bPartType;
 	}
+	public float getCurrentHealth(){
+		return currentHealth;
+	}
+
+	public Vector2 getDimensionsOfPart(){
+		return dimensions;
+	}
+	public Vector2 getAnchorPoint(){
+		return anchorPoint;
+	}
+	public ComplexAnchorPoints getComplexAnchorPoint(string incomingRequest){
+		return listOfComplexAnchorPoints.Find (ComplexAnchorPoints => ComplexAnchorPoints.nameOfPoint == incomingRequest);
+	}
+	public List<ComplexAnchorPoints> getComplexAllAnchorPoints(){
+		return listOfComplexAnchorPoints;
+	}
+		
 	public bool getSide(){
 		return leftSide;
 	}
+	public bool getActive(){
+		return active;
+	}
+	public void setAsActive(){
+		active = true;
+	}
+	public void setAsInactive(){
+		active = false;
+	}
+
 	public bool getGridPoint(Vector2 incomingPoint){
 		return nodesOfBP [(int)incomingPoint.x] [(int)incomingPoint.y].getState ();
 	}

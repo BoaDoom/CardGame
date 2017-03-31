@@ -42,16 +42,18 @@ public class PlayAreaScript: MonoBehaviour {
 
 		GameObject EnemyScriptTemp = GameObject.FindWithTag("EnemyController");
 		if(EnemyScriptTemp != null){
-			//enemyScript = EnemyScriptTemp.GetComponent<EnemyScript>();
+			enemyScript = EnemyScriptTemp.GetComponent<EnemyScript>();
 		}
 		if(EnemyScriptTemp == null){
 			Debug.Log ("Cannot find 'enemyScript'object");}
-
+		
 
 		bodyHitBoxWidth = bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody.Length;
 		bodyHitBoxHeight = bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [0].Length;
 
 		gridDimensions = new Vector2(boxCountX, boxCountY);
+
+		enemyScript.setPlayAreaDimensions(gridDimensions);
 
 		TargetSquareScript smallSquareInst;
 		transformOriginal = gameObject.transform;
@@ -81,7 +83,7 @@ public class PlayAreaScript: MonoBehaviour {
 				if ((offSetToCenter.x <= x) && (bodyHitBoxWidth+offSetToCenter.x > x)) {
 					if ((bodyHitBoxHeight > y + offSetToCenter.y)) {
 						if (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x-(int)offSetToCenter.x] [y] == 1) {
-							smallSquareInst.OccupiedSquare ();
+							//smallSquareInst.OccupiedSquare ();
 						}
 					}
 				}
@@ -91,7 +93,9 @@ public class PlayAreaScript: MonoBehaviour {
 			}
 		}
 	}
-
+	public void populateEnemyPlayAreaSquares(){
+		grid = enemyScript.populateCorrectPlayAreaSquares (grid);
+	}
 //	public void activateSmallSquare(){
 //		
 //		for (int x = 0; x < gridDimensions.x; x++){
@@ -160,5 +164,29 @@ public class PlayAreaScript: MonoBehaviour {
 			}
 		}
 	}
+}
+public class TargetSquareState{
+	bool occupied = false;
+	bool hardTargeted = false;
+	bool softTargeted = false;
+	public TargetSquareState(){
+	}
+	public bool getOccupiedState(){
+		return occupied;}
+	public void setOccupiedState(bool incomingState){
+		occupied = incomingState;}
+
+	public bool getHardTargetedState(){
+		return hardTargeted;}
+	public void setHardTargetedState(bool incomingState){
+		hardTargeted = incomingState;
+	}
+
+	public bool getSoftTargetedState(){
+		return softTargeted;}
+	public void setSoftTargetedState(bool incomingState){
+		softTargeted = incomingState;
+	}
+
 }
 //public class activeSquareState

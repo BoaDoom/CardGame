@@ -118,7 +118,10 @@ public class BPartXMLReaderScript : MonoBehaviour {
 								sexOfSocket = false;
 							}
 							uniqueAnchorPoints = new ComplexAnchorPoints (point.Name.ToString(), anchorVector2 , sexOfSocket);
+							//Debug.Log ("AnchorPoints name test " + point.Name.ToString()+ " and point "+ anchorVector2);
 							listOfComplexAnchorPoints.Add (uniqueAnchorPoints);
+//							Debug.Log (uniqueAnchorPoints.nameOfPoint);
+//							Debug.Log (uniqueAnchorPoints.anchorPoint);
 						}
 						BPartData.Add (new BodyPartDataHolder (BpartName, BpartType, MaxHealth, gridOfBodyPart, listOfComplexAnchorPoints));
 						//anchorVector2 = new Vector2 (0.0f, 0.0f);		//placeholder
@@ -161,7 +164,7 @@ public class BodyPartDataHolder{
 	public int maxHealth;
 	public int[][] bodyPartGrid;
 	public Vector2 anchor;
-	public List<ComplexAnchorPoints> complexAnchorPoints;
+	public List<ComplexAnchorPoints> listOfComplexAnchorPoints;
 	public bool simpleAnchorPoints;
 	public BodyPartDataHolder(string BpartName, string incBpartName, int incMaxHealth, int[][] incomingBodyPartGrid, Vector2 AnchorPoint){
 		simpleAnchorPoints = true;
@@ -177,12 +180,12 @@ public class BodyPartDataHolder{
 			}
 		}
 	}
-	public BodyPartDataHolder(string BpartName, string incBpartName, int incMaxHealth, int[][] incomingBodyPartGrid, List<ComplexAnchorPoints> incomingComplexAnchorPoints){
+	public BodyPartDataHolder(string BpartName, string incBpartName, int incMaxHealth, int[][] incomingBodyPartGrid, List<ComplexAnchorPoints> incomingListOfComplexAnchorPoints){
 		simpleAnchorPoints = false;
 		name = BpartName;
 		typeOfpart = incBpartName;
 		maxHealth = incMaxHealth;
-		complexAnchorPoints = incomingComplexAnchorPoints;
+		listOfComplexAnchorPoints = incomingListOfComplexAnchorPoints;
 		bodyPartGrid = new int[incomingBodyPartGrid.Length][];
 		for(int i=0; i < incomingBodyPartGrid.Length; i++){	//transfering the int[][] grid
 			bodyPartGrid [i] = new int[incomingBodyPartGrid[0].Length];
@@ -196,11 +199,15 @@ public class BodyPartDataHolder{
 public class ComplexAnchorPoints{
 	public string nameOfPoint;
 	public Vector2 anchorPoint;
+	//public Vector2 globalAnchorPointLocation;
 	public bool male;
 	public ComplexAnchorPoints(string incomingName, Vector2 incomingAnchorPoint, bool incomingType){
 		nameOfPoint = incomingName;
 		anchorPoint = incomingAnchorPoint;
 		male = incomingType;
 	}
+//	public void setGlobalAnchorPointLocation(Vector2 incomingGlobalLocation){
+//		globalAnchorPointLocation = incomingGlobalLocation;
+//	}
 }
 

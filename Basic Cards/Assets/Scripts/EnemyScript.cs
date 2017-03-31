@@ -18,6 +18,8 @@ public class EnemyScript : MonoBehaviour {
 	private WholeBodyOfParts wholeBodyOfParts;
 	CurrentWeaponHitBox incomingWeaponhitBox;
 
+	private Vector2 playAreaDimensions;
+
 	void Start () {
 		BpartMaker = gameObject.GetComponent<BodyPartMakerScript> ();
 
@@ -25,13 +27,12 @@ public class EnemyScript : MonoBehaviour {
 		healthBarStartingScale = healthBarGraphic.localScale;
 		updateHealthDisplay ();
 		wholeBodyOfParts = new WholeBodyOfParts();
-
+	}
+	public void setPlayAreaDimensions(Vector2 incomingDimensions){
+		playAreaDimensions = incomingDimensions;
 	}
 
-	void Update () {
-		
-	}
-	public void takeDamage(CurrentWeaponHitBox incomingDamage){			//only sent from GameController script
+	public void takeDamage(CurrentWeaponHitBox incomingDamage, int xCordOfHit, int yCordOfHit){			//only sent from GameController script
 		Vector3 tempHealth = healthBarStartingScale;
 
 		remainingHealth -= incomingDamage.weaponDamage;
@@ -41,7 +42,6 @@ public class EnemyScript : MonoBehaviour {
 			ResetHealthBar ();
 		}
 		updateHealthDisplay ();
-
 	}
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
@@ -50,9 +50,10 @@ public class EnemyScript : MonoBehaviour {
 	private void updateHealthDisplay(){
 		enemyHealthDisplayNumber.text = remainingHealth.ToString() + "/" + healthMax.ToString();
 	}
-	public void populateBody(){				//currently invoked by game controller script on mouse down
+	public void populateBody(){				//currently invoked by game controller script on button press
 		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
+		//Debug.Log ("made left arm");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "right"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head", "none"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "left"));
@@ -60,6 +61,20 @@ public class EnemyScript : MonoBehaviour {
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "left"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "right"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso", "none"));
+		wholeBodyOfParts = BpartMaker.createWholeBody (wholeBodyOfParts, playAreaDimensions);
+	}
+	public TargetSquareScript[][] populateCorrectPlayAreaSquares(TargetSquareScript[][] incomingSquareGrid){
+	//Debug.Log (wholeBodyOfParts.listOfAllParts.Count);
+		for (int i=0; i<wholeBodyOfParts.listOfAllParts.Count; i++){
+			for (int x=0; x<wholeBodyOfParts.listOfAllParts [i].getDimensionsOfPart ().x; x++){
+				for (int y=0; y<wholeBodyOfParts.listOfAllParts [i].getDimensionsOfPart ().y; y++){
+					if (wholeBodyOfParts.listOfAllParts [i].getGridPoint(new Vector2(x, y))){
+						incomingSquareGrid[x][y].OccupiedSquare();
+					}
+				}
+			}
+		}
+		return incomingSquareGrid;
 	}
 }
 

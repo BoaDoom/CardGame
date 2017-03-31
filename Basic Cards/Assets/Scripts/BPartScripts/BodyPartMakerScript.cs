@@ -20,36 +20,82 @@ public class BodyPartMakerScript : MonoBehaviour {
 //		return bodyPartObject;
 //	}
 	public BPartGenericScript makeBodyPart(string nameOfpart, string leftOrRight){
-		Debug.Log ("double: " + nameOfpart + " " + leftOrRight);
+		//Debug.Log ("double: " + nameOfpart + " " + leftOrRight);
 		partData = bPartXMLReader.getBodyData (nameOfpart);
-		Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
-		bodyPartObject.CreateNewPart (partData, leftOrRight);
-		return bodyPartObject;
+		BPartGenericScript instaBodypart = Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
+		instaBodypart.CreateNewPart (partData, leftOrRight);
+		return instaBodypart;
+	}
+	public WholeBodyOfParts createWholeBody(WholeBodyOfParts incomingWholeBodyOfParts, Vector2 incomingDimensionsOfPlayArea){
+		for (int i=0; i < 5; i++) {
+//			Debug.Log (incomingWholeBodyOfParts.leftArm.getName());
+//			Debug.Log (incomingWholeBodyOfParts.rightArm.getName());
+//			Debug.Log (incomingWholeBodyOfParts.torso.getName());
+		}
+		if (incomingWholeBodyOfParts.bodyPartCheck ()) {
+//			Debug.Log ("dimensions of part"+ incomingWholeBodyOfParts.torso.getDimensionsOfPart());
+////			Debug.Log (Mathf.Round(incomingDimensionsOfPlayArea.x/2));
+////			Debug.Log (Mathf.Round (incomingWholeBodyOfParts.torso.getDimensionsOfPart ().x / 2));
+//			Debug.Log (Mathf.Round(incomingDimensionsOfPlayArea.x/2)-Mathf.Round(incomingWholeBodyOfParts.torso.getDimensionsOfPart().x/2));		//the far left point that the torso needs to be center, it's origin x point
+//			Debug.Log (incomingWholeBodyOfParts.torso.getDimensionsOfPart().y);
+			Vector2 offSetToCenter = new Vector2
+				(Mathf.Round(incomingDimensionsOfPlayArea.x/2)-Mathf.Round(incomingWholeBodyOfParts.torso.getDimensionsOfPart().x/2),		//the far left point that the torso needs to be center, it's origin x point
+				incomingWholeBodyOfParts.leftLeg.getDimensionsOfPart().y-1);
+			
+			incomingWholeBodyOfParts.torso.setTorsoOriginPosition (offSetToCenter);
+//			Debug.Log ("offset to center for torso" +offSetToCenter);
+//			Debug.Log ("test for left leg point:" +incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("LeftLegPoint"));
+			incomingWholeBodyOfParts.leftLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("LeftLegPoint"));
+//			Debug.Log ("global origin left leg: "+incomingWholeBodyOfParts.leftLeg.getGlobalOriginPoint());
+			incomingWholeBodyOfParts.rightLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("RightLegPoint"));
+//			Debug.Log ("global origin right leg: "+incomingWholeBodyOfParts.rightLeg.getGlobalOriginPoint());
+			incomingWholeBodyOfParts.head.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("HeadPoint"));
+//			Debug.Log ("global origin head: "+incomingWholeBodyOfParts.head.getGlobalOriginPoint());
+			incomingWholeBodyOfParts.leftShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("LeftShoulderPoint"), "TorsoPoint");
+//			Debug.Log ("global origin left shoulder: "+incomingWholeBodyOfParts.leftShoulder.getGlobalOriginPoint());
+			incomingWholeBodyOfParts.rightShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("RightShoulderPoint"), "TorsoPoint");
+//			Debug.Log ("global origin right shoulder: "+incomingWholeBodyOfParts.rightShoulder.getGlobalOriginPoint());
+
+			//Debug.Log ("Arm point "+incomingWholeBodyOfParts.leftShoulder.getGlobalAnchorPoint ("ArmPoint"));
+			incomingWholeBodyOfParts.leftArm.setGlobalPosition (incomingWholeBodyOfParts.leftShoulder.getGlobalAnchorPoint ("ArmPoint"));
+//			Debug.Log ("global origin left arm: "+incomingWholeBodyOfParts.leftArm.getGlobalOriginPoint());
+			incomingWholeBodyOfParts.rightArm.setGlobalPosition (incomingWholeBodyOfParts.rightShoulder.getGlobalAnchorPoint ("ArmPoint"));
+//			Debug.Log ("global origin right arm: "+incomingWholeBodyOfParts.rightArm.getGlobalOriginPoint());
+
+		} else {
+			Debug.Log ("There are body parts missing");
+		}
+		return incomingWholeBodyOfParts;
 	}
 }
 public class WholeBodyOfParts{
-	BPartGenericScript leftArm;
-	BPartGenericScript rightArm;
-	BPartGenericScript head;
-	BPartGenericScript leftLeg;
-	BPartGenericScript rightLeg;
-	BPartGenericScript leftShoulder;
-	BPartGenericScript rightShoulder;
-	BPartGenericScript torso;
+	public BPartGenericScript leftArm;
+	public BPartGenericScript rightArm;
+	public BPartGenericScript head;
+	public BPartGenericScript leftLeg;
+	public BPartGenericScript rightLeg;
+	public BPartGenericScript leftShoulder;
+	public BPartGenericScript rightShoulder;
+	public BPartGenericScript torso;
+	public List <BPartGenericScript> listOfAllParts = new List<BPartGenericScript> ();
 
 	public void setBodyPart(BPartGenericScript incomingBodyPart){
-		//Debug.Log (incomingBodyPart.getName());
+		//Debug.Log (incomingBodyPart.getType());
+		listOfAllParts.Add(incomingBodyPart);
 		switch (incomingBodyPart.getType()) {
 		case ("Arm"):
 			if (incomingBodyPart.getSide ()) {
 				leftArm = incomingBodyPart;
+				//Debug.Log("left arm import check: " +leftArm.getName ());
 				break;
 			} else {
 				rightArm = incomingBodyPart;
+				//Debug.Log("left arm import check: " +leftArm.getName ());
 				break;
 			}
 		case ("Head"):
 			head = incomingBodyPart;
+			//Debug.Log("left arm import check: " +leftArm.getName ());
 			break;
 		case ("Leg"):
 			if (incomingBodyPart.getSide ()) {
@@ -92,6 +138,14 @@ public class WholeBodyOfParts{
 			return torso;
 		}
 		return null;
+	}
+
+	public bool bodyPartCheck(){
+		if (leftArm != null && rightArm != null && head != null && leftLeg != null && rightLeg != null && leftShoulder != null && rightShoulder != null && torso != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
