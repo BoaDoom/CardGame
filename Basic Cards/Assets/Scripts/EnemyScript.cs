@@ -52,12 +52,12 @@ public class EnemyScript : MonoBehaviour {
 	}
 	public void populateBody(){				//currently invoked by game controller script on button press
 		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
-		//Debug.Log ("made left arm");
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("heavy arm", "left"));
+		//Debug.Log ("made heavy arm");
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("heavy arm", "right"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head", "none"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "left"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("heavy leg", "left"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("heavy leg", "right"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "left"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "right"));
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso", "none"));
@@ -69,7 +69,8 @@ public class EnemyScript : MonoBehaviour {
 			for (int x=0; x<wholeBodyOfParts.listOfAllParts [i].getDimensionsOfPart ().x; x++){
 				for (int y=0; y<wholeBodyOfParts.listOfAllParts [i].getDimensionsOfPart ().y; y++){
 					if (wholeBodyOfParts.listOfAllParts [i].getGridPoint(new Vector2(x, y))){
-						incomingSquareGrid[x][y].OccupiedSquare();
+						incomingSquareGrid[(((int)wholeBodyOfParts.listOfAllParts [i].getGlobalOriginPoint().x)+x)][(((int)wholeBodyOfParts.listOfAllParts [i].getGlobalOriginPoint().y)+y)].OccupiedSquare();
+						Debug.Log (x + " " + y);
 					}
 				}
 			}

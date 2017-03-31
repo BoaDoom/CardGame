@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameControllerScript : MonoBehaviour {
 	public Button shuffleDiscardsButton;
-	public Button shuffleEverythingButton;
+	public Button MakeSquaresButton;
 	public Button discardEverythingButton;
 	public Button makeBodyButton;
 	//public DeckBehaviour deckBehav;
@@ -20,7 +20,7 @@ public class GameControllerScript : MonoBehaviour {
 		//boolCardClickedOn = false;
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null, 0);
 		shuffleDiscardsButton.onClick.AddListener(shuffleDiscard);
-		shuffleEverythingButton.onClick.AddListener(discardDrawThenShuffle);
+		MakeSquaresButton.onClick.AddListener(makeActiveSquares);
 		discardEverythingButton.onClick.AddListener(discardAllActiveShuffle);
 		makeBodyButton.onClick.AddListener(makeBody);
 		GameObject deckControllerObjectTemp = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
@@ -59,6 +59,9 @@ public class GameControllerScript : MonoBehaviour {
 	}
 	public void shuffleDiscard(){					//only shuffles discard
 		deckController.shuffleDiscard();
+
+	}
+	public void makeActiveSquares(){
 		playAreaController.populateEnemyPlayAreaSquares ();
 	}
 	public void discardAllActiveShuffle(){			//discards all active cards and cards in draw pile and then shuffles

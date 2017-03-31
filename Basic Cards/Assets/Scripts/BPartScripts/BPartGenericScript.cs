@@ -68,7 +68,7 @@ public class BPartGenericScript : MonoBehaviour {
 			else{									//mirroring the body part for right hand pieces
 				nodesOfBP [g] = new BodyPartNode[incomingBodyPartData.bodyPartGrid[0].Length];
 			}
-			nodesOfBP [i] = new BodyPartNode[incomingBodyPartData.bodyPartGrid[0].Length];
+			//nodesOfBP [i] = new BodyPartNode[incomingBodyPartData.bodyPartGrid[0].Length];
 			for(int j=0; j < incomingBodyPartData.bodyPartGrid[0].Length; j++){
 				BodyPartNode bodyPartNode = new BodyPartNode ();
 				if (incomingBodyPartData.bodyPartGrid [i] [j] == 1) {

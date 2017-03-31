@@ -39,7 +39,7 @@ public class BodyPartMakerScript : MonoBehaviour {
 //			Debug.Log (Mathf.Round(incomingDimensionsOfPlayArea.x/2)-Mathf.Round(incomingWholeBodyOfParts.torso.getDimensionsOfPart().x/2));		//the far left point that the torso needs to be center, it's origin x point
 //			Debug.Log (incomingWholeBodyOfParts.torso.getDimensionsOfPart().y);
 			Vector2 offSetToCenter = new Vector2
-				(Mathf.Round(incomingDimensionsOfPlayArea.x/2)-Mathf.Round(incomingWholeBodyOfParts.torso.getDimensionsOfPart().x/2),		//the far left point that the torso needs to be center, it's origin x point
+				(Mathf.Round(incomingDimensionsOfPlayArea.x/2)-Mathf.Round(incomingWholeBodyOfParts.torso.getDimensionsOfPart().x/2)+1,		//the far left point that the torso needs to be center, it's origin x point
 				incomingWholeBodyOfParts.leftLeg.getDimensionsOfPart().y-1);
 			
 			incomingWholeBodyOfParts.torso.setTorsoOriginPosition (offSetToCenter);

@@ -16,8 +16,8 @@
 		</Bpart>
 		<Bpart name = "heavy arm">
 			<gridHitBox>
-				<line>111</line>
-				<line>111</line>
+				<line>110</line>
+				<line>110</line>
 				<line>110</line>
 				<line>110</line>
 			</gridHitBox>
@@ -60,7 +60,7 @@
 		</Bpart>
 		<Bpart name = "heavy leg">
 			<gridHitBox>
-				<line>11</line>
+				<line>01</line>
 				<line>11</line>
 				<line>11</line>
 				<line>11</line>
