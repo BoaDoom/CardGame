@@ -80,13 +80,13 @@ public class PlayAreaScript: MonoBehaviour {
 				grid[x][y] = smallSquareInst;
 				gridOfStates[x][y] = smallSquareInst.activeSquareState;
 
-				if ((offSetToCenter.x <= x) && (bodyHitBoxWidth+offSetToCenter.x > x)) {
-					if ((bodyHitBoxHeight > y + offSetToCenter.y)) {
-						if (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x-(int)offSetToCenter.x] [y] == 1) {
-							//smallSquareInst.OccupiedSquare ();
-						}
-					}
-				}
+//				if ((offSetToCenter.x <= x) && (bodyHitBoxWidth+offSetToCenter.x > x)) {
+//					if ((bodyHitBoxHeight > y + offSetToCenter.y)) {
+//						if (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x-(int)offSetToCenter.x] [y] == 1) {
+//							//smallSquareInst.OccupiedSquare ();
+//						}
+//					}
+//				}
 
 
 
@@ -107,9 +107,9 @@ public class PlayAreaScript: MonoBehaviour {
 //		}
 //		//grid [x] [y].ActivateSquare ();
 //	}
-	public TargetSquareScript getSmallSquare(){
+	public TargetSquareScript getSmallSquare(int x, int y){
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
-		return grid [0] [0];
+		return grid [x] [y];
 	}
 
 	public bool getTargetSquareStateSoftTarget(int xcordT, int ycordT){
@@ -163,6 +163,9 @@ public class PlayAreaScript: MonoBehaviour {
 				square.hardUntargetSquare ();
 			}
 		}
+	}
+	public void takeAHit(CurrentWeaponHitBox incomingWeaponHitBox, int incomingX, int incomingY){
+		grid [incomingX] [incomingY].takeOneSquareDamage (incomingWeaponHitBox.weaponDamage);
 	}
 }
 public class TargetSquareState{

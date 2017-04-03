@@ -22,6 +22,7 @@ public class TargetSquareScript : MonoBehaviour {
 
 	SpriteRenderer spriteRenderer;
 	PlayAreaScript playArea;
+	BPartGenericScript bodyPartReference;
 //	ActiveSquareBehaviour(int startingIntValueImport){
 //		startingIntValue = startingIntValueImport;
 //	}
@@ -103,9 +104,12 @@ public class TargetSquareScript : MonoBehaviour {
 
 
 
+	public void takeOneSquareDamage(float incomingWeaponDamage){
+		bodyPartReference.takeDamage (incomingWeaponDamage);
+	}
 
-
-	public void OccupiedSquare(){	//used by playarea to turn on and off if the enemy occupies the space
+	public void OccupiedSquare(BPartGenericScript incomingBodyPartReference){	//used by playarea to turn on and off if the enemy occupies the space
+		bodyPartReference = incomingBodyPartReference;
 		trueTarget = occupiedTargetedSprite;
 		trueUntarget = occupiedUntargetedSprite;
 		activeSquareState.setOccupiedState(true);

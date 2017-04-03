@@ -22,32 +22,14 @@ public class BPartGenericScript : MonoBehaviour {
 	//dependent and changable variables
 	private float currentHealth;
 	private bool active;
+	private bool fullyDeactivated;
 
-//	public void CreateNewPart(BodyPartDataHolder incomingBodyPartData){
-//		bPartType = incomingBodyPartData.typeOfpart;				//arm,head,legs,shoulder, or torso
-//		bPartName = incomingBodyPartData.name;
-//		nodesOfBP = new BodyPartNode[incomingBodyPartData.bodyPartGrid.Length][];
-//		for(int i=0; i < incomingBodyPartData.bodyPartGrid.Length; i++){	//transfering the int[][] grid
-//			nodesOfBP [i] = new BodyPartNode[incomingBodyPartData.bodyPartGrid[0].Length];
-//			for(int j=0; j < incomingBodyPartData.bodyPartGrid[0].Length; j++){
-//				BodyPartNode bodyPartNode = new BodyPartNode ();
-//				if (incomingBodyPartData.bodyPartGrid [i] [j] == 1) {
-//					bodyPartNode.turnOn ();
-//				}
-//				nodesOfBP [i] [j] = bodyPartNode;
-//			}
-//		}
-//		anchorPoint = incomingBodyPartData.anchor;			//the location in which all parts will be located and placed
-//		maxHealth = incomingBodyPartData.maxHealth;
-//
-//		dimensions = new Vector2(nodesOfBP.Length, nodesOfBP[0].Length);		//dependent on the farthest location from the source (0,0) of the list of binaryDimensions
-//				//default is left side
-//
-//		//dependent and changable variables
-//		currentHealth = incomingBodyPartData.maxHealth;
-//		resetHealthToFull();
-//		active = true;
-//	}
+	public void takeDamage(float incomingDamage){
+		currentHealth -= incomingDamage;
+	}
+
+
+
 	public void CreateNewPart(BodyPartDataHolder incomingBodyPartData, string leftOrRight){
 		bPartType = incomingBodyPartData.typeOfpart;				//arm,head,legs,shoulder, or torso
 		bPartName = incomingBodyPartData.name;
@@ -119,37 +101,29 @@ public class BPartGenericScript : MonoBehaviour {
 		currentHealth = incomingBodyPartData.maxHealth;
 		resetHealthToFull();
 		active = true;
+		fullyDeactivated = false;
 		//Debug.Log("complex list for "+bPartName+ " : "+ listOfComplexAnchorPoints.Count);
 	}
 	public void resetHealthToFull(){
 		currentHealth = maxHealth;
 	}
+
+
+
+
 	public void setTorsoOriginPosition(Vector2 incomingTorsoOriginPoint){
 		//Debug.Log ("setting custom torso origin");
 		globalOriginPoint = incomingTorsoOriginPoint;
 	}
 
 	public void setGlobalPosition(Vector2 incomingGlobalAnchorPoint){
-//		Debug.Log ("body part anchor Point: " + anchorPoint);
-//		Debug.Log ("incoming point: " + incomingGlobalAnchorPoint);
-		//Debug.Log ("setting "+bPartName+" origin");
 		globalOriginPoint = incomingGlobalAnchorPoint - anchorPoint;
-//		Debug.Log ("global Origin outgoing: "+globalOriginPoint);
 	}
-//	public void setAnchorGlobalLocation(Vector2 incomingAnchorSetPoint){
-//		globalOriginPoint = (incomingAnchorSetPoint-anchorPoint);
-//	}
 	public Vector2 getGlobalOriginPoint(){
 		return globalOriginPoint;
 	}
 
 	public void setGlobalPositionOffComplexAnchor(Vector2 incomingGlobalAnchorPoint, string pointOfConnection){
-//		Debug.Log ("complex anchor point1 " + listOfComplexAnchorPoints[0].nameOfPoint+" : " +listOfComplexAnchorPoints[0].anchorPoint);
-//		Debug.Log ("complex anchor point2 " + listOfComplexAnchorPoints[1].nameOfPoint+" : " +listOfComplexAnchorPoints[1].anchorPoint);
-//		Debug.Log (listOfComplexAnchorPoints.Count);
-////		Debug.Log("incoming point: " +incomingGlobalAnchorPoint);
-////		Debug.Log("incoming name of point: " +pointOfConnection);
-//		Debug.Log ("actual found complex anchor point:  "+listOfComplexAnchorPoints.Find (ComplexAnchorPoints => ComplexAnchorPoints.nameOfPoint == pointOfConnection).anchorPoint);
 		globalOriginPoint = incomingGlobalAnchorPoint - (listOfComplexAnchorPoints.Find (ComplexAnchorPoints => ComplexAnchorPoints.nameOfPoint == pointOfConnection).anchorPoint);
 //		Debug.Log ("ouput point: " +globalOriginPoint);
 	}
@@ -195,6 +169,12 @@ public class BPartGenericScript : MonoBehaviour {
 		active = false;
 	}
 
+	public bool getFullyDeactivated(){
+		return fullyDeactivated;
+	}
+	public void setFullyDeactivated(){
+		fullyDeactivated  = true;
+	}
 	public bool getGridPoint(Vector2 incomingPoint){
 		return nodesOfBP [(int)incomingPoint.x] [(int)incomingPoint.y].getState ();
 	}

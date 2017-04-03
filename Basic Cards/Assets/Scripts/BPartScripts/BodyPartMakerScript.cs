@@ -139,7 +139,13 @@ public class WholeBodyOfParts{
 		}
 		return null;
 	}
-
+	public int bodyPartCount(){
+		int count = 0;
+		foreach(BPartGenericScript part in listOfAllParts){
+			count++;
+		}
+		return count;
+	}
 	public bool bodyPartCheck(){
 		if (leftArm != null && rightArm != null && head != null && leftLeg != null && rightLeg != null && leftShoulder != null && rightShoulder != null && torso != null) {
 			return true;

@@ -39,11 +39,35 @@ public class GameControllerScript : MonoBehaviour {
 		}
 		
 	}
+	void Update(){
+		if (enemyController.getWholeBodyOfParts().bodyPartCount() > 0) {
+			//int i = 0;
+			for (int i=0; i<enemyController.getWholeBodyOfParts().listOfAllParts.Count; i++){		//for every body part in the list
+				if (!enemyController.getWholeBodyOfParts ().listOfAllParts [i].getActive () && !enemyController.getWholeBodyOfParts ().listOfAllParts [i].getFullyDeactivated ()) {
+					Debug.Log (enemyController.getWholeBodyOfParts().listOfAllParts.Count);
+					enemyController.getWholeBodyOfParts ().listOfAllParts [i].setFullyDeactivated ();
+					for (int x = 0; x < (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getDimensionsOfPart ().x); x++) {				//get the x dimensions and run through the grid of Y
+						for (int y = 0; y < (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getDimensionsOfPart ().y); y++) {			//get the y dimensions and run through every colloum of parts
+							if (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getGridPoint (new Vector2 (x, y))) {				//gets the body part point and asks the grid of bodypartnodes if they are on or off at the internal dimension of the part
+								int outGoingXCord = ((int)enemyController.getWholeBodyOfParts ().listOfAllParts [i].getGlobalOriginPoint ().x) + x;
+								int outGoingYCord = ((int)enemyController.getWholeBodyOfParts ().listOfAllParts [i].getGlobalOriginPoint ().y) + y;
+								playAreaController.getSmallSquare (outGoingXCord, outGoingYCord).DeactivateSquare ();
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	public void makeBody(){
 		enemyController.populateBody ();
+		//enemyController.takeDamage ();
+	}
+	public void makeActiveSquares(){
+		playAreaController.populateEnemyPlayAreaSquares ();
 	}
 
-	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix, int weaponDamage){		//command sent from the CardBehaviour script with info about the damage its doing
+	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix, float weaponDamage){		//command sent from the CardBehaviour script with info about the damage its doing
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(true, WeaponHitMatrix, weaponDamage);
 		playAreaController.hardResetSmallSquares ();
 
@@ -61,9 +85,7 @@ public class GameControllerScript : MonoBehaviour {
 		deckController.shuffleDiscard();
 
 	}
-	public void makeActiveSquares(){
-		playAreaController.populateEnemyPlayAreaSquares ();
-	}
+
 	public void discardAllActiveShuffle(){			//discards all active cards and cards in draw pile and then shuffles
 		deckController.discardAllActiveShuffle();
 	}
@@ -77,7 +99,8 @@ public class GameControllerScript : MonoBehaviour {
 		for (int x = 0; x < gridDimensions.x; x++) {
 			for (int y = 0; y < gridDimensions.y; y++) {
 				if (playAreaController.getTargetSquareStateSoftTarget(x,y) && playAreaController.getTargetSquareStateOccupied(x,y)){
-					enemyController.takeDamage (currentClickedOnCardWeaponMatrix, x, y);
+					playAreaController.takeAHit (currentClickedOnCardWeaponMatrix, x, y);
+					enemyController.takeDamage ();
 				}
 			}
 		}
@@ -87,8 +110,8 @@ public class GameControllerScript : MonoBehaviour {
 public class CurrentWeaponHitBox{
 	public bool isCardClickedOn;
 	public XMLWeaponHitData weaponHitData;
-	public int weaponDamage;
-	public CurrentWeaponHitBox(bool incomingCardClickedData, XMLWeaponHitData incomingWeaponHitData, int weaponDamageT){
+	public float weaponDamage;
+	public CurrentWeaponHitBox(bool incomingCardClickedData, XMLWeaponHitData incomingWeaponHitData, float weaponDamageT){
 		isCardClickedOn = incomingCardClickedData;
 		weaponHitData = incomingWeaponHitData;
 		weaponDamage = weaponDamageT;

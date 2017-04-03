@@ -20,7 +20,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 	int cardSpriteNum = 0;
 	string nameOfCard; 
 	int rankOfCard; 
-	int attackDamageOfCard; 
+	float attackDamageOfCard; 
 	string typeOfAttack;
 
 	void Start ()
@@ -78,9 +78,10 @@ public class XMLCardLoaderScript : MonoBehaviour {
 // This class is used to assign our XML Data to objects in a list so we can call on them later. 
 public class XMLData {
 	public string nameOfCard, typeOfAttack;
-	public int cardSpriteNum, rankOfCard, attackDamageOfCard;
+	public float attackDamageOfCard;
+	public int cardSpriteNum, rankOfCard;
 // Create a constructor that will accept multiple arguments that can be assigned to our variables. 
-	public XMLData (int spriteNum, string name, int rank, int attack, string atkType)
+	public XMLData (int spriteNum, string name, int rank, float attack, string atkType)
 	{
 		cardSpriteNum = spriteNum;
 		nameOfCard = name;

@@ -7,7 +7,7 @@ public class CardScript : MonoBehaviour {
 	int cardSpriteNum;
 	string nameOfCard; 
 	int rankOfCard; 
-	int attackDamageOfCard; 
+	float attackDamageOfCard; 
 	string typeOfAttack;
 
 	private DeckScript deckScript;
@@ -62,7 +62,7 @@ public class CardScript : MonoBehaviour {
 	public int CardNumber{
 		get{return cardSpriteNum;}
 	}
-	public int AttackValue{
+	public float AttackValue{
 		get{return attackDamageOfCard;}
 	}
 	public string TypeOfAttack{
