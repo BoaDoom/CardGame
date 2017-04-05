@@ -33,34 +33,27 @@ public class BodyPartMakerScript : MonoBehaviour {
 //			Debug.Log (incomingWholeBodyOfParts.torso.getName());
 		}
 		if (incomingWholeBodyOfParts.bodyPartCheck ()) {
-//			Debug.Log ("dimensions of part"+ incomingWholeBodyOfParts.torso.getDimensionsOfPart());
-////			Debug.Log (Mathf.Round(incomingDimensionsOfPlayArea.x/2));
-////			Debug.Log (Mathf.Round (incomingWholeBodyOfParts.torso.getDimensionsOfPart ().x / 2));
-//			Debug.Log (Mathf.Round(incomingDimensionsOfPlayArea.x/2)-Mathf.Round(incomingWholeBodyOfParts.torso.getDimensionsOfPart().x/2));		//the far left point that the torso needs to be center, it's origin x point
-//			Debug.Log (incomingWholeBodyOfParts.torso.getDimensionsOfPart().y);
+
 			Vector2 offSetToCenter = new Vector2
 				(Mathf.Round(incomingDimensionsOfPlayArea.x/2)-Mathf.Round(incomingWholeBodyOfParts.torso.getDimensionsOfPart().x/2)+1,		//the far left point that the torso needs to be center, it's origin x point
-				incomingWholeBodyOfParts.leftLeg.getDimensionsOfPart().y-1);
+					incomingWholeBodyOfParts.leftLeg.getAnchorPoint().y-1);
 			
 			incomingWholeBodyOfParts.torso.setTorsoOriginPosition (offSetToCenter);
-//			Debug.Log ("offset to center for torso" +offSetToCenter);
-//			Debug.Log ("test for left leg point:" +incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("LeftLegPoint"));
-			incomingWholeBodyOfParts.leftLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("LeftLegPoint"));
-//			Debug.Log ("global origin left leg: "+incomingWholeBodyOfParts.leftLeg.getGlobalOriginPoint());
-			incomingWholeBodyOfParts.rightLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("RightLegPoint"));
-//			Debug.Log ("global origin right leg: "+incomingWholeBodyOfParts.rightLeg.getGlobalOriginPoint());
-			incomingWholeBodyOfParts.head.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("HeadPoint"));
-//			Debug.Log ("global origin head: "+incomingWholeBodyOfParts.head.getGlobalOriginPoint());
-			incomingWholeBodyOfParts.leftShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("LeftShoulderPoint"), "TorsoPoint");
-//			Debug.Log ("global origin left shoulder: "+incomingWholeBodyOfParts.leftShoulder.getGlobalOriginPoint());
-			incomingWholeBodyOfParts.rightShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("RightShoulderPoint"), "TorsoPoint");
-//			Debug.Log ("global origin right shoulder: "+incomingWholeBodyOfParts.rightShoulder.getGlobalOriginPoint());
 
-			//Debug.Log ("Arm point "+incomingWholeBodyOfParts.leftShoulder.getGlobalAnchorPoint ("ArmPoint"));
+			incomingWholeBodyOfParts.leftLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("LeftLegPoint"));
+
+			incomingWholeBodyOfParts.rightLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("RightLegPoint"));
+
+			incomingWholeBodyOfParts.head.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("HeadPoint"));
+
+			incomingWholeBodyOfParts.leftShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("LeftShoulderPoint"), "TorsoPoint");
+
+			incomingWholeBodyOfParts.rightShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("RightShoulderPoint"), "TorsoPoint");
+
 			incomingWholeBodyOfParts.leftArm.setGlobalPosition (incomingWholeBodyOfParts.leftShoulder.getGlobalAnchorPoint ("ArmPoint"));
-//			Debug.Log ("global origin left arm: "+incomingWholeBodyOfParts.leftArm.getGlobalOriginPoint());
+
 			incomingWholeBodyOfParts.rightArm.setGlobalPosition (incomingWholeBodyOfParts.rightShoulder.getGlobalAnchorPoint ("ArmPoint"));
-//			Debug.Log ("global origin right arm: "+incomingWholeBodyOfParts.rightArm.getGlobalOriginPoint());
+
 
 		} else {
 			Debug.Log ("There are body parts missing");
@@ -78,9 +71,11 @@ public class WholeBodyOfParts{
 	public BPartGenericScript rightShoulder;
 	public BPartGenericScript torso;
 	public List <BPartGenericScript> listOfAllParts = new List<BPartGenericScript> ();
+	public bool hasAnyBodyParts;
 
 	public void setBodyPart(BPartGenericScript incomingBodyPart){
 		//Debug.Log (incomingBodyPart.getType());
+		hasAnyBodyParts = true;
 		listOfAllParts.Add(incomingBodyPart);
 		switch (incomingBodyPart.getType()) {
 		case ("Arm"):
@@ -152,6 +147,9 @@ public class WholeBodyOfParts{
 		} else {
 			return false;
 		}
+	}
+	public bool hasBodyPart(){
+		return hasAnyBodyParts;
 	}
 	public void resetBodyToZero(){
 		 leftArm = null;

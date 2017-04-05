@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TargetSquareScript : MonoBehaviour {
 
-//	[SerializeField]
 	int gridCordX;
-//	[SerializeField]
 	int gridCordY;
 
 	public Sprite occupiedUntargetedSprite;
@@ -23,9 +21,6 @@ public class TargetSquareScript : MonoBehaviour {
 	SpriteRenderer spriteRenderer;
 	PlayAreaScript playArea;
 	BPartGenericScript bodyPartReference;
-//	ActiveSquareBehaviour(int startingIntValueImport){
-//		startingIntValue = startingIntValueImport;
-//	}
 
 	void Awake(){
 		activeSquareState = new TargetSquareState();
@@ -80,6 +75,9 @@ public class TargetSquareScript : MonoBehaviour {
 	}
 	void OnMouseExit(){
 		playArea.squareHoveredOff ();
+	}
+	void OnMouseDown(){
+		playArea.squareClickedOn(gridCordX, gridCordY);
 	}
 		
 	public void TargetSquare(){		//used by playarea to turn on and off targetting

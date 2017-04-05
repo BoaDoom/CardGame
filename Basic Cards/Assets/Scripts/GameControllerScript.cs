@@ -41,11 +41,11 @@ public class GameControllerScript : MonoBehaviour {
 		
 	}
 	void Update(){
-		if (enemyController.getWholeBodyOfParts().bodyPartCount() > 0) {
+		if (enemyController.hasBodyParts()) {
 			//int i = 0;
 			for (int i=0; i<enemyController.getWholeBodyOfParts().listOfAllParts.Count; i++){		//for every body part in the list
-				if (!enemyController.getWholeBodyOfParts ().listOfAllParts [i].getActive () && !enemyController.getWholeBodyOfParts ().listOfAllParts [i].getFullyDeactivated ()) {
-					Debug.Log (enemyController.getWholeBodyOfParts().listOfAllParts.Count);
+				if (!enemyController.getWholeBodyOfParts ().listOfAllParts [i].getActive () && !enemyController.getWholeBodyOfParts ().listOfAllParts [i].getFullyDeactivated ()) {	//if part is not active and not fully deactivated, deactivate it's squares
+					//Debug.Log (enemyController.getWholeBodyOfParts().listOfAllParts.Count);
 					enemyController.getWholeBodyOfParts ().listOfAllParts [i].setFullyDeactivated ();
 					for (int x = 0; x < (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getDimensionsOfPart ().x); x++) {				//get the x dimensions and run through the grid of Y
 						for (int y = 0; y < (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getDimensionsOfPart ().y); y++) {			//get the y dimensions and run through every colloum of parts
@@ -58,6 +58,7 @@ public class GameControllerScript : MonoBehaviour {
 					}
 				}
 			}
+			UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
 		}
 	}
 	public void makeBody(){
@@ -101,10 +102,11 @@ public class GameControllerScript : MonoBehaviour {
 			for (int y = 0; y < gridDimensions.y; y++) {
 				if (playAreaController.getTargetSquareStateSoftTarget(x,y) && playAreaController.getTargetSquareStateOccupied(x,y)){
 					playAreaController.takeAHit (currentClickedOnCardWeaponMatrix, x, y);
-					enemyController.takeDamage ();
+					enemyController.updateHealthDisplay ();
 				}
 			}
 		}
+		cardClickedOff ();
 	}
 
 }

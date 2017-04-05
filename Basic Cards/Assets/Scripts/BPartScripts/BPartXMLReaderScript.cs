@@ -118,10 +118,8 @@ public class BPartXMLReaderScript : MonoBehaviour {
 								sexOfSocket = false;
 							}
 							uniqueAnchorPoints = new ComplexAnchorPoints (point.Name.ToString(), anchorVector2 , sexOfSocket);
-							//Debug.Log ("AnchorPoints name test " + point.Name.ToString()+ " and point "+ anchorVector2);
+
 							listOfComplexAnchorPoints.Add (uniqueAnchorPoints);
-//							Debug.Log (uniqueAnchorPoints.nameOfPoint);
-//							Debug.Log (uniqueAnchorPoints.anchorPoint);
 						}
 						BPartData.Add (new BodyPartDataHolder (BpartName, BpartType, MaxHealth, gridOfBodyPart, listOfComplexAnchorPoints));
 						//anchorVector2 = new Vector2 (0.0f, 0.0f);		//placeholder
@@ -139,12 +137,7 @@ public class BPartXMLReaderScript : MonoBehaviour {
 						BPartData.Add (new BodyPartDataHolder (BpartName, BpartType, MaxHealth, gridOfBodyPart, anchorVector2));
 					}
 				}
-//				Debug.Log(BPartData[t].name);
-//				Debug.Log (t);
-//				t++;
 			}
-			//		Debug.Log ("bodydata after add " + BPartData.Count);
-			//finishedLoading = true; //tell the program that we’ve finished loading data. 
 
 			yield return null;
 		}

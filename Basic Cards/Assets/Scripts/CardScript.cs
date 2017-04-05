@@ -21,6 +21,7 @@ public class CardScript : MonoBehaviour {
 	//private bool clicked;
 	private bool cardInPlayArea;
 	private bool active;
+	private bool clickedOn;
 	private Sprite storedSprite;
 	private SpriteRenderer spriteRenderer;
 	private int hitSquareOverflow;
@@ -34,6 +35,7 @@ public class CardScript : MonoBehaviour {
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
 		active = true;
 		cardInPlayArea = false;
+		clickedOn = false;
 		hitSquareOverflow = 0;
 		GameObject deckControllerObjectTemp = GameObject.FindWithTag ("DeckController");
 		if (deckControllerObjectTemp != null) {
@@ -99,16 +101,26 @@ public class CardScript : MonoBehaviour {
 	public void moveCard(Vector3 newPosition){
 		gameObject.transform.position = newPosition;
 	}
-	
+
 	private void OnMouseDown(){
-		gameController.cardClickedOn (hitBoxDataForCard, attackDamageOfCard);		//sends the info about attack attached to the card to the gamecontroller
+		if (!clickedOn) {
+			gameController.cardClickedOn (hitBoxDataForCard, attackDamageOfCard);		//sends the info about attack attached to the card to the gamecontroller
+			clickedOn = true;
+			//Debug.Log (gameObject.GetComponent<CardScript> ().AttackValue);
+			deckScript.setCurrentCard (gameObject.GetComponent<CardScript>());
+		} else {
+			clickedOn = false;
+			deckScript.emptyCurrentCard ();
+		}
 	}
 	private void OnMouseUp(){
-		gameController.cardClickedOff();
-		//clicked = true;
-		if (cardInPlayArea) {
-			deactivate ();
-			deckScript.updateCards ();		//lets the deck know that a card was played and to update the active cards
+		if (!clickedOn) {
+			gameController.cardClickedOff ();
+			//clicked = true;
+//			if (cardInPlayArea) {
+//				deactivate ();
+//				deckScript.updateCards ();		//lets the deck know that a card was played and to update the active cards
+//			}
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
@@ -116,7 +128,7 @@ public class CardScript : MonoBehaviour {
 		if (other.CompareTag("TargetSquare")){		//does not trigger anything if its colliding with anything else
 			if (active && (hitSquareOverflow<=0)){
 				hideCard ();
-				cardInPlayArea = true;
+//				cardInPlayArea = true;
 			}
 			hitSquareOverflow++;			//the sum of all the small squares the card has entered. If number is 0, its left play area and can becom active again
 		}
@@ -126,7 +138,7 @@ public class CardScript : MonoBehaviour {
 			hitSquareOverflow--;
 			if (!active && (hitSquareOverflow<=0)){
 				showCard ();
-				cardInPlayArea = false;
+//				cardInPlayArea = false;
 			}
 		}
 	}
@@ -145,6 +157,7 @@ public class CardScript : MonoBehaviour {
 	public void deactivate(){
 		gameObject.SetActive (false);
 	}
+
 
 
 

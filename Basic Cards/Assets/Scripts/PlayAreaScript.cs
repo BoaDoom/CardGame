@@ -14,11 +14,11 @@ public class PlayAreaScript: MonoBehaviour {
 	public GameControllerScript gameControllerScript; //added manually inside unity
 	EnemyScript enemyScript;
 
-	public int boxCountX = 7;
-	public int boxCountY = 8;
+	public int boxCountX;
+	public int boxCountY;
 
-	int bodyHitBoxWidth;
-	int bodyHitBoxHeight;
+//	int bodyHitBoxWidth;
+//	int bodyHitBoxHeight;
 
 	public float sizeRatioOfSmallBox = 1.0f;
 
@@ -32,14 +32,6 @@ public class PlayAreaScript: MonoBehaviour {
 
 
 	void Start () {
-		GameObject XMLBodyHitLoaderTEMP = GameObject.FindWithTag("BodyLoader");
-		if(XMLBodyHitLoaderTEMP != null){
-			bodyLoaderData = XMLBodyHitLoaderTEMP.GetComponent<XMLBodyLoaderScript>().bodyData;
-		}
-		if(XMLBodyHitLoaderTEMP == null){
-			Debug.Log ("Cannot find 'BodyLoader'object");}
-
-
 		GameObject EnemyScriptTemp = GameObject.FindWithTag("EnemyController");
 		if(EnemyScriptTemp != null){
 			enemyScript = EnemyScriptTemp.GetComponent<EnemyScript>();
@@ -47,10 +39,6 @@ public class PlayAreaScript: MonoBehaviour {
 		if(EnemyScriptTemp == null){
 			Debug.Log ("Cannot find 'enemyScript'object");}
 		
-
-		bodyHitBoxWidth = bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody.Length;
-		bodyHitBoxHeight = bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [0].Length;
-
 		gridDimensions = new Vector2(boxCountX, boxCountY);
 
 		enemyScript.setPlayAreaDimensions(gridDimensions);
@@ -63,7 +51,7 @@ public class PlayAreaScript: MonoBehaviour {
 		//int xi = 0;
 		gridOfStates = new TargetSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
 		grid = new TargetSquareScript[(int)gridDimensions.x][];		//grid of prefab ActiveSquare
-		Vector2 offSetToCenter = new Vector2(Mathf.Round(boxCountX/2)-Mathf.Round(bodyHitBoxWidth/2),0);
+//		Vector2 offSetToCenter = new Vector2(Mathf.Round(boxCountX/2)-Mathf.Round(bodyHitBoxWidth/2),0);
 
 		//Debug.Log (offSetToCenter);
 		for (int x = 0; x < gridDimensions.x; x++){
@@ -80,33 +68,13 @@ public class PlayAreaScript: MonoBehaviour {
 				grid[x][y] = smallSquareInst;
 				gridOfStates[x][y] = smallSquareInst.activeSquareState;
 
-//				if ((offSetToCenter.x <= x) && (bodyHitBoxWidth+offSetToCenter.x > x)) {
-//					if ((bodyHitBoxHeight > y + offSetToCenter.y)) {
-//						if (bodyLoaderData.Find (XMLBodyHitData => XMLBodyHitData.nameOfBody == "plainTestBody").gridOfBody [x-(int)offSetToCenter.x] [y] == 1) {
-//							//smallSquareInst.OccupiedSquare ();
-//						}
-//					}
-//				}
-
-
-
 			}
 		}
 	}
 	public void populateEnemyPlayAreaSquares(){
 		grid = enemyScript.populateCorrectPlayAreaSquares (grid);
 	}
-//	public void activateSmallSquare(){
-//		
-//		for (int x = 0; x < gridDimensions.x; x++){
-////			grid[x] = new TargetSquareScript[(int)gridDimensions.y];
-//			for (int y = 0; y < gridDimensions.y; y++)
-//			{
-////				grid [x] [y].ActivateSquare ();
-//			}
-//		}
-//		//grid [x] [y].ActivateSquare ();
-//	}
+
 	public TargetSquareScript getSmallSquare(int x, int y){
 		//Debug.Log (grid [0] [0].GetComponent<BoxCollider2D>);
 		return grid [x] [y];
@@ -150,6 +118,13 @@ public class PlayAreaScript: MonoBehaviour {
 		hardResetSmallSquares ();
 		//grid [xCord] [yCord].DeactivateSquare ();	
 	}
+	public void squareClickedOn(int xCord, int yCord){		//when a small square is clicked on
+		if (gameControllerScript.currentClickedOnCardWeaponMatrix.isCardClickedOn) {		//checks to see if there was a card in play
+			gameControllerScript.enemyCardDamage ();		//if there was, make the enemy take damage
+			gameControllerScript.deckController.turnOffCurrentCard();
+		}
+	}
+
 	public void softResetSmallSquares(){
 		foreach(TargetSquareScript[] gridY in grid){
 			foreach (TargetSquareScript square in gridY) {

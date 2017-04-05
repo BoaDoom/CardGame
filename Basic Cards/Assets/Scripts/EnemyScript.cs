@@ -44,14 +44,14 @@ public class EnemyScript : MonoBehaviour {
 //		}
 //		updateHealthDisplay ();
 //	}
-	public void takeDamage(){
-		updateHealthDisplay ();
-	}
+//	public void takeDamage(){
+//		updateHealthDisplay ();
+//	}
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
 
 	}
-	private void updateHealthDisplay(){
+	public void updateHealthDisplay(){
 		Vector3 tempHealth = healthBarStartingScale;
 		float newHealth = 0;
 		//Debug.Log ("Number of body parts: " + wholeBodyOfParts.listOfAllParts.Count);
@@ -73,15 +73,24 @@ public class EnemyScript : MonoBehaviour {
 		healthMax = 0;
 		wholeBodyOfParts.resetBodyToZero ();
 		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
-		//Debug.Log ("made heavy arm");
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "right"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head", "none"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "left"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "right"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "left"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "right"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso", "none"));
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
+//		//Debug.Log ("made heavy arm");
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "right"));
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head", "none"));
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "left"));
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "right"));
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "left"));
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "right"));
+//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso", "none"));
+//
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped arm", "left"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped arm", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped head", "none"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped leg", "left"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped leg", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped shoulder", "left"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped shoulder", "right"));
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped torso", "none"));
 		wholeBodyOfParts = BpartMaker.createWholeBody (wholeBodyOfParts, playAreaDimensions);		//setting internal location positions of each of the body parts in relation to eachother
 		for (int i=0; i<wholeBodyOfParts.listOfAllParts.Count; i++){
 			healthMax += wholeBodyOfParts.listOfAllParts [i].getCurrentHealth ();
@@ -91,6 +100,9 @@ public class EnemyScript : MonoBehaviour {
 	}
 	public WholeBodyOfParts getWholeBodyOfParts(){
 		return wholeBodyOfParts;
+	}
+	public bool hasBodyParts(){
+		return wholeBodyOfParts.hasBodyPart();
 	}
 	public TargetSquareScript[][] populateCorrectPlayAreaSquares(TargetSquareScript[][] incomingSquareGrid){
 	//Debug.Log (wholeBodyOfParts.listOfAllParts.Count);

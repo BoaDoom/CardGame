@@ -40,6 +40,7 @@ public class DeckScript : MonoBehaviour {
 	private SpriteRenderer weaponSmallSquare;
 	//private Vector3 playAreaCurrentRatioSize;
 	//public GridMaker PlayArea;
+	private CardScript currentCard;
 
 	void Start () {
 		GameObject XMLCardLoaderObject = GameObject.FindWithTag("CardLoader");
@@ -105,7 +106,7 @@ public class DeckScript : MonoBehaviour {
 			if (!drawnCards[i].isActiveAndEnabled) {		//checks to see which ones are still active. Ontrigger2dCollision in CardBehavior deactivates cards when put into play area @void OnTriggerStay2D(Collider2D other)
 				discardedCards.Add(drawnCards[i].CardNumber);			//moves any non active cards to discarded pile
 				//enemyBehaviour.takeDamage(drawnCards[i].AttackValue);
-				gameController.enemyCardDamage();
+				//gameController.enemyCardDamage();
 				Destroy(drawnCards[i].gameObject);
 				drawnCards.RemoveAt(i);						//removes the non active card from the drawn pile
 				i--;
@@ -144,10 +145,27 @@ public class DeckScript : MonoBehaviour {
 		updateCards ();
 		discardDrawThenShuffle ();
 	}
+	public void setCurrentCard(CardScript incomingCard){
+		currentCard = incomingCard;
+
+	}
+	public void emptyCurrentCard(){
+		currentCard = null;
+	}
+	public void turnOffCurrentCard(){
+		//Debug.Log ("trying to turn off");
+		if (currentCard == null) {
+			Debug.Log ("There is currently no activated card");
+		} else
+			currentCard.deactivate ();
+			//Debug.Log ("attack value of current card: "+currentCard.AttackValue);
+			updateCards ();
+		}
+	}
 //	public void discardEverything(){
 //		foreach (CardScript drawnCard in drawnCards) {
 //			drawnCard.deactivate ();
 //		}
 //		updateCards ();
 //	}
-}
+

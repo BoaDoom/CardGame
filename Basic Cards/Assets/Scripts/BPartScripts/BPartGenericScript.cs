@@ -65,23 +65,18 @@ public class BPartGenericScript : MonoBehaviour {
 			}
 		}
 		dimensions = new Vector2(nodesOfBP.Length, nodesOfBP[0].Length);		//dependent on the farthest location from the source (0,0) of the list of binaryDimensions
-		//Debug.Log ("Dimensions of "+ bPartName +": " + dimensions);
-		//dependent and changable variables
+
 		if (incomingBodyPartData.simpleAnchorPoints) {			//checking to see if there is one anchor point or more
 			if (leftSide){										//if left side (default design), then transfer anchor point normally
 				anchorPoint = incomingBodyPartData.anchor;			//the location in which all parts will be located and placed
-//				Debug.Log("Left side, anchorpoint: "+anchorPoint+" "+bPartName);
 			}
 			else if(!leftSide){								//if right side, mirror the anchor point across the X axis
 				anchorPoint = new Vector2 (((dimensions.x) - (incomingBodyPartData.anchor.x+1)), incomingBodyPartData.anchor.y);
-//				Debug.Log("Right side, anchorpoint: "+anchorPoint+" "+bPartName);
-
 			}
-		} else {
-			//listOfComplexAnchorPoints = incomingBodyPartData.listOfComplexAnchorPoints;	
+		} 
+		else {
 			if (leftSide) {										//if left side (default design), then transfer anchor point normally
 				listOfComplexAnchorPoints = incomingBodyPartData.listOfComplexAnchorPoints;			//the location in which all parts will be located and placed
-				//Debug.Log("complex list: "+ listOfComplexAnchorPoints.Count);
 			} else 
 			if (!leftSide) {								//if right side, mirror the anchor point across the X axis
 				for (int i = 0; i < incomingBodyPartData.listOfComplexAnchorPoints.Count; i++) {
@@ -91,12 +86,8 @@ public class BPartGenericScript : MonoBehaviour {
 							incomingBodyPartData.listOfComplexAnchorPoints[i].male));
 					//the dimension.x+1 is to account for the origin of the points being at 1,1 rather than 0,0.
 				}
-				//listOfComplexAnchorPoints = 
 			}
-//			Debug.Log ("check anchor points: " + listOfComplexAnchorPoints[0].nameOfPoint + " " + listOfComplexAnchorPoints[0].anchorPoint);
-//			Debug.Log ("check anchor points: " + listOfComplexAnchorPoints[1].nameOfPoint + " " + listOfComplexAnchorPoints[1].anchorPoint);
 		}
-		//Debug.Log (bPartName + " "+ leftSide);
 
 		currentHealth = incomingBodyPartData.maxHealth;
 		resetHealthToFull();
@@ -140,7 +131,11 @@ public class BPartGenericScript : MonoBehaviour {
 		return bPartType;
 	}
 	public float getCurrentHealth(){
-		return currentHealth;
+		if (currentHealth < 0) {
+			return 0;
+		} else {
+			return currentHealth;
+		}
 	}
 
 	public Vector2 getDimensionsOfPart(){
