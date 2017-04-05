@@ -58,33 +58,15 @@ public class DeckScript : MonoBehaviour {
 		if(XMLWeaponHitLoaderScriptTEMP == null){
 			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 
-//		GameObject playAreaTemp = GameObject.FindWithTag("PlayArea");
-//		if (playAreaTemp != null) {
-//			//PlayArea = playAreaTemp;
-//			//playAreaCurrentRatioSize = playAreaTemp.transform.localScale;
-//		}
-//		if(playAreaTemp == null){
-//			Debug.Log ("Cannot find 'playArea'object");}
-
-//		GameObject gameControllerTemp = GameObject.FindWithTag("GameController");
-//		if(XMLWeaponHitLoaderScriptTEMP != null){
-//			gameController = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;}
-//		if(XMLWeaponHitLoaderScriptTEMP == null){
-//			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
-	
-		//weaponHitSmallBoxes = new TargetSquareScript[100];
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
 		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
 		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
 		for (int i=0; i < cardsFaces.Length; i++){															//making as many cards as there are graphics for faces, gets the number from the Card prefab
 			orderOfDrawPile.Add(i);
+			//Debug.Log (i);
 		}
 		discardDrawThenShuffle();							//shuffles all the cards in orderOfDrawPile
 
-//		weaponSmallSquare = Instantiate (weaponHitSmallSquarePrefab, deckStartPosition.position, deckStartPosition.rotation);
-//		weaponSmallSquare.transform.localScale = smallSquareSize.transform.localScale;
-//		//weaponSmallSquare.tag="weaponHitBox";
-//		weaponSmallSquare.transform.localScale = new Vector3(playAreaCurrentRatioSize.x*weaponSmallSquare.transform.localScale.x,playAreaCurrentRatioSize.y*weaponSmallSquare.transform.localScale.y,1.0f);
 	}
 	public void DealCard(){
 		for (int i=0; i < 1; i++){
@@ -140,7 +122,7 @@ public class DeckScript : MonoBehaviour {
 			}
 		} else {				
 			//Debug.Log ("the stack of cards being shuffled does not have any cards in it");
-			Debug.Log (orderOfDrawPile.Count);
+			//Debug.Log (orderOfDrawPile.Count);
 		}
 		shuffleDiscard ();										//calls the shuffle discard function after putting all cards into the discard.
 

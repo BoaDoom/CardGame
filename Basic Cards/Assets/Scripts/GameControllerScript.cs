@@ -13,7 +13,7 @@ public class GameControllerScript : MonoBehaviour {
 	public PlayAreaScript playAreaController;
 	public EnemyScript enemyController;
 
-	public CurrentWeaponHitBox currentClickedOnCardWeaponMatrix;
+	public CurrentWeaponHitBox currentClickedOnCardWeaponMatrix{ get; set; }
 	//private bool boolCardClickedOn;
 
 	void Start () {
@@ -23,6 +23,7 @@ public class GameControllerScript : MonoBehaviour {
 		MakeSquaresButton.onClick.AddListener(makeActiveSquares);
 		discardEverythingButton.onClick.AddListener(discardAllActiveShuffle);
 		makeBodyButton.onClick.AddListener(makeBody);
+
 		GameObject deckControllerObjectTemp = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
 		if(deckControllerObjectTemp != null){
 			deckController = deckControllerObjectTemp.GetComponent<DeckScript>();
@@ -108,9 +109,9 @@ public class GameControllerScript : MonoBehaviour {
 
 }
 public class CurrentWeaponHitBox{
-	public bool isCardClickedOn;
-	public XMLWeaponHitData weaponHitData;
-	public float weaponDamage;
+	public bool isCardClickedOn{ get; set; }
+	public XMLWeaponHitData weaponHitData{ get;  set; }
+	public float weaponDamage{ get; private set; }
 	public CurrentWeaponHitBox(bool incomingCardClickedData, XMLWeaponHitData incomingWeaponHitData, float weaponDamageT){
 		isCardClickedOn = incomingCardClickedData;
 		weaponHitData = incomingWeaponHitData;

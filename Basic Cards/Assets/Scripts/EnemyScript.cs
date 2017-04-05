@@ -54,10 +54,14 @@ public class EnemyScript : MonoBehaviour {
 	private void updateHealthDisplay(){
 		Vector3 tempHealth = healthBarStartingScale;
 		float newHealth = 0;
+		//Debug.Log ("Number of body parts: " + wholeBodyOfParts.listOfAllParts.Count);
 		for (int i=0; i<wholeBodyOfParts.listOfAllParts.Count; i++){
+			float currentHealth = wholeBodyOfParts.listOfAllParts [i].getCurrentHealth ();
 			newHealth += wholeBodyOfParts.listOfAllParts [i].getCurrentHealth ();
-			if (newHealth <= 0) {
+			//Debug.Log (i+ " health: "+wholeBodyOfParts.listOfAllParts [i].getCurrentHealth ());
+			if (currentHealth <= 0 && wholeBodyOfParts.listOfAllParts [i].getActive()) {
 				wholeBodyOfParts.listOfAllParts [i].setAsInactive ();
+				Debug.Log ("deactivated triggered");
 			}
 		}
 		remainingHealth = newHealth;
@@ -67,6 +71,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 	public void populateBody(){				//currently invoked by game controller script on button press
 		healthMax = 0;
+		wholeBodyOfParts.resetBodyToZero ();
 		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
 		//Debug.Log ("made heavy arm");

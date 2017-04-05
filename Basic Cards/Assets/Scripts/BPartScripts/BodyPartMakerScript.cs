@@ -153,5 +153,16 @@ public class WholeBodyOfParts{
 			return false;
 		}
 	}
+	public void resetBodyToZero(){
+		 leftArm = null;
+		rightArm = null;
+		head = null;
+		leftLeg = null;
+		rightLeg = null;
+		leftShoulder = null;
+		rightShoulder = null;
+		torso = null;
+		listOfAllParts.Clear();
+	}
 }
 
