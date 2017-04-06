@@ -41,24 +41,27 @@ public class GameControllerScript : MonoBehaviour {
 		
 	}
 	void Update(){
-		if (enemyController.hasBodyParts()) {
+		if (enemyController.hasBodyParts() && enemyController.hasAtLeastOneBrokenPart()) {
 			//int i = 0;
-			for (int i=0; i<enemyController.getWholeBodyOfParts().listOfAllParts.Count; i++){		//for every body part in the list
-				if (!enemyController.getWholeBodyOfParts ().listOfAllParts [i].getActive () && !enemyController.getWholeBodyOfParts ().listOfAllParts [i].getFullyDeactivated ()) {	//if part is not active and not fully deactivated, deactivate it's squares
+
+			foreach (BPartGenericScript bPart in enemyController.getWholeBodyOfParts().getBrokenParts()){		//for every body part in the list
+				
+				if (!bPart.getActive() && !bPart.getFullyDeactivated ()) {	//if part is not active and not fully deactivated, deactivate it's squares
 					//Debug.Log (enemyController.getWholeBodyOfParts().listOfAllParts.Count);
-					enemyController.getWholeBodyOfParts ().listOfAllParts [i].setFullyDeactivated ();
-					for (int x = 0; x < (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getDimensionsOfPart ().x); x++) {				//get the x dimensions and run through the grid of Y
-						for (int y = 0; y < (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getDimensionsOfPart ().y); y++) {			//get the y dimensions and run through every colloum of parts
-							if (enemyController.getWholeBodyOfParts ().listOfAllParts [i].getGridPoint (new Vector2 (x, y))) {				//gets the body part point and asks the grid of bodypartnodes if they are on or off at the internal dimension of the part
-								int outGoingXCord = ((int)enemyController.getWholeBodyOfParts ().listOfAllParts [i].getGlobalOriginPoint ().x) + x;
-								int outGoingYCord = ((int)enemyController.getWholeBodyOfParts ().listOfAllParts [i].getGlobalOriginPoint ().y) + y;
+					bPart.setFullyDeactivated ();
+					for (int x = 0; x < (bPart.getDimensionsOfPart ().x); x++) {				//get the x dimensions and run through the grid of Y
+						for (int y = 0; y < (bPart.getDimensionsOfPart ().y); y++) {			//get the y dimensions and run through every colloum of parts
+							if (bPart.getGridPoint (new Vector2 (x, y))) {				//gets the body part point and asks the grid of bodypartnodes if they are on or off at the internal dimension of the part
+								int outGoingXCord = ((int)bPart.getGlobalOriginPoint ().x) + x;
+								int outGoingYCord = ((int)bPart.getGlobalOriginPoint ().y) + y;
 								playAreaController.getSmallSquare (outGoingXCord, outGoingYCord).DeactivateSquare ();
 							}
 						}
 					}
+					enemyController.unflagABrokenPart ();
 				}
 			}
-			UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
+			//UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
 		}
 	}
 	public void makeBody(){

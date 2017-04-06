@@ -24,11 +24,24 @@ public class BPartGenericScript : MonoBehaviour {
 	private bool active;
 	private bool fullyDeactivated;
 
+	private EnemyScript enemyScript;
+
 	public void takeDamage(float incomingDamage){
 		currentHealth -= incomingDamage;
+		if (currentHealth <= 0) {
+			enemyScript.flagABrokenPart ();
+		}
 	}
 
-
+	public void Start(){
+		GameObject enemyControllerTemp = GameObject.FindWithTag ("EnemyController");
+		if (enemyControllerTemp != null) {
+			enemyScript = enemyControllerTemp.GetComponent<EnemyScript> ();
+		}
+		if (enemyControllerTemp == null) {
+			Debug.Log ("Cannot find 'deckController'object");
+		}
+	}
 
 	public void CreateNewPart(BodyPartDataHolder incomingBodyPartData, string leftOrRight){
 		bPartType = incomingBodyPartData.typeOfpart;				//arm,head,legs,shoulder, or torso

@@ -141,6 +141,15 @@ public class WholeBodyOfParts{
 		}
 		return count;
 	}
+	public List<BPartGenericScript> getBrokenParts(){
+		List<BPartGenericScript> listOfBrokenParts = new List<BPartGenericScript> ();
+		foreach (BPartGenericScript bPart in listOfAllParts) {
+			if (bPart.getCurrentHealth () <= 0) {
+				listOfBrokenParts.Add (bPart);
+			}
+		}
+		return listOfBrokenParts;
+	}
 	public bool bodyPartCheck(){
 		if (leftArm != null && rightArm != null && head != null && leftLeg != null && rightLeg != null && leftShoulder != null && rightShoulder != null && torso != null) {
 			return true;

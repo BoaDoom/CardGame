@@ -19,6 +19,7 @@ public class EnemyScript : MonoBehaviour {
 	CurrentWeaponHitBox incomingWeaponhitBox;
 
 	private Vector2 playAreaDimensions;
+	private int flagForBrokenParts;
 
 	void Start () {
 		BpartMaker = gameObject.GetComponent<BodyPartMakerScript> ();
@@ -93,7 +94,10 @@ public class EnemyScript : MonoBehaviour {
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped torso", "none"));
 		wholeBodyOfParts = BpartMaker.createWholeBody (wholeBodyOfParts, playAreaDimensions);		//setting internal location positions of each of the body parts in relation to eachother
 		for (int i=0; i<wholeBodyOfParts.listOfAllParts.Count; i++){
-			healthMax += wholeBodyOfParts.listOfAllParts [i].getCurrentHealth ();
+			healthMax += wholeBodyOfParts.listOfAllParts [i].getCurrentHealth ();		//makes health pool
+		}
+		foreach (BPartGenericScript bPart in wholeBodyOfParts.listOfAllParts) {
+			bPart.GetComponent<Transform>().SetParent(gameObject.GetComponent<Transform>());
 		}
 		remainingHealth = healthMax;
 		updateHealthDisplay ();
@@ -103,6 +107,19 @@ public class EnemyScript : MonoBehaviour {
 	}
 	public bool hasBodyParts(){
 		return wholeBodyOfParts.hasBodyPart();
+	}
+	public bool hasAtLeastOneBrokenPart(){
+		if (flagForBrokenParts > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public void flagABrokenPart(){
+		flagForBrokenParts++;
+	}
+	public void unflagABrokenPart(){
+		flagForBrokenParts--;
 	}
 	public TargetSquareScript[][] populateCorrectPlayAreaSquares(TargetSquareScript[][] incomingSquareGrid){
 	//Debug.Log (wholeBodyOfParts.listOfAllParts.Count);
