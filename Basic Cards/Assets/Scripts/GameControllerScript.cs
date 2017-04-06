@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameControllerScript : MonoBehaviour {
 	public Button shuffleDiscardsButton;
@@ -17,6 +18,11 @@ public class GameControllerScript : MonoBehaviour {
 	//private bool boolCardClickedOn;
 
 	void Start () {
+		GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");				//whole block is for grabbing the Deck object so it can deal a card when clicked
+		if(loaderScriptTemp == null){
+			SceneManager.LoadScene("XMLLoaderScene"); //Only happens if coroutine is finished 
+		}
+
 		//boolCardClickedOn = false;
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null, 0);
 		shuffleDiscardsButton.onClick.AddListener(shuffleDiscard);

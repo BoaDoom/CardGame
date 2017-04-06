@@ -8,6 +8,7 @@ using System.IO;
 using System.Xml.Linq; //Needed for XDocument
 
 public class XMLCardLoaderScript : MonoBehaviour {
+	bool finishedLoading = false;
 
 	XDocument xmlDoc; //create Xdocument. Will be used later to read XML file 
 	IEnumerable<XElement> items; //Create an Ienumerable list. Will be used to store XML Items. 
@@ -70,8 +71,11 @@ public class XMLCardLoaderScript : MonoBehaviour {
 				iteration++; //increment the iteration by 1
 			}
 		}
-		//finishedLoading = true; //tell the program that we’ve finished loading data. 
+		finishedLoading = true;
 		yield return null;
+	}
+	public bool checkIfFinishedLoading(){
+		return finishedLoading;
 	}
 }
 

@@ -19,7 +19,7 @@ public class CardScript : MonoBehaviour {
 //	float widthOfHitSquares;
 
 	//private bool clicked;
-	private bool cardInPlayArea;
+	//private bool cardInPlayArea;
 	private bool active;
 	private bool clickedOn;
 	private Sprite storedSprite;
@@ -34,7 +34,7 @@ public class CardScript : MonoBehaviour {
 		//ActiveSquareBehaviour[] hitSquares;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
 		active = true;
-		cardInPlayArea = false;
+		//cardInPlayArea = false;
 		clickedOn = false;
 		hitSquareOverflow = 0;
 		GameObject deckControllerObjectTemp = GameObject.FindWithTag ("DeckController");

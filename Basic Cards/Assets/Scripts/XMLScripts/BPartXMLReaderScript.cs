@@ -9,6 +9,7 @@ using System.Xml.Linq; //Needed for XDocument
 using System.Linq;
 
 public class BPartXMLReaderScript : MonoBehaviour {
+	bool finishedLoading = false;
 
 	public BPartGenericScript bPartGenericPrefab;
 
@@ -138,9 +139,12 @@ public class BPartXMLReaderScript : MonoBehaviour {
 					}
 				}
 			}
-
+			finishedLoading = true;
 			yield return null;
 		}
+	}
+	public bool checkIfFinishedLoading(){
+		return finishedLoading;
 	}
 
 	public BodyPartDataHolder getBodyData(string requestedNameOfPart){			//future efficiency, have each part be catagorized acording to their part type for better searching

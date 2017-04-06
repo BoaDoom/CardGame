@@ -9,6 +9,7 @@ using System.Xml.Linq; //Needed for XDocument
 using System.Linq;
 
 public class XMLWeaponHitLoaderScript : MonoBehaviour {
+	bool finishedLoading = false;
 
 	XDocument xmlDoc; //create Xdocument. Will be used later to read XML file 
 	IEnumerable<XElement> items; //Create an Ienumerable list. Will be used to store XML Items. 
@@ -80,8 +81,11 @@ public class XMLWeaponHitLoaderScript : MonoBehaviour {
 //
 			}
 		}
-		//finishedLoading = true; //tell the program that we’ve finished loading data. 
+		finishedLoading = true;
 		yield return null;
+	}
+	public bool checkIfFinishedLoading(){
+		return finishedLoading;
 	}
 }
 
