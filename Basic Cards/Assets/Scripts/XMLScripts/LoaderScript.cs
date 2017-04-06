@@ -32,11 +32,18 @@ public class LoaderScript : MonoBehaviour {
 		if (XMLBPartLoader == null) {
 			Debug.Log ("Cannot find 'XMLBPartLoader'object");
 		}
+		StartCoroutine(Waiter());
+
+	}
+	IEnumerator Waiter(){
+		yield return new WaitForSeconds(5);
+		print(Time.time);
 		finishedLoading = true;
+
 	}
 	void Update ()
 	{
-		
+		//print ("checking");
 		if (XMLCardLoader.checkIfFinishedLoading() && XMLWeaponHitLoader.checkIfFinishedLoading() && XMLBPartLoader.checkIfFinishedLoading() && finishedLoading)
 		{
 			SceneManager.LoadScene("_Main"); //Only happens if coroutine is finished 

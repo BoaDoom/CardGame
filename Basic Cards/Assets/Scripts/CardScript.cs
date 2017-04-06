@@ -37,6 +37,8 @@ public class CardScript : MonoBehaviour {
 		//cardInPlayArea = false;
 		clickedOn = false;
 		hitSquareOverflow = 0;
+
+		//GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");	
 		GameObject deckControllerObjectTemp = GameObject.FindWithTag ("DeckController");
 		if (deckControllerObjectTemp != null) {
 			deckScript = deckControllerObjectTemp.GetComponent<DeckScript> ();

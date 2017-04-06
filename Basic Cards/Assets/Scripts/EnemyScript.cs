@@ -28,6 +28,10 @@ public class EnemyScript : MonoBehaviour {
 		healthBarStartingScale = healthBarGraphic.localScale;
 //		updateHealthDisplay ();
 		wholeBodyOfParts = new WholeBodyOfParts();
+//		while (!BpartMaker.checkIfStartupIsDone()) {
+//			Debug.Log ("hope this repeats");
+//		}
+		//populateBody ();
 	}
 	public void setPlayAreaDimensions(Vector2 incomingDimensions){
 		playAreaDimensions = incomingDimensions;
@@ -48,6 +52,9 @@ public class EnemyScript : MonoBehaviour {
 //	public void takeDamage(){
 //		updateHealthDisplay ();
 //	}
+	public void signalThatStartupIsDone(){		//comes from BodyPartMakerScript
+		populateBody ();
+	}
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
 
@@ -72,6 +79,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 	public void populateBody(){				//currently invoked by game controller script on button press
 		healthMax = 0;
+		//StartCoroutine (waitForBpartMakerScript ());
 		wholeBodyOfParts.resetBodyToZero ();
 		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
 //		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
@@ -85,12 +93,19 @@ public class EnemyScript : MonoBehaviour {
 //		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso", "none"));
 //
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped arm", "left"));
+		//Debug.Log ("large biped arm, left");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped arm", "right"));
-		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped head", "none"));
+		//Debug.Log ("large biped arm, "+ "right");
+		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped head", "left"));
+		//Debug.Log ("soforth");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped leg", "left"));
+		//Debug.Log ("soforth");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped leg", "right"));
+		//Debug.Log ("soforth");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped shoulder", "left"));
+		//Debug.Log ("soforth");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped shoulder", "right"));
+		//Debug.Log ("soforth");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped torso", "none"));
 		wholeBodyOfParts = BpartMaker.createWholeBody (wholeBodyOfParts, playAreaDimensions);		//setting internal location positions of each of the body parts in relation to eachother
 		for (int i=0; i<wholeBodyOfParts.listOfAllParts.Count; i++){
@@ -102,6 +117,13 @@ public class EnemyScript : MonoBehaviour {
 		remainingHealth = healthMax;
 		updateHealthDisplay ();
 	}
+//	IEnumerator waitForBpartMakerScript(){
+//		if (!BpartMaker.checkIfStartupIsDone ()) {
+//			Debug.Log ("Checking...");
+//			yield return waitForBpartMakerScript();
+//		}
+//	}
+
 	public WholeBodyOfParts getWholeBodyOfParts(){
 		return wholeBodyOfParts;
 	}

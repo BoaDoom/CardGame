@@ -7,10 +7,27 @@ public class BodyPartMakerScript : MonoBehaviour {
 	public BPartGenericScript bodyPartObject;
 	BodyPartDataHolder partData;
 	public Transform placeHolder;
+	public bool startupDone = false;
 
 	void Start(){
-		bPartXMLReader = gameObject.GetComponent<BPartXMLReaderScript>();
+		GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");	
+		GameObject LoaderMainTemp = GameObject.FindWithTag ("MainLoader");
+		if (LoaderMainTemp != null) {
+			bPartXMLReader = LoaderMainTemp.GetComponent<BPartXMLReaderScript> ();
+			//Debug.Log ("GOT Bpart XML");
+			//startupDone = true;
+		}
+		if (LoaderMainTemp == null && loaderScriptTemp != null) {
+			Debug.Log ("Cannot find 'MainLoader'object");
+		}
+		//bPartXMLReader = gameObject.GetComponent<BPartXMLReaderScript>();
 		//bodyPartObject = gameObject.GetComponent<>();
+		GameObject EnemyScriptTemp = GameObject.FindWithTag ("EnemyController");
+		if (LoaderMainTemp != null) {
+			EnemyScriptTemp.GetComponent<EnemyScript> ().signalThatStartupIsDone();
+		} else if (LoaderMainTemp != null) {
+			Debug.Log ("could not find enemy script");
+		}
 	}
 //	public BPartGenericScript makeBodyPart(string nameOfpart){
 //		Debug.Log ("single: " + nameOfpart);
@@ -20,10 +37,14 @@ public class BodyPartMakerScript : MonoBehaviour {
 //		return bodyPartObject;
 //	}
 	public BPartGenericScript makeBodyPart(string nameOfpart, string leftOrRight){
-		//Debug.Log ("double: " + nameOfpart + " " + leftOrRight);
+//		Debug.Log ("check: " + nameOfpart + " " + leftOrRight);
+		Debug.Log("name: "+ nameOfpart); 
+		//Debug.Log("leftor right: "+ leftOrRight);
 		partData = bPartXMLReader.getBodyData (nameOfpart);
 		BPartGenericScript instaBodypart = Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
+		Debug.Log ("body data check: "+bPartXMLReader.getBodyData (nameOfpart).name);
 		instaBodypart.CreateNewPart (partData, leftOrRight);
+		//Debug.Log ("instantiated after: "+instaBodypart.getName());
 		return instaBodypart;
 	}
 	public WholeBodyOfParts createWholeBody(WholeBodyOfParts incomingWholeBodyOfParts, Vector2 incomingDimensionsOfPlayArea){

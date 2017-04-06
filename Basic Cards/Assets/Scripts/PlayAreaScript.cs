@@ -70,6 +70,7 @@ public class PlayAreaScript: MonoBehaviour {
 
 			}
 		}
+		populateEnemyPlayAreaSquares ();
 	}
 	public void populateEnemyPlayAreaSquares(){
 		grid = enemyScript.populateCorrectPlayAreaSquares (grid);

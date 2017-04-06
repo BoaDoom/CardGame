@@ -43,20 +43,21 @@ public class DeckScript : MonoBehaviour {
 	private CardScript currentCard;
 
 	void Start () {
-		GameObject XMLCardLoaderObject = GameObject.FindWithTag("CardLoader");
+		GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");	
+		GameObject XMLCardLoaderObject = GameObject.FindWithTag("MainLoader");
 		if(XMLCardLoaderObject != null){
 			cardData = XMLCardLoaderObject.GetComponent<XMLCardLoaderScript>().data;
 //			Debug.Log ("cardData " + cardData.Count);
 		}
-		if(XMLCardLoaderObject == null){
+		if(XMLCardLoaderObject == null && loaderScriptTemp != null){
 			Debug.Log ("Cannot find 'XMLCardLoaderObject'object");}
 
-		GameObject XMLWeaponHitLoaderScriptTEMP = GameObject.FindWithTag("HitBoxLoader");
+		GameObject XMLWeaponHitLoaderScriptTEMP = GameObject.FindWithTag("MainLoader");
 		if(XMLWeaponHitLoaderScriptTEMP != null){
 			weaponHitBoxData = XMLWeaponHitLoaderScriptTEMP.GetComponent<XMLWeaponHitLoaderScript>().data;
 //			Debug.Log ("weaponHitBoxData " + weaponHitBoxData.Count);
 		}
-		if(XMLWeaponHitLoaderScriptTEMP == null){
+		if(XMLWeaponHitLoaderScriptTEMP == null && loaderScriptTemp != null){
 			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Diagnostics;
 using System.Collections.Generic; //Needed for Lists
 using System.Xml; //Needed for XML functionality
 using System.Xml.Serialization; //Needed for XML Functionality
@@ -29,6 +30,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 		//DontDestroyOnLoad (gameObject); //Allows Loader to carry over into new scene 
 		LoadXML (); //Loads XML File. Code below. 
 		StartCoroutine(AssignData()); //Starts assigning XML data to data List. Code below
+
 	}
 	void Update ()
 	{
@@ -40,7 +42,6 @@ public class XMLCardLoaderScript : MonoBehaviour {
 	{
 		//Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
 		xmlDoc = XDocument.Load("assets/XMLdata/cards.xml");
-
 		//This basically breaks down the XML Document into XML Elements. Used later. 
 		items = xmlDoc.Descendants("card").Elements ();
 	}
