@@ -1,0 +1,45 @@
+Initialize engine version: 5.5.1f1 (88d00a7498cd)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) HD Graphics 530 (ID=0x1912)
+    Vendor:   Intel
+    VRAM:     2111 MB
+    Driver:   21.20.16.4534
+Begin MonoManager ReloadAssembly
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.110 seconds
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\System.dll (this message is harmless)
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\System.Xml.Linq.dll (this message is harmless)
+Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\System.Xml.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 3520x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.228190 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 2bb4 -> priority: 1 
+UnloadTime: 44.920811 ms
+
+Unloading 66 unused Assets to reduce memory usage. Loaded Objects now: 261.
+Total: 0.231619 ms (FindLiveObjects: 0.026043 ms CreateObjectMapping: 0.011636 ms MarkObjects: 0.114701 ms  DeleteObjects: 0.078961 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.208069 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 404.
+Total: 0.409766 ms (FindLiveObjects: 0.025766 ms CreateObjectMapping: 0.017731 ms MarkObjects: 0.358510 ms  DeleteObjects: 0.006926 ms)
+

@@ -36,10 +36,9 @@ public class LoaderScript : MonoBehaviour {
 
 	}
 	IEnumerator Waiter(){
-		yield return new WaitForSeconds(5);
-		print(Time.time);
+		yield return new WaitForSeconds(1);
+//		print(Time.time);
 		finishedLoading = true;
-
 	}
 	void Update ()
 	{

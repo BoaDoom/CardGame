@@ -7,6 +7,7 @@ public class EnemyScript : MonoBehaviour {
 	private BodyPartMakerScript BpartMaker;
 
 	public BPartGenericScript bodyPartObject;
+	public PlayAreaScript playAreaScript;
 
 	float healthMax = 0;
 	float remainingHealth;
@@ -15,25 +16,36 @@ public class EnemyScript : MonoBehaviour {
 	public Transform healthBarGraphic;
 	private Vector3 healthBarStartingScale;
 
-	private WholeBodyOfParts wholeBodyOfParts;
+	private WholeBodyOfParts wholeBodyOfParts = new WholeBodyOfParts();
 	CurrentWeaponHitBox incomingWeaponhitBox;
 
 	private Vector2 playAreaDimensions;
 	private int flagForBrokenParts;
 
+	bool bodypartIsDone = false;
+	bool playAreaIsDone = false;
+
 	void Start () {
+		GameObject playAreaScriptTemp = GameObject.FindWithTag("PlayAreaController");
+		if(playAreaScriptTemp != null){
+			playAreaScript = playAreaScriptTemp.GetComponent<PlayAreaScript>();
+		}
+		if(playAreaScriptTemp == null){
+			Debug.Log ("Cannot find 'playAreaScriptTemp'object");}
+		
 		BpartMaker = gameObject.GetComponent<BodyPartMakerScript> ();
 
 //		remainingHealth = healthMax;
 		healthBarStartingScale = healthBarGraphic.localScale;
 //		updateHealthDisplay ();
-		wholeBodyOfParts = new WholeBodyOfParts();
+
 //		while (!BpartMaker.checkIfStartupIsDone()) {
 //			Debug.Log ("hope this repeats");
 //		}
 		//populateBody ();
 	}
 	public void setPlayAreaDimensions(Vector2 incomingDimensions){
+		//print ("inc dim "+incomingDimensions);
 		playAreaDimensions = incomingDimensions;
 		remainingHealth = healthMax;
 	}
@@ -52,8 +64,21 @@ public class EnemyScript : MonoBehaviour {
 //	public void takeDamage(){
 //		updateHealthDisplay ();
 //	}
-	public void signalThatStartupIsDone(){		//comes from BodyPartMakerScript
-		populateBody ();
+	public void signalThatBodyPartIsDone(){		//comes from BodyPartMakerScript
+//		print("body done");
+		bodypartIsDone = true;
+		if (playAreaIsDone) {
+			populateBody ();
+			playAreaScript.populateEnemyPlayAreaSquares ();
+		}
+	}
+	public void signalThatPlayAreaIsDone(){		//comes from BodyPartMakerScript
+//		print("playarea is done");
+		playAreaIsDone = true;
+		if (bodypartIsDone) {
+			populateBody ();
+			playAreaScript.populateEnemyPlayAreaSquares ();
+		}
 	}
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
@@ -107,6 +132,7 @@ public class EnemyScript : MonoBehaviour {
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped shoulder", "right"));
 		//Debug.Log ("soforth");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped torso", "none"));
+//		print ("play area dim " + playAreaDimensions);
 		wholeBodyOfParts = BpartMaker.createWholeBody (wholeBodyOfParts, playAreaDimensions);		//setting internal location positions of each of the body parts in relation to eachother
 		for (int i=0; i<wholeBodyOfParts.listOfAllParts.Count; i++){
 			healthMax += wholeBodyOfParts.listOfAllParts [i].getCurrentHealth ();		//makes health pool
@@ -145,13 +171,25 @@ public class EnemyScript : MonoBehaviour {
 	}
 	public TargetSquareScript[][] populateCorrectPlayAreaSquares(TargetSquareScript[][] incomingSquareGrid){
 	//Debug.Log (wholeBodyOfParts.listOfAllParts.Count);
+		//print("grid x length: " +incomingSquareGrid[0].Length + " grid y length: "+incomingSquareGrid.Length);
 		for (int i=0; i<wholeBodyOfParts.listOfAllParts.Count; i++){		//for every body part in the list
 			for (int x=0; x<wholeBodyOfParts.listOfAllParts [i].getDimensionsOfPart ().x; x++){				//get the x dimensions and run through the grid of Y
 				for (int y=0; y<wholeBodyOfParts.listOfAllParts [i].getDimensionsOfPart ().y; y++){			//get the y dimensions and run through every colloum of parts
 					if (wholeBodyOfParts.listOfAllParts [i].getGridPoint(new Vector2(x, y))&& wholeBodyOfParts.listOfAllParts [i].getActive()){				//gets the body part point and asks the grid of bodypartnodes if they are on or off at the internal dimension of the part
+
 						int outGoingXCord = ((int)wholeBodyOfParts.listOfAllParts [i].getGlobalOriginPoint().x)+x;
 						int outGoingYCord = ((int)wholeBodyOfParts.listOfAllParts [i].getGlobalOriginPoint ().y) + y;
+						//print ("incomingSquareGridX: "+ incomingSquareGrid[0].Length + " incomingSquareGridY: "+ incomingSquareGrid.Length);
+
+						//print (incomingSquareGrid[7][7]);
+//						print (outGoingXCord +" "+ outGoingYCord);
+//						print (x +" "+ y);
+
+//						print ("wholeBodyOfParts name: "+wholeBodyOfParts.listOfAllParts [i].getName());
+//						print ("i: " +i+ " outGoingXCord: " +outGoingYCord+ " y: " + outGoingYCord);
+//						print("whole body part list count: "+wholeBodyOfParts.listOfAllParts.Count);
 						incomingSquareGrid[outGoingXCord][outGoingYCord].OccupiedSquare(wholeBodyOfParts.listOfAllParts [i]);
+
 						//if grid point is on, it finds the relative relation of the body part node and turns it on as an Occupiedsquare in the play area. it finds the relative location on the grid because each
 						//body part knows its own global origin point, the 0,0 location is the lower left field off the square of the body part. No redundency yet for overlapping body parts.
 					}

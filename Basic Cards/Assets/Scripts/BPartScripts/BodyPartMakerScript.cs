@@ -24,25 +24,19 @@ public class BodyPartMakerScript : MonoBehaviour {
 		//bodyPartObject = gameObject.GetComponent<>();
 		GameObject EnemyScriptTemp = GameObject.FindWithTag ("EnemyController");
 		if (LoaderMainTemp != null) {
-			EnemyScriptTemp.GetComponent<EnemyScript> ().signalThatStartupIsDone();
+			EnemyScriptTemp.GetComponent<EnemyScript> ().signalThatBodyPartIsDone();
 		} else if (LoaderMainTemp != null) {
 			Debug.Log ("could not find enemy script");
 		}
 	}
-//	public BPartGenericScript makeBodyPart(string nameOfpart){
-//		Debug.Log ("single: " + nameOfpart);
-//		partData = bPartXMLReader.getBodyData (nameOfpart);
-//		Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
-//		bodyPartObject.CreateNewPart (partData);
-//		return bodyPartObject;
-//	}
+
 	public BPartGenericScript makeBodyPart(string nameOfpart, string leftOrRight){
 //		Debug.Log ("check: " + nameOfpart + " " + leftOrRight);
-		Debug.Log("name: "+ nameOfpart); 
+		//Debug.Log("name: "+ nameOfpart); 
 		//Debug.Log("leftor right: "+ leftOrRight);
 		partData = bPartXMLReader.getBodyData (nameOfpart);
 		BPartGenericScript instaBodypart = Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
-		Debug.Log ("body data check: "+bPartXMLReader.getBodyData (nameOfpart).name);
+		//Debug.Log ("body data check: "+bPartXMLReader.getBodyData (nameOfpart).name);
 		instaBodypart.CreateNewPart (partData, leftOrRight);
 		//Debug.Log ("instantiated after: "+instaBodypart.getName());
 		return instaBodypart;

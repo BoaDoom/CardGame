@@ -40,7 +40,7 @@ public class PlayAreaScript: MonoBehaviour {
 			Debug.Log ("Cannot find 'enemyScript'object");}
 		
 		gridDimensions = new Vector2(boxCountX, boxCountY);
-
+//		print ("dimensions: " + gridDimensions);
 		enemyScript.setPlayAreaDimensions(gridDimensions);
 
 		TargetSquareScript smallSquareInst;
@@ -70,7 +70,9 @@ public class PlayAreaScript: MonoBehaviour {
 
 			}
 		}
-		populateEnemyPlayAreaSquares ();
+//		print ("grid: "+grid[7][7]);
+		enemyScript.signalThatPlayAreaIsDone ();
+		//populateEnemyPlayAreaSquares ();
 	}
 	public void populateEnemyPlayAreaSquares(){
 		grid = enemyScript.populateCorrectPlayAreaSquares (grid);
