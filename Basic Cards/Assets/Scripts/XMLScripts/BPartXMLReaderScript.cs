@@ -139,9 +139,9 @@ public class BPartXMLReaderScript : MonoBehaviour {
 					}
 				}
 			}
-			finishedLoading = true;
-			yield return null;
 		}
+		finishedLoading = true;
+		yield return null;
 	}
 	public bool checkIfFinishedLoading(){
 		return finishedLoading;

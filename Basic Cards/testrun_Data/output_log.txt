@@ -19,7 +19,7 @@ Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngin
 Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
 Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
 Loading H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-- Completed reload, in  0.110 seconds
+- Completed reload, in  0.125 seconds
 Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\System.dll (this message is harmless)
 Platform assembly: H:\Unity\CardGame\Basic Cards\testrun_Data\Managed\System.Xml.Linq.dll (this message is harmless)
@@ -28,18 +28,22 @@ desktop: 1920x1080 60Hz; virtual: 3520x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.228190 ms
+UnloadTime: 4.796122 ms
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 2bb4 -> priority: 1 
-UnloadTime: 44.920811 ms
+  Thread -> id: fc0 -> priority: 1 
+UnloadTime: 39.105953 ms
 
 Unloading 66 unused Assets to reduce memory usage. Loaded Objects now: 261.
-Total: 0.231619 ms (FindLiveObjects: 0.026043 ms CreateObjectMapping: 0.011636 ms MarkObjects: 0.114701 ms  DeleteObjects: 0.078961 ms)
+Total: 0.237991 ms (FindLiveObjects: 0.025766 ms CreateObjectMapping: 0.013852 ms MarkObjects: 0.110545 ms  DeleteObjects: 0.083671 ms)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.208069 ms
+UnloadTime: 0.249350 ms
 
 Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 404.
-Total: 0.409766 ms (FindLiveObjects: 0.025766 ms CreateObjectMapping: 0.017731 ms MarkObjects: 0.358510 ms  DeleteObjects: 0.006926 ms)
+Total: 0.504242 ms (FindLiveObjects: 0.029090 ms CreateObjectMapping: 0.022995 ms MarkObjects: 0.441904 ms  DeleteObjects: 0.009696 ms)
+
+deactivated triggered
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 

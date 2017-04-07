@@ -45,7 +45,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 		//This basically breaks down the XML Document into XML Elements. Used later. 
 		items = xmlDoc.Descendants("card").Elements ();
 	}
-
+	int loaderTest = 0;
 	//this is our coroutine that will actually read and assign the XML data to our List 
 	IEnumerator AssignData()
 	{
@@ -53,6 +53,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 		/*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/ 
 		foreach (var item in items)
 		{
+
 //			Debug.Log (item.Parent.Attribute("number").Value);
 //			Debug.Log (iteration.ToString ());
 			/*Determine if the <page number> attribute in the XML is equal to whatever our current iteration of the loop is. If it is, then we want to assign our variables to the value of the XML Element that we need.*/

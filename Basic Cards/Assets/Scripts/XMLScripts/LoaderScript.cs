@@ -9,7 +9,7 @@ using System.Xml.Linq; //Needed for XDocument
 
 public class LoaderScript : MonoBehaviour {
 
-	bool finishedLoading = false;
+	//bool finishedLoading = false;
 	public XMLCardLoaderScript XMLCardLoader;
 	public XMLWeaponHitLoaderScript XMLWeaponHitLoader;
 	public BPartXMLReaderScript XMLBPartLoader;
@@ -36,17 +36,24 @@ public class LoaderScript : MonoBehaviour {
 
 	}
 	IEnumerator Waiter(){
-		yield return new WaitForSeconds(1);
+		while (!XMLCardLoader.checkIfFinishedLoading() || !XMLWeaponHitLoader.checkIfFinishedLoading() || !XMLBPartLoader.checkIfFinishedLoading())
+		{
+			//print ("First " +!XMLCardLoader.checkIfFinishedLoading() +" "+ !XMLWeaponHitLoader.checkIfFinishedLoading() +" "+ !XMLBPartLoader.checkIfFinishedLoading());
+			//print ("inside while loop");
+			//finishedLoading = false;
+			yield return new WaitForEndOfFrame();
+		}
+		//print (XMLCardLoader.checkIfFinishedLoading() +" "+ XMLWeaponHitLoader.checkIfFinishedLoading() +" "+ XMLBPartLoader.checkIfFinishedLoading());
+		//print ("outside while loop");
+		SceneManager.LoadScene("_Main"); //Only happens if coroutine is finished 
+		//yield return WaitForEndOfFrame();
+		//yield return new WaitForSeconds(1);
 //		print(Time.time);
-		finishedLoading = true;
+
 	}
 	void Update ()
 	{
 		//print ("checking");
-		if (XMLCardLoader.checkIfFinishedLoading() && XMLWeaponHitLoader.checkIfFinishedLoading() && XMLBPartLoader.checkIfFinishedLoading() && finishedLoading)
-		{
-			SceneManager.LoadScene("_Main"); //Only happens if coroutine is finished 
-			finishedLoading = false;
-		}
+
 	}
 }

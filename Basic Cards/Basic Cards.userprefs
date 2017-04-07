@@ -1,19 +1,19 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayAreaScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameControllerScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameControllerScript.cs" Line="29" Column="60" />
-      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="73" Column="3" />
+      <File FileName="Assets\Scripts\GameControllerScript.cs" Line="71" Column="4" />
+      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TargetSquareScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="68" Column="14" />
-      <File FileName="Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" Line="27" Column="73" />
-      <File FileName="Assets\Scripts\DeckScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemyScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DeckScript.cs" Line="88" Column="1" />
       <File FileName="Assets\Scripts\CardScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\BPartScripts\BPartGenericScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\XMLScripts\LoaderScript.cs" Line="40" Column="3" />
-      <File FileName="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\XMLScripts\XMLWeaponHitLoaderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\XMLScripts\BPartXMLReaderScript.cs" Line="153" Column="5" />
+      <File FileName="Assets\Scripts\XMLScripts\LoaderScript.cs" Line="42" Column="6" />
+      <File FileName="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" Line="75" Column="4" />
+      <File FileName="Assets\Scripts\XMLScripts\XMLWeaponHitLoaderScript.cs" Line="56" Column="4" />
+      <File FileName="Assets\Scripts\XMLScripts\BPartXMLReaderScript.cs" Line="148" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
