@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour {
 	private BodyPartMakerScript BpartMaker;
 
 	public BPartGenericScript bodyPartObject;
-	public PlayAreaScript playAreaScript;
+//	public PlayAreaScript playAreaScript;
 
 	float healthMax = 0;
 	float remainingHealth;
@@ -25,13 +25,13 @@ public class EnemyScript : MonoBehaviour {
 	bool bodypartIsDone = false;
 	bool playAreaIsDone = false;
 
-	void Start () {
-		GameObject playAreaScriptTemp = GameObject.FindWithTag("PlayAreaController");
-		if(playAreaScriptTemp != null){
-			playAreaScript = playAreaScriptTemp.GetComponent<PlayAreaScript>();
-		}
-		if(playAreaScriptTemp == null){
-			Debug.Log ("Cannot find 'playAreaScriptTemp'object");}
+	public IEnumerator ManualStart () {
+//		GameObject playAreaScriptTemp = GameObject.FindWithTag("PlayAreaController");
+//		if(playAreaScriptTemp != null){
+//			playAreaScript = playAreaScriptTemp.GetComponent<PlayAreaScript>();
+//		}
+//		if(playAreaScriptTemp == null){
+//			Debug.Log ("Cannot find 'playAreaScriptTemp'object");}
 		
 		BpartMaker = gameObject.GetComponent<BodyPartMakerScript> ();
 
@@ -43,6 +43,9 @@ public class EnemyScript : MonoBehaviour {
 //			Debug.Log ("hope this repeats");
 //		}
 		//populateBody ();
+		StartCoroutine(BpartMaker.ManualStart());
+		populateBody ();
+		yield return null;
 	}
 	public void setPlayAreaDimensions(Vector2 incomingDimensions){
 		//print ("inc dim "+incomingDimensions);
@@ -64,22 +67,22 @@ public class EnemyScript : MonoBehaviour {
 //	public void takeDamage(){
 //		updateHealthDisplay ();
 //	}
-	public void signalThatBodyPartIsDone(){		//comes from BodyPartMakerScript
-//		print("body done");
-		bodypartIsDone = true;
-		if (playAreaIsDone) {
-			populateBody ();
-			playAreaScript.populateEnemyPlayAreaSquares ();
-		}
-	}
-	public void signalThatPlayAreaIsDone(){		//comes from Playareascript
-//		print("playarea is done");
-		playAreaIsDone = true;
-		if (bodypartIsDone) {
-			populateBody ();
-			playAreaScript.populateEnemyPlayAreaSquares ();
-		}
-	}
+//	public void signalThatBodyPartIsDone(){		//comes from BodyPartMakerScript
+////		print("body done");
+//		bodypartIsDone = true;
+//		if (playAreaIsDone) {
+//			populateBody ();
+//			playAreaScript.populateEnemyPlayAreaSquares ();
+//		}
+//	}
+//	public void signalThatPlayAreaIsDone(){		//comes from Playareascript
+////		print("playarea is done");
+//		playAreaIsDone = true;
+//		if (bodypartIsDone) {
+//			populateBody ();
+//			playAreaScript.populateEnemyPlayAreaSquares ();
+//		}
+//	}
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
 
@@ -188,6 +191,7 @@ public class EnemyScript : MonoBehaviour {
 //						print ("wholeBodyOfParts name: "+wholeBodyOfParts.listOfAllParts [i].getName());
 //						print ("i: " +i+ " outGoingXCord: " +outGoingYCord+ " y: " + outGoingYCord);
 //						print("whole body part list count: "+wholeBodyOfParts.listOfAllParts.Count);
+//						print (incomingSquareGrid[outGoingXCord][outGoingYCord]);
 						incomingSquareGrid[outGoingXCord][outGoingYCord].OccupiedSquare(wholeBodyOfParts.listOfAllParts [i]);
 
 						//if grid point is on, it finds the relative relation of the body part node and turns it on as an Occupiedsquare in the play area. it finds the relative location on the grid because each

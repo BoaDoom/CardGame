@@ -20,9 +20,11 @@ public class GameControllerScript : MonoBehaviour {
 	void Start () {
 		GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");				//whole block is for grabbing the Deck object so it can deal a card when clicked
 		if(loaderScriptTemp == null){
-			SceneManager.LoadScene("XMLLoaderScene"); //Only happens if coroutine is finished 
+			SceneManager.LoadScene("XMLLoaderScene"); //Only happens if coroutine is finished
+//			StartCoroutine (StartUpLoader());
+			return;
 		}
-
+//		print ("and still");
 		//boolCardClickedOn = false;
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null, 0);
 		shuffleDiscardsButton.onClick.AddListener(shuffleDiscard);
@@ -30,22 +32,34 @@ public class GameControllerScript : MonoBehaviour {
 		discardEverythingButton.onClick.AddListener(discardAllActiveShuffle);
 //		makeBodyButton.onClick.AddListener(makeBody);
 
-		GameObject deckControllerObjectTemp = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
-		if(deckControllerObjectTemp != null){
-			deckController = deckControllerObjectTemp.GetComponent<DeckScript>();
-			}
-		if(deckControllerObjectTemp == null){
-			Debug.Log ("Cannot find 'deckController'object");
-			}
-		GameObject playAreaControllerTemp = GameObject.FindWithTag("PlayAreaController");
-		if(playAreaControllerTemp != null){
-			playAreaController = playAreaControllerTemp.GetComponent<PlayAreaScript>();
-		}
-		if(playAreaControllerTemp == null){
-			Debug.Log ("Cannot find 'DeckBehaviour'object");
-		}
-		
+//		GameObject deckControllerObjectTemp = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
+//		if(deckControllerObjectTemp != null){
+//			deckController = deckControllerObjectTemp.GetComponent<DeckScript>();
+//			}
+//		if(deckControllerObjectTemp == null){
+//			Debug.Log ("Cannot find 'deckController'object");
+//			}
+//		GameObject playAreaControllerTemp = GameObject.FindWithTag("PlayAreaController");
+//		if(playAreaControllerTemp != null){
+//			playAreaController = playAreaControllerTemp.GetComponent<PlayAreaScript>();
+//		}
+//		if(playAreaControllerTemp == null){
+//			Debug.Log ("Cannot find 'DeckBehaviour'object");
+//		}
+
+		StartCoroutine (playAreaController.ManualStart ());
+		print ("manual play area done");
+		StartCoroutine (enemyController.ManualStart ());
+		print ("manual enemy cont done");
+		playAreaController.populateEnemyPlayAreaSquares ();
+		print ("enemy play area population started");
 	}
+//	IEnumerator StartUpLoader(){
+//		SceneManager.LoadScene("XMLLoaderScene"); //Only happens if coroutine is finished
+//		print("its still going");
+//		yield return null;
+//	}
+
 	void Update(){
 		if (enemyController.hasBodyParts() && enemyController.hasAtLeastOneBrokenPart()) {
 			//int i = 0;
@@ -70,10 +84,10 @@ public class GameControllerScript : MonoBehaviour {
 			//UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
 		}
 	}
-	public void makeBody(){
-		enemyController.populateBody ();
-		//enemyController.takeDamage ();
-	}
+//	public void makeBody(){
+//		enemyController.populateBody ();
+//		//enemyController.takeDamage ();
+//	}
 	public void makeActiveSquares(){
 		playAreaController.populateEnemyPlayAreaSquares ();
 	}

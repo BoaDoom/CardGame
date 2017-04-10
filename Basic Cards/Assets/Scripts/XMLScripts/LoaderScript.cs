@@ -17,6 +17,7 @@ public class LoaderScript : MonoBehaviour {
 
 	void Start ()
 	{
+//		print ("loading script started");
 		DontDestroyOnLoad (gameObject); //Allows Loader to carry over into new scene 
 		//LoadXML (); //Loads XML File. Code below. 
 		//StartCoroutine(AssignData()); //Starts assigning XML data to data List. Code below

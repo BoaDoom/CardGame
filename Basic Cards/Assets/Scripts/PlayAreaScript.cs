@@ -24,14 +24,14 @@ public class PlayAreaScript: MonoBehaviour {
 
 	private TargetSquareScript[][] grid;
 	private Vector2 gridDimensions;
-	private TargetSquareState[][] gridOfStates;		//tracks the states of the squares in the targeting box. Boolean of Occupied, HardTargeted, SoftTargeted
+	//private TargetSquareState[][] gridOfStates;		//tracks the states of the squares in the targeting box. Boolean of Occupied, HardTargeted, SoftTargeted
 
 	Vector3 zeroCord = Vector3.zero;
 	Vector3 framingBoxSize;
 	public Vector3 firstBoxCord;
 
 
-	void Start () {
+	public IEnumerator ManualStart () {
 		GameObject EnemyScriptTemp = GameObject.FindWithTag("EnemyController");
 		if(EnemyScriptTemp != null){
 			enemyScript = EnemyScriptTemp.GetComponent<EnemyScript>();
@@ -49,32 +49,36 @@ public class PlayAreaScript: MonoBehaviour {
 		firstBoxCord = zeroCord + new Vector3 ((-0.5f + framingBoxSize.x / 2), (-0.5f + framingBoxSize.y / 2), 0.0f);
 		//int yi = 0;
 		//int xi = 0;
-		gridOfStates = new TargetSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
+		//gridOfStates = new TargetSquareState[(int)gridDimensions.x][];	//grid of data for the prefab squares' states
 		grid = new TargetSquareScript[(int)gridDimensions.x][];		//grid of prefab ActiveSquare
 //		Vector2 offSetToCenter = new Vector2(Mathf.Round(boxCountX/2)-Mathf.Round(bodyHitBoxWidth/2),0);
 
 		//Debug.Log (offSetToCenter);
 		for (int x = 0; x < gridDimensions.x; x++){
-			gridOfStates [x] = new TargetSquareState[(int)gridDimensions.y];
+			//gridOfStates [x] = new TargetSquareState[(int)gridDimensions.y];
 			grid[x] = new TargetSquareScript[(int)gridDimensions.y];
 			for (int y = 0; y < gridDimensions.y; y++)
 			{
 				smallSquareInst = Instantiate (smallSquare, zeroCord, transformOriginal.rotation);
+				StartCoroutine( smallSquareInst.ManualStart ());
 				smallSquareInst.transform.SetParent (gameObject.transform);
 				smallSquareInst.transform.localScale = framingBoxSize * sizeRatioOfSmallBox;
 				smallSquareInst.transform.localPosition = firstBoxCord + new Vector3(framingBoxSize.x*x, framingBoxSize.y*y, 0.0f);
 				smallSquareInst.SetGridCordX (x);
 				smallSquareInst.SetGridCordY (y);
 				grid[x][y] = smallSquareInst;
-				gridOfStates[x][y] = smallSquareInst.activeSquareState;
+				//gridOfStates[x][y] = smallSquareInst.activeSquareState;
 
 			}
 		}
 //		print ("grid: "+grid[7][7]);
-		enemyScript.signalThatPlayAreaIsDone ();
+		//enemyScript.signalThatPlayAreaIsDone ();
 		//populateEnemyPlayAreaSquares ();
+		yield return null;
 	}
 	public void populateEnemyPlayAreaSquares(){		//triggered by enemyscript when both the play area is done being made and the enemy squares are done being set up
+//		print("grid [0][0] "+grid[0][0].activeSquareState.getOccupiedState());
+//		print("grid "+grid.Length);
 		grid = enemyScript.populateCorrectPlayAreaSquares (grid);
 	}
 
@@ -84,10 +88,10 @@ public class PlayAreaScript: MonoBehaviour {
 	}
 
 	public bool getTargetSquareStateSoftTarget(int xcordT, int ycordT){
-		return gridOfStates [xcordT] [ycordT].getSoftTargetedState ();
+		return grid [xcordT] [ycordT].activeSquareState.getSoftTargetedState ();
 	}
 	public bool getTargetSquareStateOccupied(int xcordT, int ycordT){
-		return gridOfStates [xcordT] [ycordT].getOccupiedState ();
+		return grid [xcordT] [ycordT].activeSquareState.getOccupiedState ();
 	}
 
 	public Vector2 getGridDimensions(){

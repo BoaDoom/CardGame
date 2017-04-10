@@ -5,11 +5,11 @@ using UnityEngine;
 public class BodyPartMakerScript : MonoBehaviour {
 	BPartXMLReaderScript bPartXMLReader;
 	public BPartGenericScript bodyPartObject;
-	BodyPartDataHolder partData;
+	BodyPartDataHolder partData = null;
 	public Transform placeHolder;
 	public bool startupDone = false;
 
-	void Start(){
+	public IEnumerator ManualStart(){
 		GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");	
 		GameObject LoaderMainTemp = GameObject.FindWithTag ("MainLoader");
 		if (LoaderMainTemp != null) {
@@ -22,18 +22,20 @@ public class BodyPartMakerScript : MonoBehaviour {
 		}
 		//bPartXMLReader = gameObject.GetComponent<BPartXMLReaderScript>();
 		//bodyPartObject = gameObject.GetComponent<>();
-		GameObject EnemyScriptTemp = GameObject.FindWithTag ("EnemyController");
-		if (LoaderMainTemp != null) {
-			EnemyScriptTemp.GetComponent<EnemyScript> ().signalThatBodyPartIsDone();
-		} else if (LoaderMainTemp != null) {
-			Debug.Log ("could not find enemy script");
-		}
+//		GameObject EnemyScriptTemp = GameObject.FindWithTag ("EnemyController");
+//		if (LoaderMainTemp != null) {
+//			EnemyScriptTemp.GetComponent<EnemyScript> ().signalThatBodyPartIsDone();
+//		} else if (LoaderMainTemp != null) {
+//			Debug.Log ("could not find enemy script");
+//		}
+		yield return null;
 	}
 
 	public BPartGenericScript makeBodyPart(string nameOfpart, string leftOrRight){
 //		Debug.Log ("check: " + nameOfpart + " " + leftOrRight);
 		//Debug.Log("name: "+ nameOfpart); 
 		//Debug.Log("leftor right: "+ leftOrRight);
+		//BodyPartDataHolder partData = new BodyPartDataHolder();
 		partData = bPartXMLReader.getBodyData (nameOfpart);
 		BPartGenericScript instaBodypart = Instantiate (bodyPartObject, Vector3.zero, bodyPartObject.GetComponent<Transform>().rotation);
 		//Debug.Log ("body data check: "+bPartXMLReader.getBodyData (nameOfpart).name);

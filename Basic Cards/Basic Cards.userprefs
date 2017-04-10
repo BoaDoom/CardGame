@@ -1,17 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameControllerScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TargetSquareScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameControllerScript.cs" Line="46" Column="4" />
-      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="74" Column="43" />
-      <File FileName="Assets\Scripts\TargetSquareScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyScript.cs" Line="67" Column="38" />
-      <File FileName="Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameControllerScript.cs" Line="55" Column="25" />
+      <File FileName="Assets\Scripts\PlayAreaScript.cs" Line="80" Column="3" />
+      <File FileName="Assets\Scripts\TargetSquareScript.cs" Line="118" Column="51" />
+      <File FileName="Assets\Scripts\EnemyScript.cs" Line="194" Column="3" />
+      <File FileName="Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" Line="39" Column="1" />
       <File FileName="Assets\Scripts\DeckScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CardScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\BPartScripts\BPartGenericScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\XMLScripts\LoaderScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\XMLScripts\LoaderScript.cs" Line="20" Column="3" />
+      <File FileName="Assets\Scripts\XMLScripts\XMLCardLoaderScript.cs" Line="11" Column="51" />
       <File FileName="Assets\Scripts\XMLScripts\XMLWeaponHitLoaderScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\XMLScripts\BPartXMLReaderScript.cs" Line="1" Column="1" />
     </Files>
@@ -19,7 +19,7 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="F:\Unity\CardGame\Basic Cards\Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" line="144" column="1" />
-      <Breakpoint file="H:\Unity\CardGame\Basic Cards\Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" line="37" column="1" />
+      <Breakpoint file="H:\Unity\CardGame\Basic Cards\Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" line="39" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

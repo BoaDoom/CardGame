@@ -22,8 +22,11 @@ public class TargetSquareScript : MonoBehaviour {
 	PlayAreaScript playArea;
 	BPartGenericScript bodyPartReference;
 
-	void Awake(){
+	public IEnumerator ManualStart(){
+
 		activeSquareState = new TargetSquareState();
+//		activeSquareState.setOccupiedState (true);
+//		print (activeSquareState.getOccupiedState());
 		SpriteRenderer spriteRendererTemp = gameObject.GetComponent<SpriteRenderer>();
 		if(spriteRendererTemp != null){
 			spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -45,6 +48,7 @@ public class TargetSquareScript : MonoBehaviour {
 			Debug.Log ("Cannot find 'playAreaImport'object");
 		}
 		hardUntargetSquare ();
+		yield return null;
 	}
 	public void SetGridCordX(int cordx){
 		gridCordX = cordx;
@@ -111,6 +115,7 @@ public class TargetSquareScript : MonoBehaviour {
 		trueTarget = occupiedTargetedSprite;
 		trueUntarget = occupiedUntargetedSprite;
 		activeSquareState.setOccupiedState(true);
+		spriteRenderer.sprite = occupiedUntargetedSprite;
 	}
 	public void DeactivateSquare(){		//used by playarea to turn on and off if the enemy occupies the space
 		trueUntarget = defaultSprite;
