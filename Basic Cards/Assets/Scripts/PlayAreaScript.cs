@@ -74,7 +74,7 @@ public class PlayAreaScript: MonoBehaviour {
 		enemyScript.signalThatPlayAreaIsDone ();
 		//populateEnemyPlayAreaSquares ();
 	}
-	public void populateEnemyPlayAreaSquares(){
+	public void populateEnemyPlayAreaSquares(){		//triggered by enemyscript when both the play area is done being made and the enemy squares are done being set up
 		grid = enemyScript.populateCorrectPlayAreaSquares (grid);
 	}
 

@@ -72,7 +72,7 @@ public class EnemyScript : MonoBehaviour {
 			playAreaScript.populateEnemyPlayAreaSquares ();
 		}
 	}
-	public void signalThatPlayAreaIsDone(){		//comes from BodyPartMakerScript
+	public void signalThatPlayAreaIsDone(){		//comes from Playareascript
 //		print("playarea is done");
 		playAreaIsDone = true;
 		if (bodypartIsDone) {

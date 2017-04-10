@@ -26,9 +26,9 @@ public class GameControllerScript : MonoBehaviour {
 		//boolCardClickedOn = false;
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null, 0);
 		shuffleDiscardsButton.onClick.AddListener(shuffleDiscard);
-		MakeSquaresButton.onClick.AddListener(makeActiveSquares);
+//		MakeSquaresButton.onClick.AddListener(makeActiveSquares);
 		discardEverythingButton.onClick.AddListener(discardAllActiveShuffle);
-		makeBodyButton.onClick.AddListener(makeBody);
+//		makeBodyButton.onClick.AddListener(makeBody);
 
 		GameObject deckControllerObjectTemp = GameObject.FindWithTag("DeckController");				//whole block is for grabbing the Deck object so it can deal a card when clicked
 		if(deckControllerObjectTemp != null){
