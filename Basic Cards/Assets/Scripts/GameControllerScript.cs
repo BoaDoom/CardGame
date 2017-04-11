@@ -10,9 +10,11 @@ public class GameControllerScript : MonoBehaviour {
 	public Button discardEverythingButton;
 	public Button makeBodyButton;
 	//public DeckBehaviour deckBehav;
-	public DeckScript deckController;
-	public PlayAreaScript playAreaController;
-	public EnemyScript enemyController;
+	private DeckScript enemyDeckController;
+	private DeckScript playerDeckController;
+	//public PlayAreaScript playAreaController;
+	private EnemyScript enemyController;
+	private PlayerScript playerController;
 
 	public CurrentWeaponHitBox currentClickedOnCardWeaponMatrix{ get; set; }
 	//private bool boolCardClickedOn;
@@ -24,6 +26,11 @@ public class GameControllerScript : MonoBehaviour {
 //			StartCoroutine (StartUpLoader());
 			return;
 		}
+		enemyController = gameObject.GetComponentInChildren<EnemyScript>();
+		playerController = gameObject.GetComponentInChildren<PlayerScript>();
+
+		enemyDeckController = enemyController.GetComponentInChildren<DeckScript>();
+		playerDeckController = playerController.GetComponentInChildren<DeckScript>();
 //		print ("and still");
 		//boolCardClickedOn = false;
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(false, null, 0);
@@ -47,12 +54,14 @@ public class GameControllerScript : MonoBehaviour {
 //			Debug.Log ("Cannot find 'DeckBehaviour'object");
 //		}
 
-		StartCoroutine (playAreaController.ManualStart ());
+//		StartCoroutine (playAreaController.ManualStart ());
 //		print ("manual play area done");
+
 		StartCoroutine (enemyController.ManualStart ());
 //		print ("manual enemy cont done");
-		playAreaController.populateEnemyPlayAreaSquares ();
+//		playAreaController.populateEnemyPlayAreaSquares ();
 //		print ("enemy play area population started");
+
 	}
 //	IEnumerator StartUpLoader(){
 //		SceneManager.LoadScene("XMLLoaderScene"); //Only happens if coroutine is finished
@@ -60,59 +69,36 @@ public class GameControllerScript : MonoBehaviour {
 //		yield return null;
 //	}
 
-	void Update(){
-//		if (enemyController.hasBodyParts() && enemyController.hasAtLeastOneBrokenPart()) {
-//			//int i = 0;
-//
-//			foreach (BPartGenericScript bPart in enemyController.getWholeBodyOfParts().getBrokenParts()){		//for every body part in the list
-//				
-//				if (!bPart.getActive() && !bPart.getFullyDeactivated ()) {	//if part is not active and not fully deactivated, deactivate it's squares
-//					//Debug.Log (enemyController.getWholeBodyOfParts().listOfAllParts.Count);
-//					bPart.setFullyDeactivated ();
-//					for (int x = 0; x < (bPart.getDimensionsOfPart ().x); x++) {				//get the x dimensions and run through the grid of Y
-//						for (int y = 0; y < (bPart.getDimensionsOfPart ().y); y++) {			//get the y dimensions and run through every colloum of parts
-//							if (bPart.getGridPoint (new Vector2 (x, y))) {				//gets the body part point and asks the grid of bodypartnodes if they are on or off at the internal dimension of the part
-//								int outGoingXCord = ((int)bPart.getGlobalOriginPoint ().x) + x;
-//								int outGoingYCord = ((int)bPart.getGlobalOriginPoint ().y) + y;
-//								playAreaController.getSmallSquare (outGoingXCord, outGoingYCord).DeactivateSquare ();
-//							}
-//						}
-//					}
-//					enemyController.unflagABrokenPart ();
-//				}
-//			}
-//			//UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
-//		}
-	}
+
 //	public void makeBody(){
 //		enemyController.populateBody ();
 //		//enemyController.takeDamage ();
 //	}
-	public void makeActiveSquares(){
-		playAreaController.populateEnemyPlayAreaSquares ();
-	}
+//	public void makeActiveSquares(){
+//		playAreaController.populateEnemyPlayAreaSquares ();
+//	}
 
 	public void cardClickedOn(XMLWeaponHitData WeaponHitMatrix, float weaponDamage){		//command sent from the CardBehaviour script with info about the damage its doing
 		currentClickedOnCardWeaponMatrix = new CurrentWeaponHitBox(true, WeaponHitMatrix, weaponDamage);
-		playAreaController.hardResetSmallSquares ();
+		enemyController.getPlayAreaOfEnemy().hardResetSmallSquares ();
 
 		//boolCardClickedOn = true;
 	}
 	public void cardClickedOff(){				//sent from the cardbehaviour
-		playAreaController.softResetSmallSquares ();			//resets all the targetting squares if the card is released. If not in place, used cards never 'exit'
+		enemyController.getPlayAreaOfEnemy().softResetSmallSquares ();			//resets all the targetting squares if the card is released. If not in place, used cards never 'exit'
 		currentClickedOnCardWeaponMatrix.isCardClickedOn = false;
 	}
 
 	public void discardDrawThenShuffle(){
-		deckController.discardDrawThenShuffle();		//puts all draw pile cards into the discard and then shuffles discard
+		enemyDeckController.discardDrawThenShuffle();		//puts all draw pile cards into the discard and then shuffles discard
 	}
 	public void shuffleDiscard(){					//only shuffles discard
-		deckController.shuffleDiscard();
+		enemyDeckController.shuffleDiscard();
 
 	}
 
 	public void discardAllActiveShuffle(){			//discards all active cards and cards in draw pile and then shuffles
-		deckController.discardAllActiveShuffle();
+		enemyDeckController.discardAllActiveShuffle();
 	}
 
 
@@ -120,16 +106,19 @@ public class GameControllerScript : MonoBehaviour {
 //		Debug.Log("target: " +playAreaController.getActiveSquareStateSoftTarget(0,0));
 //		Debug.Log("occupied: " +playAreaController.getActiveSquareStateOccupied(0,0));
 		//enemyController.takeDamage (currentClickedOnCardWeaponMatrix);
-		Vector2 gridDimensions = playAreaController.getGridDimensions();
+		Vector2 gridDimensions = enemyController.getPlayAreaOfEnemy().getGridDimensions();
 		for (int x = 0; x < gridDimensions.x; x++) {
 			for (int y = 0; y < gridDimensions.y; y++) {
-				if (playAreaController.getTargetSquareStateSoftTarget(x,y) && playAreaController.getTargetSquareStateOccupied(x,y)){
-					playAreaController.takeAHit (currentClickedOnCardWeaponMatrix, x, y);
+				if (enemyController.getPlayAreaOfEnemy().getTargetSquareStateSoftTarget(x,y) && enemyController.getPlayAreaOfEnemy().getTargetSquareStateOccupied(x,y)){
+					enemyController.getPlayAreaOfEnemy().takeAHit (currentClickedOnCardWeaponMatrix, x, y);
 					enemyController.updateHealthDisplay ();
 				}
 			}
 		}
 		cardClickedOff ();
+	}
+	public DeckScript getEnemyDeckController(){
+		return enemyDeckController;
 	}
 
 }

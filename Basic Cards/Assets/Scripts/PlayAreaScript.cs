@@ -14,11 +14,10 @@ public class PlayAreaScript: MonoBehaviour {
 	public GameControllerScript gameControllerScript; //added manually inside unity
 	EnemyScript enemyScript;
 
+	private string controllerParentIDtag;
+
 	public int boxCountX;
 	public int boxCountY;
-
-//	int bodyHitBoxWidth;
-//	int bodyHitBoxHeight;
 
 	public float sizeRatioOfSmallBox = 1.0f;
 
@@ -32,7 +31,10 @@ public class PlayAreaScript: MonoBehaviour {
 
 
 	public IEnumerator ManualStart () {
-		GameObject EnemyScriptTemp = GameObject.FindWithTag("EnemyController");
+		controllerParentIDtag = gameObject.transform.parent.tag;
+		//print ("My daddy is "+controllerParentIDtag);
+
+		Transform EnemyScriptTemp = gameObject.transform.parent;
 		if(EnemyScriptTemp != null){
 			enemyScript = EnemyScriptTemp.GetComponent<EnemyScript>();
 		}
@@ -60,7 +62,7 @@ public class PlayAreaScript: MonoBehaviour {
 			for (int y = 0; y < gridDimensions.y; y++)
 			{
 				smallSquareInst = Instantiate (smallSquare, zeroCord, transformOriginal.rotation);
-				StartCoroutine( smallSquareInst.ManualStart ());
+				StartCoroutine( smallSquareInst.ManualStart (gameObject.GetComponent<PlayAreaScript>()));
 				smallSquareInst.transform.SetParent (gameObject.transform);
 				smallSquareInst.transform.localScale = framingBoxSize * sizeRatioOfSmallBox;
 				smallSquareInst.transform.localPosition = firstBoxCord + new Vector3(framingBoxSize.x*x, framingBoxSize.y*y, 0.0f);
@@ -128,7 +130,7 @@ public class PlayAreaScript: MonoBehaviour {
 	public void squareClickedOn(int xCord, int yCord){		//when a small square is clicked on
 		if (gameControllerScript.currentClickedOnCardWeaponMatrix.isCardClickedOn) {		//checks to see if there was a card in play
 			gameControllerScript.enemyCardDamage ();		//if there was, make the enemy take damage
-			gameControllerScript.deckController.turnOffCurrentCard();
+			gameControllerScript.getEnemyDeckController().turnOffCurrentCard();
 		}
 	}
 
@@ -148,6 +150,9 @@ public class PlayAreaScript: MonoBehaviour {
 	}
 	public void takeAHit(CurrentWeaponHitBox incomingWeaponHitBox, int incomingX, int incomingY){
 		grid [incomingX] [incomingY].takeOneSquareDamage (incomingWeaponHitBox.weaponDamage);
+	}
+	public string getControllerParentIdTag(){
+		return controllerParentIDtag;
 	}
 }
 public class TargetSquareState{

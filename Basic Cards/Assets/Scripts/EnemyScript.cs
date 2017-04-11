@@ -27,32 +27,18 @@ public class EnemyScript : MonoBehaviour {
 //	bool playAreaIsDone = false;
 
 	public IEnumerator ManualStart () {
-		GameObject playAreaScriptTemp = GameObject.FindWithTag("PlayAreaController");
-		if(playAreaScriptTemp != null){
-			playAreaScript = playAreaScriptTemp.GetComponent<PlayAreaScript>();
-		}
-		if(playAreaScriptTemp == null){
-			Debug.Log ("Cannot find 'playAreaScript'object");}
-		
-//		GameObject playAreaScriptTemp = GameObject.FindWithTag("PlayAreaController");
-//		if(playAreaScriptTemp != null){
-//			playAreaScript = playAreaScriptTemp.GetComponent<PlayAreaScript>();
-//		}
-//		if(playAreaScriptTemp == null){
-//			Debug.Log ("Cannot find 'playAreaScriptTemp'object");}
-		
+		playAreaScript = gameObject.GetComponentInChildren<PlayAreaScript> ();
+		StartCoroutine( playAreaScript.ManualStart ());
+
 		BpartMaker = gameObject.GetComponent<BodyPartMakerScript> ();
 
 //		remainingHealth = healthMax;
 		healthBarStartingScale = healthBarGraphic.localScale;
 //		updateHealthDisplay ();
 
-//		while (!BpartMaker.checkIfStartupIsDone()) {
-//			Debug.Log ("hope this repeats");
-//		}
-		//populateBody ();
 		StartCoroutine(BpartMaker.ManualStart());
 		populateBody ();
+		playAreaScript.populateEnemyPlayAreaSquares ();
 		yield return null;
 	}
 	public void setPlayAreaDimensions(Vector2 incomingDimensions){
@@ -60,37 +46,7 @@ public class EnemyScript : MonoBehaviour {
 		playAreaDimensions = incomingDimensions;
 		remainingHealth = healthMax;
 	}
-
-//	public void takeDamage(CurrentWeaponHitBox incomingDamage, int xCordOfHit, int yCordOfHit){			//only sent from GameController script
-//		Vector3 tempHealth = healthBarStartingScale;
-//
-//		remainingHealth -= incomingDamage.weaponDamage;
-//		tempHealth.x = healthBarStartingScale.x * (remainingHealth / healthMax);
-//		healthBarGraphic.localScale = tempHealth;
-//		if (remainingHealth <= 0) {
-//			ResetHealthBar ();
-//		}
-//		updateHealthDisplay ();
-//	}
-//	public void takeDamage(){
-//		updateHealthDisplay ();
-//	}
-//	public void signalThatBodyPartIsDone(){		//comes from BodyPartMakerScript
-////		print("body done");
-//		bodypartIsDone = true;
-//		if (playAreaIsDone) {
-//			populateBody ();
-//			playAreaScript.populateEnemyPlayAreaSquares ();
-//		}
-//	}
-//	public void signalThatPlayAreaIsDone(){		//comes from Playareascript
-////		print("playarea is done");
-//		playAreaIsDone = true;
-//		if (bodypartIsDone) {
-//			populateBody ();
-//			playAreaScript.populateEnemyPlayAreaSquares ();
-//		}
-//	}
+		
 	public void ResetHealthBar(){
 		healthBarGraphic.localScale = healthBarStartingScale;
 
@@ -117,17 +73,7 @@ public class EnemyScript : MonoBehaviour {
 		healthMax = 0;
 		//StartCoroutine (waitForBpartMakerScript ());
 		wholeBodyOfParts.resetBodyToZero ();
-		//Debug.Log(BpartMaker.getBodyData ("light Arm").name);
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "left"));
-//		//Debug.Log ("made heavy arm");
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light arm", "right"));
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light head", "none"));
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "left"));
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light leg", "right"));
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "left"));
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light shoulder", "right"));
-//		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("light torso", "none"));
-//
+
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped arm", "left"));
 		//Debug.Log ("large biped arm, left");
 		wholeBodyOfParts.setBodyPart( BpartMaker.makeBodyPart ("large biped arm", "right"));
@@ -162,26 +108,14 @@ public class EnemyScript : MonoBehaviour {
 		}
 		
 	}
+	public PlayAreaScript getPlayAreaOfEnemy(){
+		return playAreaScript;
+	}
 
 	public WholeBodyOfParts getWholeBodyOfParts(){
 		return wholeBodyOfParts;
 	}
-//	public bool hasBodyParts(){
-//		return wholeBodyOfParts.hasBodyPart();
-//	}
-//	public bool hasAtLeastOneBrokenPart(){
-//		if (flagForBrokenParts > 0) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-//	public void flagABrokenPart(){
-//		flagForBrokenParts++;
-//	}
-//	public void unflagABrokenPart(){
-//		flagForBrokenParts--;
-//	}
+
 	public TargetSquareScript[][] populateCorrectPlayAreaSquares(TargetSquareScript[][] incomingSquareGrid){
 	//Debug.Log (wholeBodyOfParts.listOfAllParts.Count);
 		//print("grid x length: " +incomingSquareGrid[0].Length + " grid y length: "+incomingSquareGrid.Length);
@@ -192,16 +126,7 @@ public class EnemyScript : MonoBehaviour {
 
 						int outGoingXCord = ((int)wholeBodyOfParts.listOfAllParts [i].getGlobalOriginPoint().x)+x;
 						int outGoingYCord = ((int)wholeBodyOfParts.listOfAllParts [i].getGlobalOriginPoint ().y) + y;
-						//print ("incomingSquareGridX: "+ incomingSquareGrid[0].Length + " incomingSquareGridY: "+ incomingSquareGrid.Length);
 
-						//print (incomingSquareGrid[7][7]);
-//						print (outGoingXCord +" "+ outGoingYCord);
-//						print (x +" "+ y);
-
-//						print ("wholeBodyOfParts name: "+wholeBodyOfParts.listOfAllParts [i].getName());
-//						print ("i: " +i+ " outGoingXCord: " +outGoingYCord+ " y: " + outGoingYCord);
-//						print("whole body part list count: "+wholeBodyOfParts.listOfAllParts.Count);
-//						print (incomingSquareGrid[outGoingXCord][outGoingYCord]);
 						incomingSquareGrid[outGoingXCord][outGoingYCord].OccupiedSquare(wholeBodyOfParts.listOfAllParts [i]);
 
 						//if grid point is on, it finds the relative relation of the body part node and turns it on as an Occupiedsquare in the play area. it finds the relative location on the grid because each

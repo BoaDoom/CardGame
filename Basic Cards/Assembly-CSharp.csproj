@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\DontDestroy.cs" />
+     <Compile Include="Assets\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\BPartScripts\BPartGenericScript.cs" />
      <Compile Include="Assets\Scripts\BPartScripts\BodyPartMakerScript.cs" />
      <Compile Include="Assets\Scripts\CardScript.cs" />

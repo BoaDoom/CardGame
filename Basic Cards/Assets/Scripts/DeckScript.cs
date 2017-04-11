@@ -18,6 +18,7 @@ public class DeckScript : MonoBehaviour {
 	public List<XMLWeaponHitData> weaponHitBoxData;
 	public GameControllerScript gameController;
 	//public
+	private string controllerParentIDtag;
 
 	//public XMLloaderScript XMLloader;
 	public List<XMLData> cardData;
@@ -43,6 +44,7 @@ public class DeckScript : MonoBehaviour {
 	private CardScript currentCard;
 
 	void Start () {
+		controllerParentIDtag = gameObject.transform.parent.tag;
 		GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");	
 		GameObject XMLCardLoaderObject = GameObject.FindWithTag("MainLoader");
 		if(XMLCardLoaderObject != null){
@@ -84,6 +86,8 @@ public class DeckScript : MonoBehaviour {
 	private void createCard(){
 		CardScript instCard;
 		instCard = Instantiate (card, offScreenDeck.position, cardStartPosition.rotation);
+		instCard.ManualStart (gameObject.GetComponent<DeckScript>());
+		instCard.transform.SetParent (gameObject.GetComponent<Transform>());
 		drawnCards.Add(instCard);
 		instCard.CardAttributes = cardData[orderOfDrawPile[0]];
 		instCard.setFace(cardsFaces[(orderOfDrawPile[0])]);
@@ -162,7 +166,11 @@ public class DeckScript : MonoBehaviour {
 			//Debug.Log ("attack value of current card: "+currentCard.AttackValue);
 			updateCards ();
 		}
+	public string getControllerParentIdTag(){
+		return controllerParentIDtag;
 	}
+}
+
 //	public void discardEverything(){
 //		foreach (CardScript drawnCard in drawnCards) {
 //			drawnCard.deactivate ();

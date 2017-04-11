@@ -21,9 +21,10 @@ public class TargetSquareScript : MonoBehaviour {
 	SpriteRenderer spriteRenderer;
 	PlayAreaScript playArea;
 	BPartGenericScript bodyPartReference;
+	//PlayAreaScript playAreaScript;
 
-	public IEnumerator ManualStart(){
-
+	public IEnumerator ManualStart(PlayAreaScript parentPlayAreaScript){
+		playArea = parentPlayAreaScript;
 		activeSquareState = new TargetSquareState();
 //		activeSquareState.setOccupiedState (true);
 //		print (activeSquareState.getOccupiedState());
@@ -40,13 +41,13 @@ public class TargetSquareScript : MonoBehaviour {
 			Debug.Log ("Cannot find 'spriteRendererTemp'object");
 		}
 
-		GameObject playAreaTemp = GameObject.FindWithTag ("PlayAreaController");
-		if(playAreaTemp != null){
-			playArea = playAreaTemp.GetComponent<PlayAreaScript>();
-		}
-		if(playAreaTemp == null){
-			Debug.Log ("Cannot find 'playAreaImport'object");
-		}
+//		GameObject playAreaTemp = GameObject.FindWithTag ("PlayAreaController");
+//		if(playAreaTemp != null){
+//			playArea = playAreaTemp.GetComponent<PlayAreaScript>();
+//		}
+//		if(playAreaTemp == null){
+//			Debug.Log ("Cannot find 'playAreaImport'object");
+//		}
 		hardUntargetSquare ();
 		yield return null;
 	}

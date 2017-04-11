@@ -26,11 +26,14 @@ public class CardScript : MonoBehaviour {
 	private SpriteRenderer spriteRenderer;
 	private int hitSquareOverflow;
 
+	private string controllerParentIDtag;
+
 	private XMLWeaponHitData hitBoxDataForCard;
 
 	private GameControllerScript gameController;
 
-	public void Start() {
+	public void ManualStart(DeckScript incomingDeckReference) {
+		deckScript = incomingDeckReference;
 		//ActiveSquareBehaviour[] hitSquares;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
 		active = true;
@@ -39,13 +42,13 @@ public class CardScript : MonoBehaviour {
 		hitSquareOverflow = 0;
 
 		//GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");	
-		GameObject deckControllerObjectTemp = GameObject.FindWithTag ("DeckController");
-		if (deckControllerObjectTemp != null) {
-			deckScript = deckControllerObjectTemp.GetComponent<DeckScript> ();
-		}
-		if (deckControllerObjectTemp == null) {
-			Debug.Log ("Cannot find 'deckController'object");
-		}
+//		GameObject deckControllerObjectTemp = GameObject.FindWithTag ("DeckController");
+//		if (deckControllerObjectTemp != null) {
+//			deckScript = deckControllerObjectTemp.GetComponent<DeckScript> ();
+//		}
+//		if (deckControllerObjectTemp == null) {
+//			Debug.Log ("Cannot find 'deckController'object");
+//		}
 
 		GameObject gameControllerScriptTemp = GameObject.FindWithTag ("GameController");
 		if (gameControllerScriptTemp != null) {
