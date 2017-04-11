@@ -12,7 +12,7 @@ public class DeckScript : MonoBehaviour {
 	public Sprite cardBack;			//the image for the back of the cards
 	public CardScript card;		//the gameobject of the actual cards
 
-	public GameObject undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
+	public UndrawnDeckScript undrawnDeck;		//the object that symbolizes the Undrawn stack of cards
 	//public EnemyBehaviour enemyBehaviour;
 
 	public List<XMLWeaponHitData> weaponHitBoxData;
@@ -42,9 +42,13 @@ public class DeckScript : MonoBehaviour {
 	//private Vector3 playAreaCurrentRatioSize;
 	//public GridMaker PlayArea;
 	private CardScript currentCard;
+	private UndrawnDeckScript undrawnDeckInst;
 
 	void Start () {
+		//print (cardStartPosition.transform.position);
 		controllerParentIDtag = gameObject.transform.parent.tag;
+		//print (controllerParentIDtag);
+
 		GameObject loaderScriptTemp = GameObject.FindWithTag("MainLoader");	
 		GameObject XMLCardLoaderObject = GameObject.FindWithTag("MainLoader");
 		if(XMLCardLoaderObject != null){
@@ -63,8 +67,10 @@ public class DeckScript : MonoBehaviour {
 			Debug.Log ("Cannot find 'weaponHitBoxLoader'object");}
 
 		cardWidthX = card.transform.localScale.x;															//scale of card used for spacing
-		Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
-		undrawnDeck.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
+		undrawnDeckInst = Instantiate (undrawnDeck, deckStartPosition.position, deckStartPosition.rotation);					//making the object that symbolized the undrawn deck of cards
+		undrawnDeckInst.transform.SetParent(gameObject.transform);
+		undrawnDeckInst.GetComponent<UndrawnDeckScript>().ManualStart();
+		undrawnDeckInst.GetComponent<SpriteRenderer>().sprite = cardBack;										//applying the back of the card graphic to it
 		for (int i=0; i < cardsFaces.Length; i++){															//making as many cards as there are graphics for faces, gets the number from the Card prefab
 			orderOfDrawPile.Add(i);
 			//Debug.Log (i);
@@ -73,6 +79,7 @@ public class DeckScript : MonoBehaviour {
 
 	}
 	public void DealCard(){
+		print (controllerParentIDtag);
 		for (int i=0; i < 1; i++){
 			if (drawnCards.Count < 5 && orderOfDrawPile.Count > 0) {								//does not allow a dealt card if there are more than 5 cards out and active, or if the draw pile is empty
 				createCard();
@@ -98,6 +105,7 @@ public class DeckScript : MonoBehaviour {
 	}
 
 	private void relocateDrawnCards(){
+		print (cardStartPosition.transform.position);
 		int tempCount = drawnCards.Count;
 		for (int i = 0; i < tempCount; i++) {
 			float cardXPosition = cardStartPosition.transform.position.x + (cardWidthX + cardGapX) * i;
