@@ -21,11 +21,19 @@ public class EnemyScript : MonoBehaviour {
 
 	private Vector2 playAreaDimensions;
 	private int flagForBrokenParts;
+	private PlayAreaScript playAreaScript;
 
-	bool bodypartIsDone = false;
-	bool playAreaIsDone = false;
+//	bool bodypartIsDone = false;
+//	bool playAreaIsDone = false;
 
 	public IEnumerator ManualStart () {
+		GameObject playAreaScriptTemp = GameObject.FindWithTag("PlayAreaController");
+		if(playAreaScriptTemp != null){
+			playAreaScript = playAreaScriptTemp.GetComponent<PlayAreaScript>();
+		}
+		if(playAreaScriptTemp == null){
+			Debug.Log ("Cannot find 'playAreaScript'object");}
+		
 //		GameObject playAreaScriptTemp = GameObject.FindWithTag("PlayAreaController");
 //		if(playAreaScriptTemp != null){
 //			playAreaScript = playAreaScriptTemp.GetComponent<PlayAreaScript>();
@@ -146,32 +154,34 @@ public class EnemyScript : MonoBehaviour {
 		remainingHealth = healthMax;
 		updateHealthDisplay ();
 	}
-//	IEnumerator waitForBpartMakerScript(){
-//		if (!BpartMaker.checkIfStartupIsDone ()) {
-//			Debug.Log ("Checking...");
-//			yield return waitForBpartMakerScript();
-//		}
-//	}
+	public void outgoingBrokenPartNodes(Vector2[][] incomingSet){		//new replacement for turning off the targeting nodes when a bodypart is destroyed
+		foreach(Vector2[] partCordsRow in incomingSet){
+			foreach (Vector2 cord in partCordsRow) {
+				playAreaScript.getSmallSquare ((int)cord.x, (int)cord.y).DeactivateSquare ();
+			}
+		}
+		
+	}
 
 	public WholeBodyOfParts getWholeBodyOfParts(){
 		return wholeBodyOfParts;
 	}
-	public bool hasBodyParts(){
-		return wholeBodyOfParts.hasBodyPart();
-	}
-	public bool hasAtLeastOneBrokenPart(){
-		if (flagForBrokenParts > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public void flagABrokenPart(){
-		flagForBrokenParts++;
-	}
-	public void unflagABrokenPart(){
-		flagForBrokenParts--;
-	}
+//	public bool hasBodyParts(){
+//		return wholeBodyOfParts.hasBodyPart();
+//	}
+//	public bool hasAtLeastOneBrokenPart(){
+//		if (flagForBrokenParts > 0) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+//	public void flagABrokenPart(){
+//		flagForBrokenParts++;
+//	}
+//	public void unflagABrokenPart(){
+//		flagForBrokenParts--;
+//	}
 	public TargetSquareScript[][] populateCorrectPlayAreaSquares(TargetSquareScript[][] incomingSquareGrid){
 	//Debug.Log (wholeBodyOfParts.listOfAllParts.Count);
 		//print("grid x length: " +incomingSquareGrid[0].Length + " grid y length: "+incomingSquareGrid.Length);

@@ -45,7 +45,7 @@ public class XMLCardLoaderScript : MonoBehaviour {
 		//This basically breaks down the XML Document into XML Elements. Used later. 
 		items = xmlDoc.Descendants("card").Elements ();
 	}
-	int loaderTest = 0;
+//	int loaderTest = 0;
 	//this is our coroutine that will actually read and assign the XML data to our List 
 	IEnumerator AssignData()
 	{

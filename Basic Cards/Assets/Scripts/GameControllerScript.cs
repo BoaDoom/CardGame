@@ -48,11 +48,11 @@ public class GameControllerScript : MonoBehaviour {
 //		}
 
 		StartCoroutine (playAreaController.ManualStart ());
-		print ("manual play area done");
+//		print ("manual play area done");
 		StartCoroutine (enemyController.ManualStart ());
-		print ("manual enemy cont done");
+//		print ("manual enemy cont done");
 		playAreaController.populateEnemyPlayAreaSquares ();
-		print ("enemy play area population started");
+//		print ("enemy play area population started");
 	}
 //	IEnumerator StartUpLoader(){
 //		SceneManager.LoadScene("XMLLoaderScene"); //Only happens if coroutine is finished
@@ -61,28 +61,28 @@ public class GameControllerScript : MonoBehaviour {
 //	}
 
 	void Update(){
-		if (enemyController.hasBodyParts() && enemyController.hasAtLeastOneBrokenPart()) {
-			//int i = 0;
-
-			foreach (BPartGenericScript bPart in enemyController.getWholeBodyOfParts().getBrokenParts()){		//for every body part in the list
-				
-				if (!bPart.getActive() && !bPart.getFullyDeactivated ()) {	//if part is not active and not fully deactivated, deactivate it's squares
-					//Debug.Log (enemyController.getWholeBodyOfParts().listOfAllParts.Count);
-					bPart.setFullyDeactivated ();
-					for (int x = 0; x < (bPart.getDimensionsOfPart ().x); x++) {				//get the x dimensions and run through the grid of Y
-						for (int y = 0; y < (bPart.getDimensionsOfPart ().y); y++) {			//get the y dimensions and run through every colloum of parts
-							if (bPart.getGridPoint (new Vector2 (x, y))) {				//gets the body part point and asks the grid of bodypartnodes if they are on or off at the internal dimension of the part
-								int outGoingXCord = ((int)bPart.getGlobalOriginPoint ().x) + x;
-								int outGoingYCord = ((int)bPart.getGlobalOriginPoint ().y) + y;
-								playAreaController.getSmallSquare (outGoingXCord, outGoingYCord).DeactivateSquare ();
-							}
-						}
-					}
-					enemyController.unflagABrokenPart ();
-				}
-			}
-			//UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
-		}
+//		if (enemyController.hasBodyParts() && enemyController.hasAtLeastOneBrokenPart()) {
+//			//int i = 0;
+//
+//			foreach (BPartGenericScript bPart in enemyController.getWholeBodyOfParts().getBrokenParts()){		//for every body part in the list
+//				
+//				if (!bPart.getActive() && !bPart.getFullyDeactivated ()) {	//if part is not active and not fully deactivated, deactivate it's squares
+//					//Debug.Log (enemyController.getWholeBodyOfParts().listOfAllParts.Count);
+//					bPart.setFullyDeactivated ();
+//					for (int x = 0; x < (bPart.getDimensionsOfPart ().x); x++) {				//get the x dimensions and run through the grid of Y
+//						for (int y = 0; y < (bPart.getDimensionsOfPart ().y); y++) {			//get the y dimensions and run through every colloum of parts
+//							if (bPart.getGridPoint (new Vector2 (x, y))) {				//gets the body part point and asks the grid of bodypartnodes if they are on or off at the internal dimension of the part
+//								int outGoingXCord = ((int)bPart.getGlobalOriginPoint ().x) + x;
+//								int outGoingYCord = ((int)bPart.getGlobalOriginPoint ().y) + y;
+//								playAreaController.getSmallSquare (outGoingXCord, outGoingYCord).DeactivateSquare ();
+//							}
+//						}
+//					}
+//					enemyController.unflagABrokenPart ();
+//				}
+//			}
+//			//UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
+//		}
 	}
 //	public void makeBody(){
 //		enemyController.populateBody ();

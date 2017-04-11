@@ -56,20 +56,36 @@ public class BodyPartMakerScript : MonoBehaviour {
 					incomingWholeBodyOfParts.leftLeg.getAnchorPoint().y-1);
 			
 			incomingWholeBodyOfParts.torso.setTorsoOriginPosition (offSetToCenter);
+//			incomingWholeBodyOfParts.torso.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.torso.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 			incomingWholeBodyOfParts.leftLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("LeftLegPoint"));
+//			incomingWholeBodyOfParts.leftLeg.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.leftLeg.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 			incomingWholeBodyOfParts.rightLeg.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("RightLegPoint"));
+//			incomingWholeBodyOfParts.rightLeg.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.rightLeg.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 			incomingWholeBodyOfParts.head.setGlobalPosition (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint ("HeadPoint"));
+//			incomingWholeBodyOfParts.head.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.head.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 			incomingWholeBodyOfParts.leftShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("LeftShoulderPoint"), "TorsoPoint");
+//			incomingWholeBodyOfParts.leftShoulder.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.leftShoulder.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 			incomingWholeBodyOfParts.rightShoulder.setGlobalPositionOffComplexAnchor (incomingWholeBodyOfParts.torso.getGlobalAnchorPoint("RightShoulderPoint"), "TorsoPoint");
+//			incomingWholeBodyOfParts.rightShoulder.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.rightShoulder.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 			incomingWholeBodyOfParts.leftArm.setGlobalPosition (incomingWholeBodyOfParts.leftShoulder.getGlobalAnchorPoint ("ArmPoint"));
+//			incomingWholeBodyOfParts.leftArm.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.leftArm.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 			incomingWholeBodyOfParts.rightArm.setGlobalPosition (incomingWholeBodyOfParts.rightShoulder.getGlobalAnchorPoint ("ArmPoint"));
+//			incomingWholeBodyOfParts.rightArm.setInternalGlobalCords ();
+//			print (incomingWholeBodyOfParts.rightArm.getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 
 
 		} else {
@@ -158,15 +174,15 @@ public class WholeBodyOfParts{
 		}
 		return count;
 	}
-	public List<BPartGenericScript> getBrokenParts(){
-		List<BPartGenericScript> listOfBrokenParts = new List<BPartGenericScript> ();
-		foreach (BPartGenericScript bPart in listOfAllParts) {
-			if (bPart.getCurrentHealth () <= 0) {
-				listOfBrokenParts.Add (bPart);
-			}
-		}
-		return listOfBrokenParts;
-	}
+//	public List<BPartGenericScript> getBrokenParts(){
+//		List<BPartGenericScript> listOfBrokenParts = new List<BPartGenericScript> ();
+//		foreach (BPartGenericScript bPart in listOfAllParts) {
+//			if (bPart.getCurrentHealth () <= 0) {
+//				listOfBrokenParts.Add (bPart);
+//			}
+//		}
+//		return listOfBrokenParts;
+//	}
 	public bool bodyPartCheck(){
 		if (leftArm != null && rightArm != null && head != null && leftLeg != null && rightLeg != null && leftShoulder != null && rightShoulder != null && torso != null) {
 			return true;

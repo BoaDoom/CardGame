@@ -10,6 +10,7 @@ public class BPartGenericScript : MonoBehaviour {
 	private string bPartType;				//arm,head,legs,shoulder, or torso
 	private string bPartName;
 	private BodyPartNode[][] nodesOfBP;		//given an open grid, the list of active hitable points by list of vectors
+	private Vector2[][] internalGlobalCords;
 	private Vector2 anchorPoint;			//the location in which all parts will be located and placed
 	private List<ComplexAnchorPoints> listOfComplexAnchorPoints = new List<ComplexAnchorPoints> ();
 	private float maxHealth;
@@ -29,7 +30,8 @@ public class BPartGenericScript : MonoBehaviour {
 	public void takeDamage(float incomingDamage){
 		currentHealth -= incomingDamage;
 		if (currentHealth <= 0) {
-			enemyScript.flagABrokenPart ();
+			enemyScript.outgoingBrokenPartNodes (internalGlobalCords);
+//			enemyScript.flagABrokenPart ();
 		}
 	}
 
@@ -112,17 +114,43 @@ public class BPartGenericScript : MonoBehaviour {
 	public void resetHealthToFull(){
 		currentHealth = maxHealth;
 	}
-
+	public void setInternalGlobalCords(){			//sets the specific global locations for each node
+//		print("dimensions of body part "+getDimensionsOfPart ());
+		internalGlobalCords = new Vector2[(int)getDimensionsOfPart ().x][];
+		for (int x = 0; x < getDimensionsOfPart ().x; x++) {				
+			internalGlobalCords[x] = new Vector2[(int)getDimensionsOfPart ().y];
+			for (int y = 0; y < getDimensionsOfPart ().y; y++) {			
+				int outGoingXCord = ((int)getGlobalOriginPoint ().x) + x;
+				int outGoingYCord = ((int)getGlobalOriginPoint ().y) + y;
+//				print ("setting internal cords x: " + outGoingXCord + " y: " + outGoingYCord);
+//				print ("at x: " + x + " y: " + y);
+				internalGlobalCords [x] [y] = new Vector2 (outGoingXCord, outGoingYCord);
+			}
+		}
+	}
+	public Vector2 getInternalGlobalCord(Vector2 incomingInternalVector){
+		if (incomingInternalVector.x < 0 || incomingInternalVector.y < 0 || incomingInternalVector.x >= internalGlobalCords.Length || incomingInternalVector.y >= internalGlobalCords [0].Length) {	//testing to see if the incoming request is within the internal dimensions of the body part
+			Debug.Log ("requested dimensions are outside of the internal stored dimensions of the body part");
+			return Vector2.zero;
+		} else {
+			
+			return internalGlobalCords [(int)incomingInternalVector.x] [(int)incomingInternalVector.y];
+		}
+	}
 
 
 
 	public void setTorsoOriginPosition(Vector2 incomingTorsoOriginPoint){
 		//Debug.Log ("setting custom torso origin");
 		globalOriginPoint = incomingTorsoOriginPoint;
+		setInternalGlobalCords ();
+		//print (getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 	}
 
 	public void setGlobalPosition(Vector2 incomingGlobalAnchorPoint){
 		globalOriginPoint = incomingGlobalAnchorPoint - anchorPoint;
+		setInternalGlobalCords ();
+
 	}
 	public Vector2 getGlobalOriginPoint(){
 		return globalOriginPoint;
@@ -131,6 +159,8 @@ public class BPartGenericScript : MonoBehaviour {
 	public void setGlobalPositionOffComplexAnchor(Vector2 incomingGlobalAnchorPoint, string pointOfConnection){
 		globalOriginPoint = incomingGlobalAnchorPoint - (listOfComplexAnchorPoints.Find (ComplexAnchorPoints => ComplexAnchorPoints.nameOfPoint == pointOfConnection).anchorPoint);
 //		Debug.Log ("ouput point: " +globalOriginPoint);
+		setInternalGlobalCords ();
+		//print (getInternalGlobalCord(new Vector2(0.0f, 0.0f)));
 	}
 	public Vector2 getGlobalAnchorPoint(string requestedAnchorPointName){
 //		Debug.Log ("globalOriginpoint: "+globalOriginPoint+" requested anchor point:"+ getComplexAnchorPoint(requestedAnchorPointName).anchorPoint);
